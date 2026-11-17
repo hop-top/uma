@@ -263,10 +263,16 @@ const (
 	EventConversationSnoozed    = "conversation.snoozed"
 	EventConversationUnsnoozed  = "conversation.unsnoozed"
 	// EventConversationLinked and EventConversationUnlinked report a link
-	// added or removed, once per conversation end. Read markers emit
-	// nothing.
+	// added or removed, once per conversation end.
 	EventConversationLinked   = "conversation.linked"
 	EventConversationUnlinked = "conversation.unlinked"
+	// EventConversationReadMarked and EventConversationUnreadMarked report one actual
+	// move of an actor's read marker (Conversations.MarkRead, MarkUnread),
+	// once per move; a call that leaves the marker as it was emits nothing.
+	// Internal audience, references only, and delivered to the marker's own
+	// actor alone.
+	EventConversationReadMarked   = "conversation.read_marked"
+	EventConversationUnreadMarked = "conversation.unread_marked"
 	// EventOperationHeld reports a plugin actor's operation stored as held
 	// for a human decision, once, when it is first held. EventOperationDecided
 	// reports its approval, rejection or edit, once per decision, and
@@ -309,6 +315,9 @@ const (
 
 	SchemaConversationLinked   = "uma.conversation.linked"
 	SchemaConversationUnlinked = "uma.conversation.unlinked"
+
+	SchemaConversationReadMarked   = "uma.conversation.read_marked"
+	SchemaConversationUnreadMarked = "uma.conversation.unread_marked"
 
 	SchemaOperationHeld    = "uma.operation.held"
 	SchemaOperationDecided = "uma.operation.decided"

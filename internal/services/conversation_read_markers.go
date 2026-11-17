@@ -68,9 +68,11 @@ func (s Conversations) ReadMarker(ctx context.Context, req model.Lookup[model.Co
 // message's that was not imported (the zero time when there is none):
 // imported messages never count as unread, so marking before one would
 // leave the conversation read. The marker is the actor's
-// own record: the conversation and its revision never move, and nothing
-// is emitted. Setting the ReadThrough the marker holds changes nothing, so
-// both calls are idempotent; a lost answer is recovered by repeating.
+// own record: the conversation and its revision never move. A move emits
+// one conversation.read_marked or conversation.unread_marked event for the actor alone
+// in the same unit; setting the ReadThrough the marker holds changes
+// nothing and emits nothing, so both calls are idempotent; a lost answer is
+// recovered by repeating.
 func markRead(ctx context.Context, c *engine.Client, req model.ReadMark, read bool) (model.ReadMarker, error) {
 	e := c.Engine()
 	done, err := e.Begin()
@@ -127,14 +129,16 @@ func markRead(ctx context.Context, c *engine.Client, req model.ReadMark, read bo
 	case msg != nil:
 		through = msg.RecordedAt.Add(-time.Nanosecond)
 	}
-	rev, err := operations.NewID(ctx, e)
+	ids, err := allocate(ctx, e, 2)
 	if err != nil {
 		return model.ReadMarker{}, err
 	}
+	rev := ids[0]
 	actor := c.Principal().Actor
 	var out model.ReadMarker
 	err = operations.Transact(ctx, e, c.Principal().Tenant, func(tx store.Tx) error {
-		if err := loadConversation(ctx, tx, conv.Ref, nil); err != nil {
+		var curConv model.Conversation
+		if err := loadConversation(ctx, tx, conv.Ref, &curConv); err != nil {
 			return err
 		}
 		cur, err := currentMarker(ctx, tx, conv.Ref, actor)
@@ -146,7 +150,20 @@ func markRead(ctx context.Context, c *engine.Client, req model.ReadMark, read bo
 			return nil
 		}
 		out = model.ReadMarker{Conversation: conv.Ref, Actor: actor, ReadThrough: through, UpdatedAt: now, Revision: model.Revision(rev)}
-		return tx.PutReadMarker(ctx, out, cur.Revision)
+		if err := tx.PutReadMarker(ctx, out, cur.Revision); err != nil {
+			return err
+		}
+		kind, schema := model.EventConversationReadMarked, model.SchemaConversationReadMarked
+		if !read {
+			kind, schema = model.EventConversationUnreadMarked, model.SchemaConversationUnreadMarked
+		}
+		ev, err := commandEvent(c, ids[1], kind, schema, conv.Ref.Ref(), curConv.Revision,
+			model.Audience{Visibility: model.Internal}, req.Correlation,
+			model.ReadMarkerPayload{Conversation: conv.Ref, Actor: actor, Revision: out.Revision})
+		if err != nil {
+			return err
+		}
+		return tx.AppendEvents(ctx, []model.Event{ev})
 	})
 	if model.IsCode(err, model.NotFound) {
 		return model.ReadMarker{}, engine.ErrNotFound()

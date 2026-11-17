@@ -134,7 +134,9 @@ type ConversationLinkPayload struct {
 // ReadMarker is one actor's read state of one conversation: messages
 // recorded at or before ReadThrough are read for that actor. It is its own
 // record with its own revision: marking never moves the conversation's
-// revision and emits no event. Only the actor reads it.
+// revision. Each actual move emits a conversation.read_marked or
+// conversation.unread_marked event (ReadMarkerPayload), delivered to the actor
+// alone. Only the actor reads it.
 type ReadMarker struct {
 	Conversation ConversationRef `json:"conversation"`
 	Actor        ActorID         `json:"actor"`
@@ -202,4 +204,24 @@ func (u UnreadFilter) validate(path string) error {
 		return nil
 	}
 	return checkToken(fieldPath(path, "actor"), string(u.Actor))
+}
+
+// ReadMarkerPayload is the conversation.read_marked and conversation.unread_marked
+// payload, emitted once per actual move of Actor's read marker: references
+// only, never a message or its content. Revision is the marker's new
+// revision, the one Conversations.ReadMarker then returns, so a client
+// ordering them by it keeps the latest. The event's own Revision is the
+// conversation's, which marking never moves.
+type ReadMarkerPayload struct {
+	Conversation ConversationRef `json:"conversation"`
+	Actor        ActorID         `json:"actor"`
+	Revision     Revision        `json:"revision"`
+}
+
+// IsReadMarkerEvent reports whether kind is conversation.read_marked or
+// conversation.unread_marked, which a subscriber receives only while it holds
+// ActionConversationReadWorkflow on the conversation and is the marker's
+// own actor.
+func IsReadMarkerEvent(kind string) bool {
+	return kind == EventConversationReadMarked || kind == EventConversationUnreadMarked
 }

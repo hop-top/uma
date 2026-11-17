@@ -13,7 +13,7 @@ the store interface with its stored schema, and the wire and event formats.
 | Adapter contract | package `adapter`: `Descriptor`, `Factory`, `Instance`, `Sink`, the capability interfaces, `ActionValidator`, `RecipientNormalizer`, `LegacyRecipientReuser`, `ReceiverReporter` and `ReceiverDegradationReporter`; `adapter.ContractMajor` is 3 |
 | Store interface | `store.Store` (3 methods), `Reader` (55) and `Tx` (embeds `Reader`, adds 46): 101 methods, plus `Properties` and the unit-of-work rules in the `store` godoc |
 | Conformance suites | `RunStoreSuite`, `RunServiceSuite`, `RunDurableLogicalSuite`, `RunDurableSuite`, `RunAttachmentSuite`, `RunBlobStoreSuite` and `RunAdapterSuite`, with their harness types. Where the godoc is silent, the suites define what a backend or adapter must do |
-| Wire formats | the JSON of the `model` types: snake_case keys, `omitempty` rules, millisecond durations. 167 golden files pin them |
+| Wire formats | the JSON of the `model` types: snake_case keys, `omitempty` rules, millisecond durations. 168 golden files pin them |
 | Persisted formats | stored record bodies, and the PostgreSQL schema (version 26, forward-only migrations) |
 | Event envelope | `model.Event` and the builtin event payloads at payload major 1 |
 | Operation identity | the operation key scope, the fingerprint v1 layout and the extension intent encoding |
@@ -54,6 +54,18 @@ A breaking change needs a recorded decision, a `!` or `BREAKING CHANGE:` commit
 so release-please raises the version, and a release-notes entry. While the
 modules are `v0.x` it ships in a minor release. From `v1` it needs a major
 release.
+
+## Read marker events
+
+The read-marker events ([record](decisions/desk-state-events.md)) touch the
+surface in these places, and in no other:
+
+| Surface | Change | Class |
+| --- | --- | --- |
+| Events | new kinds `conversation.read_marked` and `conversation.unread_marked` (schemas `uma.conversation.read_marked`, `uma.conversation.unread_marked`), payload major 1: conversation, actor, the marker's new revision. Resource is the conversation, so `Event.Inbox` is its inbox. Delivered to the marker's own actor alone, who must also hold `conversation.read_workflow` | additive, announced in the release notes |
+| `model.ReadMarkerPayload`, `model.IsReadMarkerEvent`, `model.EventConversationRead`, `model.EventConversationUnread`, `model.SchemaConversationRead`, `model.SchemaConversationUnread` | new identifiers | additive |
+| `Conversations.MarkRead`, `MarkUnread` | a call that moves the marker appends one event in the same unit; one that leaves it unchanged emits none. Signatures and results unchanged | additive |
+| `store.Store`, `Reader`, `Tx`, persisted formats, PostgreSQL schema | none | unchanged |
 
 ## Held operations
 

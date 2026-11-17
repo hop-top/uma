@@ -221,6 +221,7 @@ var wireTypes = map[string]any{
 	"ConversationLinkChange":        ConversationLinkChange{},
 	"ConversationLinkPayload":       ConversationLinkPayload{},
 	"ReadMarker":                    ReadMarker{},
+	"ReadMarkerPayload":             ReadMarkerPayload{},
 	"ReadMark":                      ReadMark{},
 	"UnreadFilter":                  UnreadFilter{},
 	"HeldOperationPayload":          HeldOperationPayload{},

@@ -120,6 +120,7 @@ func builtinEvents() []string {
 		model.EventConversationAssigned, model.EventConversationUnassigned,
 		model.EventConversationSnoozed, model.EventConversationUnsnoozed,
 		model.EventConversationLinked, model.EventConversationUnlinked,
+		model.EventConversationReadMarked, model.EventConversationUnreadMarked,
 		model.EventOperationHeld, model.EventOperationDecided, model.EventOperationExpired,
 	}
 }

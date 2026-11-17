@@ -588,9 +588,11 @@ type Conversations interface {
 	// recorded until now when unset, is read. Authorized as
 	// model.ActionConversationMarkRead on the conversation, and
 	// model.ActionMessageRead on req.Message. The marker is a record of
-	// its own: the conversation's revision never moves and no event is
-	// emitted. Setting the position the marker holds changes nothing, so
-	// a retry after a lost answer is safe; it takes no operation ID.
+	// its own: the conversation's revision never moves. A move emits one
+	// model.EventConversationReadMarked (model.EventConversationUnreadMarked for
+	// MarkUnread), internal audience, for the caller alone. Setting the
+	// position the marker holds changes nothing and emits nothing, so a
+	// retry after a lost answer is safe; it takes no operation ID.
 	MarkRead(context.Context, model.ReadMark) (model.ReadMarker, error)
 	// MarkUnread moves the caller's read marker so that req.Message, or
 	// the newest live inbound message not imported by Runtime.Import when

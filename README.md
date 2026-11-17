@@ -796,8 +796,11 @@ conversations holding a readable link, or none.
 
 Read state is per actor: `MarkRead` and `MarkUnread` move the caller's own
 read marker (`conversation.mark_read`), a record of its own, so marking never
-moves the conversation's revision, emits no event and takes no operation ID;
-repeating a mark changes nothing. A message is unread for an actor when it was
+moves the conversation's revision and takes no operation ID; repeating a
+mark changes nothing. Each actual move emits one `conversation.read_marked` or
+`conversation.unread_marked` event (conversation, actor, the marker's new revision;
+never a message), which reaches that actor alone and only while it holds
+`conversation.read_workflow`. A message is unread for an actor when it was
 recorded after the marker and is neither an echo, nor imported history
 (`Runtime.Import`), nor the actor's own message.
 `ReadMarker` returns the caller's marker, and `Filter.Unread` lists the
