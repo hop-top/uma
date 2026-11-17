@@ -78,6 +78,7 @@ func (f Filter) Clone() Filter {
 	f.Attachments = clonePtr(f.Attachments, AttachmentFilter.Clone)
 	f.Assignee = clonePtr(f.Assignee, same)
 	f.Snoozed = clonePtr(f.Snoozed, same)
+	f.SnoozeEnded = clonePtr(f.SnoozeEnded, same)
 	f.Linked = clonePtr(f.Linked, same)
 	f.Unread = clonePtr(f.Unread, same)
 	f.Actor = clonePtr(f.Actor, same)

@@ -17,7 +17,15 @@ func (rt *Runtime) SweepHeld(ctx context.Context, tenant model.TenantID, window 
 	return operations.ExpireHeld(ctx, rt.e, tenant, window)
 }
 
-// sweepIfDue sweeps when every has passed since *at on the engine clock,
+// SweepSnoozes runs one wake sweep of the tenant's conversations: a snooze
+// that ended (Until passed, or a live inbound message after it was set) is
+// cleared and announced with conversation.snooze_ended. See operations.WakeSnoozes.
+// Run does this beside SweepHeld, on the same cadence.
+func (rt *Runtime) SweepSnoozes(ctx context.Context, tenant model.TenantID) (operations.WakeReport, error) {
+	return operations.WakeSnoozes(ctx, rt.e, tenant)
+}
+
+// sweepIfDue runs both sweeps when every has passed since *at on the engine clock,
 // the same clock a decision judges deadlines by, and moves *at on. every < 0
 // never sweeps. A sweep that fails to commit for contention (another
 // replica won) is retried at the next cadence, never fails the run.
@@ -31,6 +39,9 @@ func (rt *Runtime) sweepIfDue(ctx context.Context, tenant model.TenantID, every 
 	}
 	*at = now
 	_, err := rt.SweepHeld(ctx, tenant, every)
+	if err == nil {
+		_, err = rt.SweepSnoozes(ctx, tenant)
+	}
 	if model.IsCode(err, model.Transient) || model.IsCode(err, model.Conflict) {
 		return nil
 	}

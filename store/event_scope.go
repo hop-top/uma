@@ -66,7 +66,7 @@ func eventConversationPath(schema string) ([]string, bool) {
 	case model.SchemaConversationChanged,
 		model.SchemaConversationLabelAdded, model.SchemaConversationLabelRemoved,
 		model.SchemaConversationAssigned, model.SchemaConversationUnassigned,
-		model.SchemaConversationSnoozed, model.SchemaConversationUnsnoozed,
+		model.SchemaConversationSnoozed, model.SchemaConversationUnsnoozed, model.SchemaConversationSnoozeEnded,
 		model.SchemaConversationLinked, model.SchemaConversationUnlinked,
 		model.SchemaConversationReadMarked, model.SchemaConversationUnreadMarked:
 		return []string{"conversation"}, true

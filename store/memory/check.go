@@ -118,7 +118,7 @@ type filterSupport struct {
 	// Message search fields.
 	text, since, before, attachments bool
 	// Conversation workflow fields.
-	assignee, snoozed, linked, unread bool
+	assignee, snoozed, snoozeEnded, linked, unread bool
 }
 
 func (h *handle) checkFilter(f model.Filter, ok filterSupport) error {
@@ -147,6 +147,7 @@ func (h *handle) checkFilter(f model.Filter, ok filterSupport) error {
 		unsupported("assignee", f.Assignee != nil, ok.assignee),
 		unsupported("assignee.self", f.Assignee != nil && f.Assignee.Self, false),
 		unsupported("snoozed", f.Snoozed != nil, ok.snoozed),
+		unsupported("snooze_ended", f.SnoozeEnded != nil, ok.snoozeEnded),
 		unsupported("linked", f.Linked != nil, ok.linked),
 		unsupported("unread", f.Unread != nil, ok.unread),
 		unsupported("unread.actor", f.Unread != nil && f.Unread.Actor == "", !ok.unread),

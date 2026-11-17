@@ -128,7 +128,8 @@
 //     conversation's Snooze is in effect while Until is after the store
 //     clock's now and no live inbound message of it (as InboundMessages
 //     selects them) that was not imported (empty Message.ImportedBy) has
-//     a RecordedAt after At; Linked (holding any link, or none) and
+//     a RecordedAt after At, SnoozeEnded (a Snooze is stored but no
+//     longer in effect by that rule) and Linked (holding any link, or none) and
 //     Unread (Actor required: a message that model.ReadMarker.Unread
 //     counts for the actor's marker, or any such message when the actor
 //     has none; an imported message never counts).

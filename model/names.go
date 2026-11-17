@@ -256,12 +256,17 @@ const (
 	// EventConversationAssigned and EventConversationUnassigned report an
 	// assignee set or replaced and an assignee cleared;
 	// EventConversationSnoozed and EventConversationUnsnoozed report a
-	// snooze set and one ended early. Internal audience, references only;
-	// a snooze ending by expiry or inbound message emits nothing.
+	// snooze set and one ended early. Internal audience, references only.
 	EventConversationAssigned   = "conversation.assigned"
 	EventConversationUnassigned = "conversation.unassigned"
 	EventConversationSnoozed    = "conversation.snoozed"
 	EventConversationUnsnoozed  = "conversation.unsnoozed"
+	// EventConversationSnoozeEnded reports a snooze that ended by itself, once:
+	// Until passed or a live inbound message arrived after the snooze was
+	// set. A sweep a running worker makes clears the snooze and appends it
+	// in one unit. Internal audience, references only; delivered like the
+	// other workflow events.
+	EventConversationSnoozeEnded = "conversation.snooze_ended"
 	// EventConversationLinked and EventConversationUnlinked report a link
 	// added or removed, once per conversation end.
 	EventConversationLinked   = "conversation.linked"
@@ -308,10 +313,11 @@ const (
 	SchemaInteractionReceived = "uma.interaction.received"
 	SchemaInteractionUpdated  = "uma.interaction.updated"
 
-	SchemaConversationAssigned   = "uma.conversation.assigned"
-	SchemaConversationUnassigned = "uma.conversation.unassigned"
-	SchemaConversationSnoozed    = "uma.conversation.snoozed"
-	SchemaConversationUnsnoozed  = "uma.conversation.unsnoozed"
+	SchemaConversationAssigned    = "uma.conversation.assigned"
+	SchemaConversationUnassigned  = "uma.conversation.unassigned"
+	SchemaConversationSnoozed     = "uma.conversation.snoozed"
+	SchemaConversationUnsnoozed   = "uma.conversation.unsnoozed"
+	SchemaConversationSnoozeEnded = "uma.conversation.snooze_ended"
 
 	SchemaConversationLinked   = "uma.conversation.linked"
 	SchemaConversationUnlinked = "uma.conversation.unlinked"
@@ -627,3 +633,12 @@ func ValidateExtensionName(name string) error {
 func typeKeyError(reason string) error { return invalidField("type", reason) }
 
 func nameError(reason string) error { return invalidField("name", reason) }
+
+// Causes of a conversation.snooze_ended event (ConversationSnoozeEndedPayload.Cause).
+const (
+	// WakeCauseUntil: Snooze.Until passed.
+	WakeCauseUntil = "until"
+	// WakeCauseMessage: a live inbound message that was not imported was
+	// recorded after Snooze.At.
+	WakeCauseMessage = "message"
+)

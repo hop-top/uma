@@ -13,7 +13,7 @@ the store interface with its stored schema, and the wire and event formats.
 | Adapter contract | package `adapter`: `Descriptor`, `Factory`, `Instance`, `Sink`, the capability interfaces, `ActionValidator`, `RecipientNormalizer`, `LegacyRecipientReuser`, `ReceiverReporter` and `ReceiverDegradationReporter`; `adapter.ContractMajor` is 3 |
 | Store interface | `store.Store` (3 methods), `Reader` (55) and `Tx` (embeds `Reader`, adds 46): 101 methods, plus `Properties` and the unit-of-work rules in the `store` godoc |
 | Conformance suites | `RunStoreSuite`, `RunServiceSuite`, `RunDurableLogicalSuite`, `RunDurableSuite`, `RunAttachmentSuite`, `RunBlobStoreSuite` and `RunAdapterSuite`, with their harness types. Where the godoc is silent, the suites define what a backend or adapter must do |
-| Wire formats | the JSON of the `model` types: snake_case keys, `omitempty` rules, millisecond durations. 168 golden files pin them |
+| Wire formats | the JSON of the `model` types: snake_case keys, `omitempty` rules, millisecond durations. 169 golden files pin them |
 | Persisted formats | stored record bodies, and the PostgreSQL schema (version 26, forward-only migrations) |
 | Event envelope | `model.Event` and the builtin event payloads at payload major 1 |
 | Operation identity | the operation key scope, the fingerprint v1 layout and the extension intent encoding |
@@ -54,6 +54,20 @@ A breaking change needs a recorded decision, a `!` or `BREAKING CHANGE:` commit
 so release-please raises the version, and a release-notes entry. While the
 modules are `v0.x` it ships in a minor release. From `v1` it needs a major
 release.
+
+## Snooze end events
+
+The snooze-end event ([record](decisions/desk-state-events.md)) touches the
+surface in these places, and in no other:
+
+| Surface | Change | Class |
+| --- | --- | --- |
+| Events | new kind `conversation.snooze_ended` (schema `uma.conversation.snooze_ended`), payload major 1: conversation, cause (`until` or `message`), until, trigger, previous revision. Resource is the conversation. Gated like the other workflow events (`conversation.read_workflow`). Emitted only by a running worker's sweep; none without one | additive, announced in the release notes |
+| `model.Filter` | add optional `SnoozeEnded *bool` (`snooze_ended`, `omitempty`): a stored snooze no longer in effect (true) or not (false). Honoured by `Reader.Conversations` of both shipped stores and `Conversations.List` as a workflow filter; refused by every other read, subscriptions and exports. Conversations under `true` are transient once a worker sweeps them. A third-party store must honour it in `Reader.Conversations`, which the store conformance suite now requires; a store that refuses it gets no wake events, and the sweep skips it silently | additive |
+| `model.ConversationSnoozeEndedPayload`, `model.EventConversationSnoozeEnded`, `model.SchemaConversationSnoozeEnded`, `model.WakeCauseUntil`, `model.WakeCauseMessage` | new identifiers | additive |
+| `Runtime.Run` | the existing `SweepEvery` cadence also runs the snooze sweep | additive |
+| Persisted formats | a swept conversation record loses its `snooze` and moves to a new revision | unchanged format |
+| `store.Store`, `Reader`, `Tx`, PostgreSQL schema | none: the query is the existing conversation list with one more predicate; no migration | unchanged |
 
 ## Read marker events
 

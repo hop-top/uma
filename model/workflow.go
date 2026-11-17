@@ -13,10 +13,14 @@ import "time"
 // Snooze hides a conversation from lists that exclude snoozed ones until
 // Until, or until a live inbound message is recorded after At, whichever
 // comes first; a message imported from the provider's history
-// (Message.ImportedBy) is not news and never wakes it. It is a query-time
-// predicate over the stored record: nothing runs at Until, a snooze needs
-// no scheduler and survives a restart, and waking emits no event. It is
-// independent of Conversation.Status.
+// (Message.ImportedBy) is not news and never wakes it. Whether it hides is
+// a query-time predicate over the stored record (InEffect): a conversation
+// reads as awake the moment the snooze ends, with or without a worker, and
+// the snooze survives a restart. A worker's sweep then clears the stored
+// snooze and emits conversation.snooze_ended once (Filter.SnoozeEnded
+// selects the conversations still waiting for it); a store or deployment
+// with no running worker emits none. It is independent of
+// Conversation.Status.
 type Snooze struct {
 	// Until is when the snooze ends.
 	Until time.Time `json:"until"`
@@ -137,7 +141,8 @@ type ConversationAssignmentPayload struct {
 
 // ConversationSnoozePayload is the conversation.snoozed and
 // conversation.unsnoozed payload. Until is set on conversation.snoozed.
-// Waking, by expiry or by an inbound message, emits no event.
+// A snooze that ends by itself emits conversation.snooze_ended
+// (ConversationSnoozeEndedPayload) when a worker sweeps it.
 type ConversationSnoozePayload struct {
 	Conversation ConversationRef `json:"conversation"`
 	Until        *time.Time      `json:"until,omitempty"`
@@ -148,13 +153,26 @@ type ConversationSnoozePayload struct {
 	Operation        *OperationRef `json:"operation,omitempty"`
 }
 
+// ConversationSnoozeEndedPayload is the conversation.snooze_ended payload: references
+// only. Cause is WakeCauseUntil or WakeCauseMessage (until wins when both
+// hold); Until is the snooze's end; PreviousRevision is the conversation
+// revision before the wake cleared the snooze. Trigger is TriggerSystem in
+// version 1.
+type ConversationSnoozeEndedPayload struct {
+	Conversation     ConversationRef `json:"conversation"`
+	Cause            string          `json:"cause"`
+	Until            time.Time       `json:"until"`
+	Trigger          string          `json:"trigger"`
+	PreviousRevision Revision        `json:"previous_revision"`
+}
+
 // IsWorkflowEvent reports whether kind is one of the conversation
 // workflow events, which a subscriber receives only while it holds
 // ActionConversationReadWorkflow on the conversation.
 func IsWorkflowEvent(kind string) bool {
 	switch kind {
 	case EventConversationAssigned, EventConversationUnassigned,
-		EventConversationSnoozed, EventConversationUnsnoozed,
+		EventConversationSnoozed, EventConversationUnsnoozed, EventConversationSnoozeEnded,
 		EventConversationLinked, EventConversationUnlinked:
 		return true
 	}

@@ -47,7 +47,7 @@ type filterFields struct {
 	// Message search fields.
 	text, since, before, attachments bool
 	// Conversation workflow fields.
-	assignee, snoozed, linked, unread bool
+	assignee, snoozed, snoozeEnded, linked, unread bool
 	// actor is Filter.Actor, honoured by the operation list only.
 	actor bool
 }
@@ -74,6 +74,7 @@ func (f filterFields) check(in model.Filter) error {
 		reject("attachments", in.Attachments != nil, f.attachments),
 		reject("assignee", in.Assignee != nil, f.assignee),
 		reject("snoozed", in.Snoozed != nil, f.snoozed),
+		reject("snooze_ended", in.SnoozeEnded != nil, f.snoozeEnded),
 		reject("linked", in.Linked != nil, f.linked),
 		reject("unread", in.Unread != nil, f.unread),
 		reject("actor", in.Actor != nil, f.actor),
@@ -429,6 +430,9 @@ func canonicalFilter(f model.Filter) []byte {
 	}
 	if f.Snoozed != nil {
 		w.Str("snoozed").Str(strconv.FormatBool(*f.Snoozed))
+	}
+	if f.SnoozeEnded != nil {
+		w.Str("snooze_ended").Str(strconv.FormatBool(*f.SnoozeEnded))
 	}
 	if f.Linked != nil {
 		w.Str("linked").Str(strconv.FormatBool(*f.Linked))

@@ -256,56 +256,16 @@ func snoozeConversation(ctx context.Context, c *engine.Client, req model.Convers
 	return workflowCommand(ctx, c, w)
 }
 
-// snoozeInEffect reports whether conv's snooze hides it at now: its newest
-// live inbound message that was not imported (newestLiveInbound) is read
-// only when it holds a snooze.
+// snoozeInEffect reports whether conv's snooze hides it at now; see
+// operations.SnoozeInEffect.
 func snoozeInEffect(ctx context.Context, r store.Reader, conv model.Conversation, now time.Time) (bool, error) {
-	if conv.Snooze == nil {
-		return false, nil
-	}
-	m, err := newestLiveInbound(ctx, r, conv.Ref, &conv.Snooze.At)
-	if err != nil {
-		return false, err
-	}
-	var newest *time.Time
-	if m != nil {
-		newest = &m.RecordedAt
-	}
-	return conv.Snooze.InEffect(now, newest), nil
+	return operations.SnoozeInEffect(ctx, r, conv, now)
 }
 
-// inboundPage is the page size newestLiveInbound reads with past the
-// first message.
-const inboundPage = 50
-
-// newestLiveInbound returns conv's newest live inbound message
-// (Reader.InboundMessages) that was not imported from the provider's
-// history (Message.ImportedBy), or nil when it has none. Imported messages
-// are recorded when the import ran, so they come first and are passed
-// over; with after set the read stops at the first message recorded at or
-// before it, and nil then means none was recorded after it. The first
-// read takes one message, the common case without imports.
+// newestLiveInbound returns conv's newest live inbound message that was
+// not imported; see operations.NewestLiveInbound.
 func newestLiveInbound(ctx context.Context, r store.Reader, conv model.ConversationRef, after *time.Time) (*model.Message, error) {
-	page := model.PageRequest{Limit: 1}
-	for {
-		pg, err := r.InboundMessages(ctx, conv, page)
-		if err != nil {
-			return nil, err
-		}
-		for i := range pg.Items {
-			m := &pg.Items[i]
-			switch {
-			case after != nil && !m.RecordedAt.After(*after):
-				return nil, nil
-			case m.ImportedBy == "":
-				return m, nil
-			}
-		}
-		if pg.Complete || pg.Next == "" || len(pg.Items) == 0 {
-			return nil, nil
-		}
-		page = model.PageRequest{Limit: inboundPage, After: pg.Next}
-	}
+	return operations.NewestLiveInbound(ctx, r, conv, after)
 }
 
 // assignmentFingerprint returns the version 1 fingerprint of an Assign or

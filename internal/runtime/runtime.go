@@ -32,8 +32,8 @@ type WorkerOptions struct {
 	Kinds []string
 	Lease time.Duration
 	Poll  time.Duration
-	// SweepEvery is the cadence of the held-operation expiry sweep Run
-	// interleaves with claiming: zero is DefaultSweepEvery, negative turns
+	// SweepEvery is the cadence of the held-operation expiry sweep and the
+	// snooze wake sweep Run interleaves with claiming: zero is DefaultSweepEvery, negative turns
 	// it off. It is also the window after which a still-held operation is
 	// marked carried over.
 	SweepEvery time.Duration

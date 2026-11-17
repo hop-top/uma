@@ -79,6 +79,41 @@ var workflowCases = []storeCase{
 		e.wantConversations(t, model.Filter{Snoozed: &yes})
 		e.wantConversations(t, model.Filter{Snoozed: &no}, c)
 	}},
+	{"SnoozeEndedFollowsTheWakeRule", func(t *testing.T, e *env) {
+		set := e.at(100)
+		snoozed := e.putWorkflowConversation(t, nil, &model.Snooze{Until: e.fx.Now().Add(24 * time.Hour).UTC(), At: set, By: "desk-1"})
+		plain := e.putWorkflowConversation(t, nil, nil)
+		yes, no := true, false
+		check := func(step string, ended bool) {
+			t.Helper()
+			t.Run(step, func(t *testing.T) {
+				if ended {
+					e.wantConversations(t, model.Filter{SnoozeEnded: &yes}, snoozed)
+					e.wantConversations(t, model.Filter{SnoozeEnded: &no}, plain)
+					return
+				}
+				e.wantConversations(t, model.Filter{SnoozeEnded: &yes})
+				e.wantConversations(t, model.Filter{SnoozeEnded: &no}, snoozed, plain)
+			})
+		}
+		check("set", false)
+		e.putWorkflowMessage(t, snoozed, set.Add(time.Second), func(m *model.Message) { m.ImportedBy = "desk-1" })
+		check("imported inbound after", false)
+		e.putWorkflowMessage(t, snoozed, set.Add(time.Second), func(m *model.Message) { m.Origin = &model.Origin{Actor: "desk-1"} })
+		check("outbound after", false)
+		e.putWorkflowMessage(t, snoozed, set.Add(time.Nanosecond), nil)
+		check("inbound after", true)
+	}},
+	{"SnoozeEndedAtStoreClock", func(t *testing.T, e *env) {
+		if e.fx.Advance == nil {
+			t.Skip("fixture cannot advance the store clock")
+		}
+		c := e.putWorkflowConversation(t, nil, &model.Snooze{Until: e.fx.Now().Add(time.Hour).UTC(), At: e.at(0), By: "desk-1"})
+		yes := true
+		e.wantConversations(t, model.Filter{SnoozeEnded: &yes})
+		e.fx.Advance(time.Hour)
+		e.wantConversations(t, model.Filter{SnoozeEnded: &yes}, c)
+	}},
 	{"FilteredPagesAreFull", func(t *testing.T, e *env) {
 		desk := model.ActorID("desk-1")
 		var want []model.ConversationRef

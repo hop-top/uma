@@ -118,7 +118,7 @@ func builtinEvents() []string {
 		model.EventTaskUpdated,
 		model.EventInteractionReceived, model.EventInteractionUpdated,
 		model.EventConversationAssigned, model.EventConversationUnassigned,
-		model.EventConversationSnoozed, model.EventConversationUnsnoozed,
+		model.EventConversationSnoozed, model.EventConversationUnsnoozed, model.EventConversationSnoozeEnded,
 		model.EventConversationLinked, model.EventConversationUnlinked,
 		model.EventConversationReadMarked, model.EventConversationUnreadMarked,
 		model.EventOperationHeld, model.EventOperationDecided, model.EventOperationExpired,

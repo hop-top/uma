@@ -349,9 +349,13 @@ confirm.
   store clock's now, and no live inbound message of the conversation (as
   `InboundMessages` selects them) that was not imported (empty
   `Message.ImportedBy`) with `RecordedAt` after `At`, compared exactly.
-  Nothing is scheduled: the predicate runs at read time, so a snooze wakes
-  by expiry or by a live inbound message with no write; history that
-  `Runtime.Import` records is stamped `ImportedBy` and wakes nothing.
+  The predicate runs at read time, so a snooze wakes by expiry or by a live
+  inbound message with no write; history that `Runtime.Import` records is
+  stamped `ImportedBy` and wakes nothing. `SnoozeEnded` keeps the
+  conversations whose stored `Snooze` is present but no longer in effect by
+  that rule (true) or the others (false); a worker's sweep selects them,
+  clears the snooze and emits one `conversation.snooze_ended`, so they are
+  transient.
   `Linked` keeps the conversations holding a link (true) or none (false).
   `Unread` (its `Actor` is required) keeps the conversations holding a
   message that `model.ReadMarker.Unread` counts for the actor's marker on

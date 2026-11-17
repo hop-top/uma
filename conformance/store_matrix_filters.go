@@ -71,6 +71,10 @@ var matrixFields = []matrixField{
 		yes := true
 		f.Snoozed = &yes
 	}, nil},
+	{"snooze_ended", func(f *model.Filter, _ *matrixWorld) {
+		yes := true
+		f.SnoozeEnded = &yes
+	}, nil},
 	{"linked", func(f *model.Filter, _ *matrixWorld) {
 		yes := true
 		f.Linked = &yes

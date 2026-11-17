@@ -446,11 +446,18 @@ type Filter struct {
 	// Assignee selects conversations by assignee; Snoozed, when set,
 	// keeps only the conversations whose snooze is in effect (true) or
 	// only the others (false): an imported message (Message.ImportedBy)
-	// never ends a snooze. Both are workflow filters: a principal
-	// without ActionConversationReadWorkflow on a conversation never
-	// receives it through them.
-	Assignee *AssigneeFilter `json:"assignee,omitempty"`
-	Snoozed  *bool           `json:"snoozed,omitempty"`
+	// never ends a snooze. SnoozeEnded, when set, keeps only the
+	// conversations whose record still holds a snooze that is no longer in
+	// effect (true: Until has passed, or a live inbound message that was
+	// not imported was recorded after Snooze.At) or only the others
+	// (false). Such a conversation is transient: a running worker clears
+	// the snooze and emits conversation.snooze_ended (Runtime.Run). All
+	// are workflow filters: a principal without
+	// ActionConversationReadWorkflow on a conversation never receives it
+	// through them.
+	Assignee    *AssigneeFilter `json:"assignee,omitempty"`
+	Snoozed     *bool           `json:"snoozed,omitempty"`
+	SnoozeEnded *bool           `json:"snooze_ended,omitempty"`
 	// Linked, when set, keeps the conversations holding a link (true) or
 	// none (false); Unread keeps those holding a message unread for the
 	// calling principal (ReadMarker.Unread: an imported message never

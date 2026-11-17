@@ -92,7 +92,7 @@ func logicalDurableGroups() []durableGroup {
 	return []durableGroup{
 		{"Concurrency", slices.Concat(concurrencyCases, claimContentionCases, taskConcurrencyCases, trustBucketCases)},
 		{"Publication", publicationCases},
-		{"Replay", slices.Concat(replayCases, heldExpiryCases, heldDecisionCases)},
+		{"Replay", slices.Concat(replayCases, heldExpiryCases, snoozeWakeCases, heldDecisionCases)},
 		{"Faults", faultCases},
 	}
 }

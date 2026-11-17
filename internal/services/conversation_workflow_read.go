@@ -34,10 +34,21 @@ func workflowVisible(ctx context.Context, c *engine.Client, conv model.Conversat
 // what the principal sees, so a page never shows a snooze the filter
 // excluded, nor a conversation whose only links it may not read.
 func showUnderWorkflowFilter(ctx context.Context, c *engine.Client, f model.Filter, conv model.Conversation) (model.Conversation, bool, error) {
-	if f.Assignee != nil || f.Snoozed != nil || f.Linked != nil || f.Unread != nil {
+	if f.Assignee != nil || f.Snoozed != nil || f.SnoozeEnded != nil || f.Linked != nil || f.Unread != nil {
 		ok, err := workflowVisible(ctx, c, conv)
 		if err != nil || !ok {
 			return model.Conversation{}, false, err
+		}
+	}
+	if f.SnoozeEnded != nil {
+		// shownConversation hides an ended snooze, so judge it on the
+		// stored record.
+		ended, err := snoozeEnded(ctx, c, conv)
+		if err != nil {
+			return model.Conversation{}, false, err
+		}
+		if ended != *f.SnoozeEnded {
+			return model.Conversation{}, false, nil
 		}
 	}
 	shown, err := shownConversation(ctx, c, conv)
@@ -91,4 +102,21 @@ func shownConversation(ctx context.Context, c *engine.Client, conv model.Convers
 		conv.Snooze = nil
 	}
 	return conv, nil
+}
+
+// snoozeEnded reports whether conv's record holds a snooze that is no
+// longer in effect at the engine clock.
+func snoozeEnded(ctx context.Context, c *engine.Client, conv model.Conversation) (bool, error) {
+	if conv.Snooze == nil {
+		return false, nil
+	}
+	now := c.Engine().Clock().Now()
+	var in bool
+	if err := view(ctx, c, func(r store.Reader) (err error) {
+		in, err = snoozeInEffect(ctx, r, conv, now)
+		return err
+	}); err != nil {
+		return false, err
+	}
+	return !in, nil
 }

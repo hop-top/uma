@@ -761,6 +761,7 @@ provider.
 | `Unassign` | `conversation.assign` | `conversation.unassigned` (previous) |
 | `Snooze` (`Until` set) | `conversation.snooze` | `conversation.snoozed` (until) |
 | `Unsnooze` | `conversation.snooze` | `conversation.unsnoozed` |
+| a snooze ending by itself (a worker's sweep; no call) | none | `conversation.snooze_ended` (cause `until` or `message`, until), once per snooze |
 | `Link` | `conversation.link` (both ends; `work_item.read` on a work item end) | `conversation.linked`, once per conversation end |
 | `Unlink` | `conversation.link` (both ends) | `conversation.unlinked`, once per conversation end |
 
@@ -772,11 +773,16 @@ conversation. The event log keeps the assignment history.
 
 A snooze hides the conversation from lists that exclude snoozed ones until
 `Until`, or until a live inbound message is recorded after the snooze was set,
-whichever comes first. It is evaluated when read: nothing is scheduled, it
-holds across restarts, waking emits no event, and it is independent of
-`Status` (unlike `pending`, it wakes on inbound). History that
+whichever comes first. It is evaluated when read, so the conversation reads
+as awake the moment it ends, and it holds across restarts; it is independent
+of `Status` (unlike `pending`, it wakes on inbound). History that
 `Runtime.Import` records (`Message.ImportedBy` set) is not new inbound and
-never wakes it.
+never wakes it. A running worker (`Runtime.Run`, on its `SweepEvery` cadence)
+then clears the stored snooze and emits one `conversation.snooze_ended`, with
+cause `until` or `message`, in one unit with the conversation's new revision;
+sweeps racing for it wake it once. `Filter.SnoozeEnded` lists the conversations
+still holding an ended snooze, so a list under it is transient once a worker
+runs. With no worker the snooze stays stored and no event is emitted.
 
 Workflow state is desk-only. `Get` and `List` zero `Assignee` and `Snooze`
 unless the caller also holds `conversation.read_workflow` on the conversation,

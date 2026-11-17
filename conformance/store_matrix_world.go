@@ -83,7 +83,7 @@ var filteredReads = []matrixRead{
 			return viewOf(pg, err, func(v model.Identity) model.ID { return v.Ref.ID })
 		},
 		add: func(t *testing.T, e *env, _ *matrixWorld) { e.provisional(t) }},
-	{name: "Conversations", filtered: true, honours: []string{"inboxes", "statuses", "labels", "assignee", "snoozed", "linked", "unread"},
+	{name: "Conversations", filtered: true, honours: []string{"inboxes", "statuses", "labels", "assignee", "snoozed", "snooze_ended", "linked", "unread"},
 		read: func(w *matrixWorld, r store.Reader, f model.Filter, p model.PageRequest) (readView, error) {
 			pg, err := r.Conversations(w.ctx, listReq(f, p))
 			return viewOf(pg, err, func(v model.Conversation) model.ID { return v.Ref.ID })
@@ -191,6 +191,7 @@ func (e *env) seedMatrixWorld(t *testing.T) *matrixWorld {
 
 	w.cv1 = w.putConv(t, e, w.i1, model.ConversationOpen, &w.idA.Ref, []model.LabelRef{w.l1})
 	w.cv2 = w.putConv(t, e, w.i1, model.ConversationClosed, nil, nil)
+	w.endSnooze(t, e, w.cv1)
 	w.assignAndSnooze(t, e, w.cv2)
 	w.linkTo(t, e, w.cv2, model.ConversationLink{Conversation: &w.cv1})
 	w.cv3 = w.putConv(t, e, w.i2, model.ConversationOpen, &w.idB.Ref, []model.LabelRef{w.l2})
@@ -240,6 +241,7 @@ func (e *env) seedMatrixWorld(t *testing.T) *matrixWorld {
 	w.row("Conversations", "assignee", model.Filter{Assignee: &model.AssigneeFilter{Actor: matrixAssignee}}, w.cv2.ID)
 	snoozed := true
 	w.row("Conversations", "snoozed", model.Filter{Snoozed: &snoozed}, w.cv2.ID)
+	w.row("Conversations", "snooze_ended", model.Filter{SnoozeEnded: &snoozed}, w.cv1.ID)
 	w.row("Conversations", "linked", model.Filter{Linked: &snoozed}, w.cv2.ID)
 	// matrixAssignee has read everything in cv1 and cv3, nothing in cv2.
 	e.mustTx(t, func(tx store.Tx) error {
@@ -305,6 +307,21 @@ func (w *matrixWorld) assignAndSnooze(t *testing.T, e *env, conv model.Conversat
 		desk := matrixAssignee
 		c.Assignee = &desk
 		c.Snooze = &model.Snooze{Until: e.fx.Now().Add(24 * time.Hour).UTC(), At: e.at(1000), By: desk}
+		c.Revision = "r2"
+		return tx.PutConversation(e.ctx, c, "r1")
+	})
+}
+
+// endSnooze gives conv (stored at r1) a snooze that ended an hour of
+// store-clock time ago.
+func (w *matrixWorld) endSnooze(t *testing.T, e *env, conv model.ConversationRef) {
+	t.Helper()
+	e.mustTx(t, func(tx store.Tx) error {
+		c, err := tx.GetConversation(e.ctx, conv)
+		if err != nil {
+			return err
+		}
+		c.Snooze = &model.Snooze{Until: e.fx.Now().Add(-time.Hour).UTC(), At: e.at(0), By: matrixAssignee}
 		c.Revision = "r2"
 		return tx.PutConversation(e.ctx, c, "r1")
 	})

@@ -152,6 +152,8 @@ func (s Service) checkFilter(f model.Filter) error {
 		return model.NewError(model.Validation, "filter.assignee: not supported by subscriptions")
 	case f.Snoozed != nil:
 		return model.NewError(model.Validation, "filter.snoozed: not supported by subscriptions")
+	case f.SnoozeEnded != nil:
+		return model.NewError(model.Validation, "filter.snooze_ended: not supported by subscriptions")
 	case f.Linked != nil:
 		return model.NewError(model.Validation, "filter.linked: not supported by subscriptions")
 	case f.Unread != nil:
