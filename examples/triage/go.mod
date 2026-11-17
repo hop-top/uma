@@ -3,9 +3,9 @@ module hop.top/uma/examples/triage
 go 1.26.1
 
 require (
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
-	hop.top/uma/adapter/mail v0.1.0-alpha.0 // x-release-please-version
-	hop.top/uma/adapter/mail/google v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
+	hop.top/uma/adapter/mail v0.1.0-alpha.0
+	hop.top/uma/adapter/mail/google v0.1.0-alpha.0
 	hop.top/uma/examples/fakeprovider v0.0.0-00010101000000-000000000000
 )
 

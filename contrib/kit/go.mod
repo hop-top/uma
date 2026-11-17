@@ -5,7 +5,7 @@ go 1.27.3
 require (
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.114.6
 	hop.top/kit v0.5.0-beta.6
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
 )
 
 require (

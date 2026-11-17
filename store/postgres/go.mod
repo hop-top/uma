@@ -9,7 +9,7 @@ require (
 	github.com/pressly/goose/v3 v3.29.0
 	github.com/testcontainers/testcontainers-go v0.44.0
 	github.com/testcontainers/testcontainers-go/modules/postgres v0.44.0
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
 )
 
 require (

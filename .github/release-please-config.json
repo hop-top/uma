@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "pull-request-title-pattern": "chore(release):${component} ${version}",
   "include-component-in-tag": false,
-  "separate-pull-requests": false,
+  "separate-pull-requests": true,
   "packages": {
     ".": {
       "release-type": "go",
@@ -36,20 +36,6 @@
         "examples/triage",
         "store/postgres",
         "testing/xrrtest"
-      ],
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        },
-        {
-          "type": "generic",
-          "path": "examples/inbox/go.mod"
-        },
-        {
-          "type": "generic",
-          "path": "examples/triage/go.mod"
-        }
       ]
     },
     "adapter/mail": {
@@ -66,13 +52,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/messaging/meta": {
       "release-type": "go",
@@ -84,13 +64,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "contrib/kit": {
       "release-type": "go",
@@ -102,13 +76,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "contrib/otel": {
       "release-type": "go",
@@ -120,13 +88,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "testing/xrrtest": {
       "release-type": "go",
@@ -138,13 +100,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "store/postgres": {
       "release-type": "go",
@@ -156,13 +112,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/mail/microsoft": {
       "release-type": "go",
@@ -174,13 +124,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/messaging/twilio": {
       "release-type": "go",
@@ -192,13 +136,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/chat/discord": {
       "release-type": "go",
@@ -210,13 +148,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/chat/slack": {
       "release-type": "go",
@@ -228,13 +160,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/chat/teams": {
       "release-type": "go",
@@ -246,13 +172,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/chat/telegram": {
       "release-type": "go",
@@ -264,13 +184,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/ticket/zendesk": {
       "release-type": "go",
@@ -282,13 +196,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/ticket/github": {
       "release-type": "go",
@@ -300,13 +208,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/ticket/gitlab": {
       "release-type": "go",
@@ -318,13 +220,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/ticket/jira": {
       "release-type": "go",
@@ -336,13 +232,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/ticket/linear": {
       "release-type": "go",
@@ -354,13 +244,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     },
     "adapter/mail/google": {
       "release-type": "go",
@@ -372,41 +256,7 @@
       "prerelease": true,
       "prerelease-type": "alpha.0",
       "versioning": "prerelease",
-      "bump-minor-pre-major": true,
-      "extra-files": [
-        {
-          "type": "generic",
-          "path": "go.mod"
-        }
-      ]
+      "bump-minor-pre-major": true
     }
-  },
-  "group-pull-request-title-pattern": "chore(release): uma ${version}",
-  "plugins": [
-    {
-      "type": "linked-versions",
-      "groupName": "uma",
-      "components": [
-        "uma",
-        "adapter/mail",
-        "adapter/messaging/meta",
-        "contrib/kit",
-        "contrib/otel",
-        "testing/xrrtest",
-        "store/postgres",
-        "adapter/mail/microsoft",
-        "adapter/messaging/twilio",
-        "adapter/chat/discord",
-        "adapter/chat/slack",
-        "adapter/chat/teams",
-        "adapter/chat/telegram",
-        "adapter/ticket/zendesk",
-        "adapter/ticket/github",
-        "adapter/ticket/gitlab",
-        "adapter/ticket/jira",
-        "adapter/ticket/linear",
-        "adapter/mail/google"
-      ]
-    }
-  ]
+  }
 }

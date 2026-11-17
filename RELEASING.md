@@ -92,7 +92,7 @@ expects, and parses the same tag back as component `store/postgres`.
 
 With it:
 
-- Set top-level `"separate-pull-requests": true`. Without it release-please
+- Keep top-level `"separate-pull-requests": true`. Without it release-please
   folds every component into one `chore: release main` PR, and the bump order
   below cannot be followed.
 - Keep the directory in the root package's `exclude-paths`, so commits that
@@ -105,27 +105,54 @@ With it:
   containing `/`. `hop-top/.github` v0.14.1 and later (`@v0`) allow both
   when every package is `release-type: go`.
 
-- Give every in-repo require the `// x-release-please-version` marker and list
-  the module's `go.mod` in its `extra-files`, so a release rewrites the pin to
-  the linked version. Modules never published go in `RELEASE_EXCLUDE` in
-  `scripts/release-check.sh` instead. `make release-check` (CI) fails on a
-  module that is neither, an unmarked or off-version require, or a package
-  missing from the linked-versions group.
+- Modules never published go in `RELEASE_EXCLUDE` in `scripts/release-check.sh`.
+  `make release-check` (CI) fails on a module that is neither a package nor
+  excluded, and on in-repo requires that consumers cannot resolve (see
+  Independent versions).
 
 A new module directory also goes into `go.work` and the gomod `directories`
 of `.github/dependabot.yml`.
 
+## Independent versions
+
+Every module has its own version. A package releases only when a releasable
+commit touches its own directory; there is no linked-versions group, so a root
+change does not release the submodules and a submodule change does not release
+the root. (release-please cannot link the root: it must tag plain `vX.Y.Z`,
+and the group skips packages without a component in the tag.)
+
+In-repo requires name a version that has been released:
+
+```text
+require hop.top/uma v0.1.0-alpha.0
+replace hop.top/uma => ../../
+```
+
+Nothing rewrites them on release; no `// x-release-please-version` markers.
+The `replace` is development wiring only. A require stays at the version the
+module was last built against and moves only when the module needs newer code
+(google-cloud-go style).
+
+`make release-check` enforces: every module is a package or in
+`RELEASE_EXCLUDE`; every in-repo require in a published module names an
+existing tag of that module (`vX` for the root, `<dir>/vX` otherwise; skipped
+when the checkout has no tags) and no version newer than that module's
+manifest entry; no marker remains. Unpublished examples are exempt.
+
 ## Bump order: root before submodule
 
-A submodule release pins the root version in its `go.mod`. Release the root
-first, so no submodule tag points consumers at an untagged root:
+A submodule that needs newer root code moves its require to a released root
+tag. Release the root first, so no submodule require points at an untagged
+root:
 
 1. Land the root change on `main`.
 2. Merge the root release PR (tag `vX.Y.Z`).
 3. In each submodule that needs it, `GOWORK=off go get hop.top/uma@vX.Y.Z`,
    then `GOWORK=off go mod tidy`. Commit with a releasable type scoped to the
-   module, e.g. `fix(postgres): require hop.top/uma vX.Y.Z`.
+   module, e.g. `fix(postgres): require hop.top/uma vX.Y.Z`. The commit touches
+   the module's `go.mod`, so that module releases.
 4. Merge the submodule release PR (tag `store/postgres/vX.Y.Z`).
 
-The first root tag ends the pseudo-version period: each submodule moves to it
-through step 3 before its own next release.
+A submodule that does not need the new root code keeps its older require and
+does not release. The same applies to a require on another submodule
+(`hop.top/uma/adapter/mail`, `hop.top/uma/testing/xrrtest`).

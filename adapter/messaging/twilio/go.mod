@@ -5,8 +5,8 @@ go 1.26.1
 require (
 	github.com/twilio/twilio-go v1.32.0
 	gopkg.in/yaml.v3 v3.0.1
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
-	hop.top/uma/testing/xrrtest v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
+	hop.top/uma/testing/xrrtest v0.1.0-alpha.0
 )
 
 require (
