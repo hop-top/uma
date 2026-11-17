@@ -3,8 +3,8 @@ module hop.top/uma/adapter/ticket/linear
 go 1.26.1
 
 require (
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
-	hop.top/uma/testing/xrrtest v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
+	hop.top/uma/testing/xrrtest v0.1.0-alpha.0
 )
 
 require (

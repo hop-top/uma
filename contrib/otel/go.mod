@@ -8,7 +8,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.47.0
 	go.opentelemetry.io/otel/sdk/metric v1.47.0
 	go.opentelemetry.io/otel/trace v1.47.0
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
 )
 
 require (

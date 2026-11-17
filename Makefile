@@ -51,7 +51,7 @@ work-check:
 	fi
 
 # release-please wiring: every module is a package or an explicit exclude, and
-# every in-repo require carries the marker at the linked version; see
+# every in-repo require names a released version of its module; see
 # scripts/release-check.sh.
 release-check:
 	@scripts/release-check.sh

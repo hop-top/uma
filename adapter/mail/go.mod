@@ -17,7 +17,7 @@ require (
 	golang.org/x/crypto v0.58.0
 	golang.org/x/net v0.62.0
 	golang.org/x/text v0.43.0
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.0
 )
 
 require (
