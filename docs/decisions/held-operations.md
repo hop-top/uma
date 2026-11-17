@@ -188,9 +188,16 @@ Three builtin event kinds, additive, payload major stays 1 (schema
 | `operation.decided` | once per decision, in the decision's unit; never for a replay | `approved`, `rejected` or `edited` |
 | `operation.expired` | in the unit that writes `held -> expired` (`operations.ExpiredEvent`) | `expired` |
 
-- Payload: operation reference, key (caller, kind, target, id), proposer, trust
-  key, decision, decided-by. Never the preview, the reason or any argument.
-- Resource the operation, audience internal. A subscriber needs `operation.read`
+- Payload: operation reference, verb, target, key (caller, kind, target, id),
+  proposer, trust key, decision, decided-by. Verb and target repeat the key's
+  kind and target as top-level fields. Never the preview, the reason or any
+  argument.
+- Resource the operation, audience internal. The event's inbox is the
+  target's inbox (empty for a target no inbox holds, such as an inbox or
+  channel), so an inbox-filtered event list returns held events of that
+  inbox. `Event.Validate` allows this for operation resources only; every
+  other event keeps inbox equal to its resource's inbox. A non-empty inbox
+  adds the inbox read check to the gate and narrows who receives the event. A subscriber needs `operation.read`
   and the read right of the key's target, as for the operation itself.
 
 ## 5. Trust counters: storage

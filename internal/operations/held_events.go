@@ -13,6 +13,7 @@ import (
 // the schema. The payload holds references and names only: never the
 // preview, the reason or any argument, so the event reveals no draft
 // content. The audience is internal and the resource the operation; the
+// event's inbox is the target's, empty for a target no inbox holds; the
 // event gate additionally requires the read right of the operation's
 // target (the payload's key).
 func heldEvent(id model.ID, kind string, key store.OperationKey, op model.Operation,
@@ -21,8 +22,9 @@ func heldEvent(id model.ID, kind string, key store.OperationKey, op model.Operat
 	h := op.Held
 	p := model.HeldOperationPayload{
 		Operation: op.Ref,
-		Key:       model.OperationKey{Caller: key.Caller, Kind: key.Kind, Target: key.Target, ID: key.ID},
-		Proposer:  h.Proposer, TrustKey: h.TrustKey,
+		Verb:      key.Kind, Target: key.Target,
+		Key:      model.OperationKey{Caller: key.Caller, Kind: key.Kind, Target: key.Target, ID: key.ID},
+		Proposer: h.Proposer, TrustKey: h.TrustKey,
 	}
 	schema := model.SchemaOperationHeld
 	switch kind {
@@ -37,7 +39,7 @@ func heldEvent(id model.ID, kind string, key store.OperationKey, op model.Operat
 	}
 	return model.Event{
 		Version: model.EventEnvelopeVersion, ID: id, Kind: kind,
-		Tenant: op.Ref.Tenant, Resource: op.Ref.Ref(), Actor: actor,
+		Tenant: op.Ref.Tenant, Inbox: key.Target.Inbox, Resource: op.Ref.Ref(), Actor: actor,
 		OccurredAt: at, RecordedAt: at, Correlation: correlation,
 		Audience: model.Audience{Visibility: model.Internal}, Revision: op.Revision,
 		Payload: model.Extension{Name: schema, Version: model.PayloadVersion1, Data: data},

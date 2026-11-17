@@ -3,6 +3,13 @@
     "tenant": "Tenant",
     "id": "ID"
   },
+  "verb": "Verb",
+  "target": {
+    "tenant": "Tenant",
+    "kind": "Kind",
+    "inbox": "Inbox",
+    "id": "ID"
+  },
   "key": {
     "caller": "Caller",
     "kind": "Kind",

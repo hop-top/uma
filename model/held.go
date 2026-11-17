@@ -398,13 +398,17 @@ func (h HeldBlock) Clone() HeldBlock {
 // the preview, the reason or any argument, so an event reveals no draft
 // content. Key is the operation's ledger key, whose Target a subscriber
 // must be able to read to receive the event, and Proposer its proposer.
-// TrustKey is the key the host counts decisions under.
+// TrustKey is the key the host counts decisions under. Verb and Target
+// repeat Key.Kind and Key.Target as top-level fields: the operation's verb
+// and the resource it acts on. The event's Inbox is Target's inbox.
 //
 // Decision and DecidedBy are empty in operation.held. operation.decided
 // carries HeldApproved, HeldRejected or HeldEdited and the decider;
 // operation.expired carries HeldExpired and no decider.
 type HeldOperationPayload struct {
 	Operation OperationRef `json:"operation"`
+	Verb      string       `json:"verb"`
+	Target    Ref          `json:"target"`
 	Key       OperationKey `json:"key"`
 	Proposer  ActorID      `json:"proposer"`
 	TrustKey  string       `json:"trust_key"`

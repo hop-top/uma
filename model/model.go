@@ -647,7 +647,8 @@ type ValidationIssue struct {
 }
 
 // Event is a committed domain event. Tenant and Inbox repeat Resource scope
-// for filtering and must equal it; see Validate.
+// for filtering and must equal it, except that an event about an operation
+// may carry the inbox of the operation's target; see Validate.
 type Event struct {
 	Version     uint32        `json:"version"`
 	ID          ID            `json:"id"`

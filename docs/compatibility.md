@@ -70,7 +70,7 @@ surface in these places, and in no other:
 | `uma.Config` | add `Held HeldPolicy` (`LabelConfigure`, `LabelDelete`, `ConversationTransition`, `StartCreateAtHold`), zero value opts none in and creates a held start's conversation on approval | additive |
 | `model.HoldProposal`, `HeldBlock`, `TrustEntry`, `TrustLookup`, `TrustFilter`, `ResetTrust`, `ResetTrustSet`, `ImportTrust`, `HeldOperationPayload`, `MaxTrustKeyBytes`, `MaxTrustBatchBytes` | new types and constants | additive |
 | `model.DecideHeld.Batch` | optional field; empty keeps each approval its own batch | additive |
-| Events | the operation state event carries the new state values; new kinds `operation.held`, `operation.decided`, `operation.expired` (schemas `uma.operation.held`, `uma.operation.decided`, `uma.operation.expired`), payload major 1 | additive, announced in the release notes |
+| Events | the operation state event carries the new state values; new kinds `operation.held`, `operation.decided`, `operation.expired` (schemas `uma.operation.held`, `uma.operation.decided`, `uma.operation.expired`), payload major 1, with optional `verb` and `target` fields; the event's `inbox` is its target's, and `Event.Validate` accepts an inbox on an event whose resource is an operation | additive, announced in the release notes |
 | `store.Store`, `Reader`, `Tx` | none: counters are protocol records under the reserved `uma.trust.` keys | unchanged |
 | Persisted formats | add the `uma.trust` record body, version 1, with 64 fixed bucket keys | additive; the bucket count and hash are frozen once shipped |
 | Operation identity | key scope and fingerprint v1 untouched; the proposed fingerprint is kept for replay | unchanged |
