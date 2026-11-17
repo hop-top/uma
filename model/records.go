@@ -188,13 +188,20 @@ type IdentityLink struct {
 }
 
 // Validate checks envelope IDs, that Tenant and Inbox equal the Resource scope,
-// and the audience and payload shapes.
+// and the audience and payload shapes. The one exception is Inbox: an event
+// whose Resource is an operation, which belongs to no inbox, may leave it
+// empty or set it to the inbox of the resource the operation acts on.
 func (e Event) Validate() error {
 	var tenant, inbox, causation error
 	if e.Tenant != e.Resource.Tenant {
 		tenant = invalidField("tenant", "must equal the resource tenant")
 	}
-	if e.Inbox != e.Resource.Inbox {
+	switch {
+	case e.Resource.Inbox == "" && e.Resource.Kind == KindOperation && e.Inbox != "":
+		// An operation is tenant-scoped: its event may name the inbox of
+		// the resource the operation acts on.
+		inbox = checkID("inbox", e.Inbox)
+	case e.Inbox != e.Resource.Inbox:
 		inbox = invalidField("inbox", "must equal the resource inbox")
 	}
 	if e.Causation != "" {
