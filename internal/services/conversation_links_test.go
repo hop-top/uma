@@ -241,7 +241,7 @@ func TestLinkCap(t *testing.T) {
 }
 
 // Two desk actors keep independent read markers; marking moves no
-// conversation revision and emits nothing; a participant without
+// conversation revision; a participant without
 // conversation.mark_read cannot mark.
 func TestReadStatePerActor(t *testing.T) {
 	l := newLinkRig(t)
@@ -284,10 +284,14 @@ func TestReadStatePerActor(t *testing.T) {
 	var evs int
 	if err := l.E.Store().View(l.Ctx, tenantA, func(r store.Reader) error {
 		pg, err := r.Events(l.Ctx, model.Filter{}, "", 100)
-		evs = len(pg.Items)
+		for _, ev := range pg.Items {
+			if ev.Kind != model.EventConversationReadMarked && ev.Kind != model.EventConversationUnreadMarked {
+				evs++
+			}
+		}
 		return err
 	}); err != nil || evs != 0 {
-		t.Fatalf("%d events after marking, %v; want none", evs, err)
+		t.Fatalf("%d events besides read and unread after marking, %v; want none", evs, err)
 	}
 	l.pol.add(externalActor, model.ActionConversationMarkRead, model.Ref{})
 	l.pol.add(externalActor, model.ActionConversationReadWorkflow, model.Ref{})

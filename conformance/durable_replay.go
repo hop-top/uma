@@ -26,7 +26,7 @@ var replayCases = []durableCase{
 }
 
 // restartCases run only under RunDurableSuite.
-var restartCases = slices.Concat(replayCases, heldExpiryCases, heldDecisionCases,
+var restartCases = slices.Concat(replayCases, heldExpiryCases, snoozeWakeCases, heldDecisionCases,
 	[]durableCase{{"InFlightUnitIsLost", inFlightUnitIsLost}},
 	faultRestartCases, reconcileCases,
 )

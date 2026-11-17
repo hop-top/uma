@@ -8,7 +8,7 @@ import (
 
 // conversationReads is the support Conversations declares, the workflow
 // fields Assignee (resolved, never Self) and Snoozed included.
-var conversationReads = filterSupport{inboxes: true, statuses: true, labels: true, assignee: true, snoozed: true, linked: true, unread: true}
+var conversationReads = filterSupport{inboxes: true, statuses: true, labels: true, assignee: true, snoozed: true, snoozeEnded: true, linked: true, unread: true}
 
 // workflowMatch returns the workflow part of the Conversations filter: the
 // assignee, and whether the snooze is in effect at now. The newest live
@@ -32,7 +32,7 @@ func (h *handle) workflowMatch(now time.Time) func(model.Filter, model.Conversat
 				return false
 			}
 		}
-		if f.Snoozed == nil {
+		if f.Snoozed == nil && f.SnoozeEnded == nil {
 			return true
 		}
 		if newest == nil {
@@ -42,7 +42,11 @@ func (h *handle) workflowMatch(now time.Time) func(model.Filter, model.Conversat
 		if t, ok := newest[v.Ref]; ok {
 			at = &t
 		}
-		return v.Snooze.InEffect(now, at) == *f.Snoozed
+		in := v.Snooze.InEffect(now, at)
+		if f.Snoozed != nil && in != *f.Snoozed {
+			return false
+		}
+		return f.SnoozeEnded == nil || (v.Snooze != nil && !in) == *f.SnoozeEnded
 	}
 }
 

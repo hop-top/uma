@@ -80,6 +80,7 @@
         "none": true
       },
       "snoozed": true,
+      "snooze_ended": true,
       "linked": true,
       "unread": {
         "actor": "Actor"

@@ -761,6 +761,7 @@ provider.
 | `Unassign` | `conversation.assign` | `conversation.unassigned` (previous) |
 | `Snooze` (`Until` set) | `conversation.snooze` | `conversation.snoozed` (until) |
 | `Unsnooze` | `conversation.snooze` | `conversation.unsnoozed` |
+| a snooze ending by itself (a worker's sweep; no call) | none | `conversation.snooze_ended` (cause `until` or `message`, until), once per snooze |
 | `Link` | `conversation.link` (both ends; `work_item.read` on a work item end) | `conversation.linked`, once per conversation end |
 | `Unlink` | `conversation.link` (both ends) | `conversation.unlinked`, once per conversation end |
 
@@ -772,11 +773,16 @@ conversation. The event log keeps the assignment history.
 
 A snooze hides the conversation from lists that exclude snoozed ones until
 `Until`, or until a live inbound message is recorded after the snooze was set,
-whichever comes first. It is evaluated when read: nothing is scheduled, it
-holds across restarts, waking emits no event, and it is independent of
-`Status` (unlike `pending`, it wakes on inbound). History that
+whichever comes first. It is evaluated when read, so the conversation reads
+as awake the moment it ends, and it holds across restarts; it is independent
+of `Status` (unlike `pending`, it wakes on inbound). History that
 `Runtime.Import` records (`Message.ImportedBy` set) is not new inbound and
-never wakes it.
+never wakes it. A running worker (`Runtime.Run`, on its `SweepEvery` cadence)
+then clears the stored snooze and emits one `conversation.snooze_ended`, with
+cause `until` or `message`, in one unit with the conversation's new revision;
+sweeps racing for it wake it once. `Filter.SnoozeEnded` lists the conversations
+still holding an ended snooze, so a list under it is transient once a worker
+runs. With no worker the snooze stays stored and no event is emitted.
 
 Workflow state is desk-only. `Get` and `List` zero `Assignee` and `Snooze`
 unless the caller also holds `conversation.read_workflow` on the conversation,
@@ -796,8 +802,11 @@ conversations holding a readable link, or none.
 
 Read state is per actor: `MarkRead` and `MarkUnread` move the caller's own
 read marker (`conversation.mark_read`), a record of its own, so marking never
-moves the conversation's revision, emits no event and takes no operation ID;
-repeating a mark changes nothing. A message is unread for an actor when it was
+moves the conversation's revision and takes no operation ID; repeating a
+mark changes nothing. Each actual move emits one `conversation.read_marked` or
+`conversation.unread_marked` event (conversation, actor, the marker's new revision;
+never a message), which reaches that actor alone and only while it holds
+`conversation.read_workflow`. A message is unread for an actor when it was
 recorded after the marker and is neither an echo, nor imported history
 (`Runtime.Import`), nor the actor's own message.
 `ReadMarker` returns the caller's marker, and `Filter.Unread` lists the

@@ -154,6 +154,20 @@ func (g *eventGate) allows(ctx context.Context, ev model.Event) (bool, error) {
 		// reach only a principal that may read the target as well.
 		return g.targetReadable(ctx, ev)
 	}
+	if model.IsReadMarkerEvent(ev.Kind) {
+		// A read marker is its own actor's: its events reach that actor
+		// alone, and only while it may read workflow state, as
+		// Conversations.ReadMarker requires.
+		workflow := read
+		workflow.Action = model.ActionConversationReadWorkflow
+		if ok, err := g.check(ctx, workflow); err != nil || !ok {
+			return false, err
+		}
+		var p model.ReadMarkerPayload
+		if err := json.Unmarshal(ev.Payload.Data, &p); err != nil || p.Actor != g.c.Principal().Actor {
+			return false, nil
+		}
+	}
 	if model.IsWorkflowEvent(ev.Kind) {
 		// Workflow events carry workflow state: they reach only a
 		// principal that may read it.

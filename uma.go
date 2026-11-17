@@ -459,8 +459,11 @@ type Conversations interface {
 	// order, each as Get shows it. It honours Filter.Inboxes, Statuses,
 	// Labels and the workflow filters, evaluated by the store so pages are
 	// full: Filter.Assignee (an actor, Self for the principal's actor, or
-	// None for the unassigned) and Filter.Snoozed (true keeps the
-	// conversations whose snooze is in effect, false the others). Under a
+	// None for the unassigned), Filter.Snoozed (true keeps the
+	// conversations whose snooze is in effect, false the others) and
+	// Filter.SnoozeEnded (true keeps those still holding a snooze that is
+	// no longer in effect, which a worker's sweep clears at once, so they
+	// are transient; false the others). Under a
 	// workflow filter only conversations whose workflow state the principal
 	// may read (model.ActionConversationReadWorkflow) are listed.
 	// Filter.Linked keeps the conversations holding a link the principal
@@ -549,8 +552,10 @@ type Conversations interface {
 	// snoozed ones (Filter.Snoozed) until Until or until a live inbound
 	// message is recorded after At, whichever comes first (a message
 	// Runtime.Import records is no new inbound): evaluated when read, so
-	// nothing is scheduled, it holds across restarts, and waking emits no
-	// event. It is independent of Status. Authorized as
+	// the conversation reads as awake the moment it ends and it holds
+	// across restarts; a running worker then clears the stored snooze and
+	// emits one model.EventConversationSnoozeEnded (Filter.SnoozeEnded
+	// lists those not yet swept). It is independent of Status. Authorized as
 	// model.ActionConversationSnooze on the conversation at its revision;
 	// the revision moves once and one model.EventConversationSnoozed is
 	// emitted (internal audience, references and Until). ExpectedRevision
@@ -588,9 +593,11 @@ type Conversations interface {
 	// recorded until now when unset, is read. Authorized as
 	// model.ActionConversationMarkRead on the conversation, and
 	// model.ActionMessageRead on req.Message. The marker is a record of
-	// its own: the conversation's revision never moves and no event is
-	// emitted. Setting the position the marker holds changes nothing, so
-	// a retry after a lost answer is safe; it takes no operation ID.
+	// its own: the conversation's revision never moves. A move emits one
+	// model.EventConversationReadMarked (model.EventConversationUnreadMarked for
+	// MarkUnread), internal audience, for the caller alone. Setting the
+	// position the marker holds changes nothing and emits nothing, so a
+	// retry after a lost answer is safe; it takes no operation ID.
 	MarkRead(context.Context, model.ReadMark) (model.ReadMarker, error)
 	// MarkUnread moves the caller's read marker so that req.Message, or
 	// the newest live inbound message not imported by Runtime.Import when

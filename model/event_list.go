@@ -79,6 +79,7 @@ func (f Filter) eventListFields(path string) error {
 		reject("attachments", f.Attachments != nil),
 		reject("assignee", f.Assignee != nil),
 		reject("snoozed", f.Snoozed != nil),
+		reject("snooze_ended", f.SnoozeEnded != nil),
 		reject("linked", f.Linked != nil),
 		reject("unread", f.Unread != nil),
 		reject("actor", f.Actor != nil),

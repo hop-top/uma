@@ -1,0 +1,11 @@
+{
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "actor": "Actor",
+  "revision": "Revision"
+}

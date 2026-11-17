@@ -166,6 +166,23 @@ WHERE c.tenant_id = @tenant_id AND c.pos > @after
         AND (m.recorded_unix, m.recorded_nanos) > (c.snooze_at_unix, c.snooze_at_nanos)
     )
   ))
+  -- The snooze-ended filter: a snooze is stored and no longer in effect, that
+  -- is it ended at or before now, or a live inbound message that was not
+  -- imported was recorded after it was set.
+  AND (sqlc.narg(snooze_ended)::boolean IS NULL OR sqlc.narg(snooze_ended)::boolean = (
+    c.snooze_until_unix IS NOT NULL
+    AND (
+      (c.snooze_until_unix, c.snooze_until_nanos) <= (@now_unix::bigint, @now_nanos::integer)
+      OR EXISTS (
+        SELECT 1 FROM uma_messages m
+        WHERE m.tenant_id = c.tenant_id AND m.inbox_id = c.inbox_id AND m.conversation_id = c.id
+          AND m.body ->> 'origin' IS NULL AND m.body ->> 'echo_of' IS NULL
+          AND m.body ->> 'redacted' IS DISTINCT FROM 'true' AND m.body ->> 'deleted' IS DISTINCT FROM 'true'
+          AND COALESCE(m.body ->> 'imported_by', '') = ''
+          AND (m.recorded_unix, m.recorded_nanos) > (c.snooze_at_unix, c.snooze_at_nanos)
+      )
+    )
+  ))
   -- The link filter: holding a link or none.
   AND (sqlc.narg(linked)::boolean IS NULL OR sqlc.narg(linked)::boolean = (c.link_count > 0))
   -- The unread filter: a message that is no echo, not imported from history

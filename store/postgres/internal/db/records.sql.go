@@ -1046,25 +1046,42 @@ WHERE c.tenant_id = $1 AND c.pos > $2
         AND (m.recorded_unix, m.recorded_nanos) > (c.snooze_at_unix, c.snooze_at_nanos)
     )
   ))
+  -- The snooze-ended filter: a snooze is stored and no longer in effect, that
+  -- is it ended at or before now, or a live inbound message that was not
+  -- imported was recorded after it was set.
+  AND ($13::boolean IS NULL OR $13::boolean = (
+    c.snooze_until_unix IS NOT NULL
+    AND (
+      (c.snooze_until_unix, c.snooze_until_nanos) <= ($11::bigint, $12::integer)
+      OR EXISTS (
+        SELECT 1 FROM uma_messages m
+        WHERE m.tenant_id = c.tenant_id AND m.inbox_id = c.inbox_id AND m.conversation_id = c.id
+          AND m.body ->> 'origin' IS NULL AND m.body ->> 'echo_of' IS NULL
+          AND m.body ->> 'redacted' IS DISTINCT FROM 'true' AND m.body ->> 'deleted' IS DISTINCT FROM 'true'
+          AND COALESCE(m.body ->> 'imported_by', '') = ''
+          AND (m.recorded_unix, m.recorded_nanos) > (c.snooze_at_unix, c.snooze_at_nanos)
+      )
+    )
+  ))
   -- The link filter: holding a link or none.
-  AND ($13::boolean IS NULL OR $13::boolean = (c.link_count > 0))
+  AND ($14::boolean IS NULL OR $14::boolean = (c.link_count > 0))
   -- The unread filter: a message that is no echo, not imported from history
   -- and not the actor's own uma-authored message, recorded after the
   -- actor's read marker (or with no marker at all).
-  AND ($14::text IS NULL OR EXISTS (
+  AND ($15::text IS NULL OR EXISTS (
     SELECT 1 FROM uma_messages m
     WHERE m.tenant_id = c.tenant_id AND m.inbox_id = c.inbox_id AND m.conversation_id = c.id
       AND m.body ->> 'echo_of' IS NULL
       AND COALESCE(m.body ->> 'imported_by', '') = ''
-      AND (m.body #>> '{origin,actor}') IS DISTINCT FROM $14::text
+      AND (m.body #>> '{origin,actor}') IS DISTINCT FROM $15::text
       AND NOT EXISTS (
         SELECT 1 FROM uma_read_markers r
-        WHERE r.tenant_id = c.tenant_id AND r.conversation_id = c.id AND r.actor = $14::text
+        WHERE r.tenant_id = c.tenant_id AND r.conversation_id = c.id AND r.actor = $15::text
           AND (r.read_through_unix, r.read_through_nanos) >= (m.recorded_unix, m.recorded_nanos)
       )
   ))
 ORDER BY c.pos
-LIMIT $15
+LIMIT $16
 `
 
 type ListConversationsParams struct {
@@ -1080,6 +1097,7 @@ type ListConversationsParams struct {
 	Snoozed     *bool
 	NowUnix     int64
 	NowNanos    int32
+	SnoozeEnded *bool
 	Linked      *bool
 	UnreadActor *string
 	Lim         int32
@@ -1107,6 +1125,7 @@ func (q *Queries) ListConversations(ctx context.Context, arg ListConversationsPa
 		arg.Snoozed,
 		arg.NowUnix,
 		arg.NowNanos,
+		arg.SnoozeEnded,
 		arg.Linked,
 		arg.UnreadActor,
 		arg.Lim,

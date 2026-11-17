@@ -10,7 +10,7 @@ import (
 // conversationReads is the support Conversations declares: the label
 // selector and the workflow fields Assignee (resolved, never Self) and
 // Snoozed are evaluated in SQL.
-var conversationReads = filterSupport{inboxes: true, statuses: true, labels: true, assignee: true, snoozed: true, linked: true, unread: true}
+var conversationReads = filterSupport{inboxes: true, statuses: true, labels: true, assignee: true, snoozed: true, snoozeEnded: true, linked: true, unread: true}
 
 // workflowColumns are the columns a conversation row stores beside its
 // body for the workflow filters (migrations 20 and 21).
@@ -63,7 +63,7 @@ func (h *handle) listConversationsParams(f model.Filter, after int64, lim int32,
 	return db.ListConversationsParams{
 		TenantID: h.tenantID, After: after, Inboxes: inboxIDs(f), Statuses: strs(f.Statuses),
 		AnyLabels: anyOf, AllLabels: allOf, NoneLabels: noneOf,
-		AssigneeAny: assigneeAny, Assignee: assignee, Snoozed: f.Snoozed, NowUnix: nowUnix, NowNanos: nowNanos,
+		AssigneeAny: assigneeAny, Assignee: assignee, Snoozed: f.Snoozed, SnoozeEnded: f.SnoozeEnded, NowUnix: nowUnix, NowNanos: nowNanos,
 		Linked: f.Linked, UnreadActor: unreadActor(f), Lim: lim,
 	}
 }

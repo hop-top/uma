@@ -50,7 +50,7 @@ func conversationRead(conv model.Conversation) policy.Authorization {
 // List pages the conversations the principal may read, in recording order,
 // optionally limited to Filter.Inboxes, Filter.Statuses, the labels they
 // hold (Filter.Labels) and their workflow state (Filter.Assignee,
-// Filter.Snoozed, Filter.Linked, Filter.Unread), each evaluated by the
+// Filter.Snoozed, Filter.SnoozeEnded, Filter.Linked, Filter.Unread), each evaluated by the
 // store and, where the record allows, checked again here.
 // Filter.Assignee.Self and an empty Filter.Unread.Actor are resolved to the
 // principal's actor first; an unread actor other than the principal is
@@ -63,7 +63,7 @@ func (s Conversations) List(ctx context.Context, req model.ListRequest) (model.P
 	}
 	return list(ctx, s.c, listQuery[model.Conversation]{
 		name: "conversations", read: store.Reader.Conversations,
-		fields: filterFields{inboxes: true, statuses: true, labels: true, assignee: true, snoozed: true, linked: true, unread: true},
+		fields: filterFields{inboxes: true, statuses: true, labels: true, assignee: true, snoozed: true, snoozeEnded: true, linked: true, unread: true},
 		within: func(f model.Filter, conv model.Conversation) bool {
 			return inInboxes(f, conv.Ref.Inbox) && hasStatus(f, conv.Status) && hasLabels(f, conv.Labels) &&
 				(f.Assignee == nil || f.Assignee.Matches(conv.Assignee))

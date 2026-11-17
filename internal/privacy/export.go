@@ -193,6 +193,8 @@ func subjectsOf(f model.Filter, tenant model.TenantID) ([]model.Ref, error) {
 		return nil, model.NewError(model.Validation, "filter.assignee: not supported by export")
 	case f.Snoozed != nil:
 		return nil, model.NewError(model.Validation, "filter.snoozed: not supported by export")
+	case f.SnoozeEnded != nil:
+		return nil, model.NewError(model.Validation, "filter.snooze_ended: not supported by export")
 	case f.Linked != nil:
 		return nil, model.NewError(model.Validation, "filter.linked: not supported by export")
 	case f.Unread != nil:

@@ -32,8 +32,9 @@ var (
 		EventIdentityLinked, EventConversationLabelAdded, EventConversationLabelRemoved,
 		EventTaskUpdated, EventContactCreated, EventContactUpdated, EventContactMerged,
 		EventInteractionReceived, EventInteractionUpdated,
-		EventConversationAssigned, EventConversationUnassigned, EventConversationSnoozed, EventConversationUnsnoozed,
+		EventConversationAssigned, EventConversationUnassigned, EventConversationSnoozed, EventConversationUnsnoozed, EventConversationSnoozeEnded,
 		EventConversationLinked, EventConversationUnlinked,
+		EventConversationReadMarked, EventConversationUnreadMarked,
 		EventOperationHeld, EventOperationDecided, EventOperationExpired,
 	}
 	allSchemas = []string{
@@ -42,8 +43,9 @@ var (
 		SchemaIdentityLinked, SchemaConversationLabelAdded, SchemaConversationLabelRemoved,
 		SchemaTaskUpdated, SchemaContactCreated, SchemaContactUpdated, SchemaContactMerged,
 		SchemaInteractionReceived, SchemaInteractionUpdated,
-		SchemaConversationAssigned, SchemaConversationUnassigned, SchemaConversationSnoozed, SchemaConversationUnsnoozed,
+		SchemaConversationAssigned, SchemaConversationUnassigned, SchemaConversationSnoozed, SchemaConversationUnsnoozed, SchemaConversationSnoozeEnded,
 		SchemaConversationLinked, SchemaConversationUnlinked,
+		SchemaConversationReadMarked, SchemaConversationUnreadMarked,
 		SchemaOperationHeld, SchemaOperationDecided, SchemaOperationExpired,
 	}
 	allActions = []string{
@@ -291,8 +293,8 @@ func TestBuiltinEventKinds(t *testing.T) {
 		"delivery.updated", "work_item.updated", "identity.linked",
 		"conversation.label_added", "conversation.label_removed", "task.updated",
 		"contact.created", "contact.updated", "contact.merged", "interaction.received", "interaction.updated",
-		"conversation.assigned", "conversation.unassigned", "conversation.snoozed", "conversation.unsnoozed",
-		"conversation.linked", "conversation.unlinked",
+		"conversation.assigned", "conversation.unassigned", "conversation.snoozed", "conversation.unsnoozed", "conversation.snooze_ended",
+		"conversation.linked", "conversation.unlinked", "conversation.read_marked", "conversation.unread_marked",
 		"operation.held", "operation.decided", "operation.expired",
 	}
 	if len(allEvents) != len(want) {

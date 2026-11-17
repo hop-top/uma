@@ -86,7 +86,7 @@ Walkthrough: [Contacts and identity links](../README.md#contacts-and-identity-li
 | `Conversations.RemoveLabels` | implemented | conformance | conformance | |
 | `Conversations.Assign` | implemented | conformance | conformance | Local desk workflow state; the assignee must be eligible (the authorizer is asked as the assignee). Readable only with `conversation.read_workflow`. |
 | `Conversations.Unassign` | implemented | conformance | conformance | |
-| `Conversations.Snooze` | implemented | conformance | conformance | Query-time snooze: wakes at `Until` or on a live inbound message recorded after it was set, across restarts, with no scheduler; imported history never wakes it. |
+| `Conversations.Snooze` | implemented | conformance | conformance | Query-time snooze: reads as awake at `Until` or on a live inbound message recorded after it was set, across restarts; imported history never wakes it. A running worker then clears the stored snooze and emits `conversation.snooze_ended` once (`Filter.SnoozeEnded` lists those still waiting). |
 | `Conversations.Unsnooze` | implemented | conformance | conformance | |
 | `Conversations.Link` | implemented | conformance | conformance | Conversation to conversation (held by both, one unit) or to a work item (held by the conversation); authorized on both ends; readers see only links whose far end they may read. |
 | `Conversations.Unlink` | implemented | conformance | conformance | |
