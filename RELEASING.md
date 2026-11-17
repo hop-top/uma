@@ -57,12 +57,12 @@ replace hop.top/uma => ../../
 ```
 
 The `replace` makes builds and `go mod tidy` in this repository use the
-checkout. Consumers ignore it and resolve the `require`. Until the root has a
-tag, the require is a pseudo-version of a commit on `main`:
+checkout. Consumers ignore it and resolve the `require`, which must name a
+released tag of the root:
 
 ```sh
 cd store/postgres
-GOWORK=off go get hop.top/uma@<main-commit>
+GOWORK=off go get hop.top/uma@v<released-version>
 GOWORK=off go mod tidy
 ```
 
