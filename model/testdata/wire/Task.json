@@ -1,0 +1,77 @@
+{
+  "ref": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "context": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "external": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "state": "State",
+  "status_message": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "status_at": "2026-01-02T03:04:05.000000006Z",
+  "cancel_requested": true,
+  "artifacts": [
+    {
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "content": {
+        "parts": [
+          {
+            "kind": "Kind",
+            "text": "Text",
+            "attachment": {
+              "inbox": {
+                "tenant": "Tenant",
+                "id": "ID"
+              },
+              "id": "ID"
+            },
+            "structured": {
+              "name": "Name",
+              "version": 1,
+              "data": {
+                "field": "Data"
+              }
+            }
+          }
+        ]
+      },
+      "complete": true
+    }
+  ],
+  "created_at": "2026-01-02T03:04:05.000000006Z",
+  "revision": "Revision"
+}

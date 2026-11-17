@@ -1,0 +1,12 @@
+xrr: "1"
+adapter: http
+fingerprint: c6b598ed
+recorded_at: "2026-10-12T07:53:30Z"
+payload:
+    status: 204
+    headers:
+        X-Ratelimit-Limit: "5000"
+        X-Ratelimit-Remaining: "4991"
+        X-Ratelimit-Reset: "1791795208"
+        X-Ratelimit-Resource: core
+        X-Ratelimit-Used: "9"

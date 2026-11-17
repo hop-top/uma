@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 077f8203
+recorded_at: "2026-11-15T19:01:54Z"
+payload:
+    method: GET
+    url: https://gmail.googleapis.com/gmail/v1/users/MAILBOX/threads/e3d4627bc29f584?format=metadata&metadataHeaders=To&metadataHeaders=Cc

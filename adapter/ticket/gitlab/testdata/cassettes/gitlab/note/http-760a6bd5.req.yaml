@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 760a6bd5
+recorded_at: "2026-11-17T05:49:14Z"
+payload:
+    method: GET
+    url: https://gitlab.example.com/api/v4/projects/700000001/issues/4242/notes?order_by=created_at&page=1&per_page=100&sort=desc

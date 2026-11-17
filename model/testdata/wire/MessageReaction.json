@@ -1,0 +1,25 @@
+{
+  "emoji": "Emoji",
+  "by": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "actor": "Actor",
+  "count": 1,
+  "external": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "at": "2026-01-02T03:04:05.000000006Z"
+}

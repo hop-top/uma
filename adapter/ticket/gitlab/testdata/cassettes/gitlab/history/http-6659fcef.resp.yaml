@@ -1,0 +1,12 @@
+xrr: "1"
+adapter: http
+fingerprint: 6659fcef
+recorded_at: "2026-11-17T05:49:22Z"
+payload:
+    status: 204
+    headers:
+        Ratelimit-Limit: "100"
+        Ratelimit-Name: burst_traffic_per_user_free_plan
+        Ratelimit-Observed: "31"
+        Ratelimit-Remaining: "69"
+        Ratelimit-Reset: "1794894600"

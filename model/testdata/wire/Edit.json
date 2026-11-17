@@ -1,0 +1,15 @@
+{
+  "actor": "Actor",
+  "by": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "at": "2026-01-02T03:04:05.000000006Z",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

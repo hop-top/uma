@@ -1,0 +1,9 @@
+{
+  "state": "State",
+  "failure": {
+    "code": "Code",
+    "retry": "Retry",
+    "safe_message": "SafeMessage"
+  },
+  "read_at": "2026-01-02T03:04:05.000000006Z"
+}

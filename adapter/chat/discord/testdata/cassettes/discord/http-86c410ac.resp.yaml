@@ -1,0 +1,15 @@
+xrr: "1"
+adapter: http
+fingerprint: 86c410ac
+recorded_at: "2026-11-17T02:07:15Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json
+        X-Ratelimit-Bucket: f3f6402fab459d6ea06c2655a11fd1e4
+        X-Ratelimit-Limit: "5"
+        X-Ratelimit-Remaining: "4"
+        X-Ratelimit-Reset: "1794881235.943"
+        X-Ratelimit-Reset-After: "1.000"
+    body: |
+        {"id":"DISCORD_THREAD_ID","user_id":"DISCORD_MEMBER_ID","join_timestamp":"2026-10-20T05:36:38.765000+00:00","flags":1}

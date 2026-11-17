@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 5ad56b34
+recorded_at: "2026-11-17T02:07:13Z"
+payload:
+    method: PUT
+    url: https://discord.com/api/v10/channels/DISCORD_CHANNEL_ID/messages/1572070572299657318/reactions/%F0%9F%91%8D/@me

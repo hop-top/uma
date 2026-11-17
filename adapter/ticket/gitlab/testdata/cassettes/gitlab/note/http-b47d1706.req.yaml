@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: b47d1706
+recorded_at: "2026-11-17T05:49:14Z"
+payload:
+    method: POST
+    url: https://gitlab.example.com/api/v4/projects/700000001/issues/4242/notes
+    headers:
+        Content-Type: application/json
+    body: '{"body":"Recorded reply.\n\n\u003c!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b1 --\u003e"}'

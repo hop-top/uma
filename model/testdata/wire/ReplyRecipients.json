@@ -1,0 +1,9 @@
+{
+  "reply_all": true,
+  "cc": [
+    "Cc"
+  ],
+  "bcc": [
+    "Bcc"
+  ]
+}

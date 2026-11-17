@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: 1f0b89e1
+recorded_at: "2026-10-12T23:39:45Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Limit: "5000"
+        X-Ratelimit-Remaining: "4984"
+        X-Ratelimit-Reset: "1791851981"
+        X-Ratelimit-Resource: core
+        X-Ratelimit-Used: "16"
+    body: '{"documentation_url":"https://docs.github.com/rest/issues/issues#get-an-issue","message":"Not Found","status":"404"}'

@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: "3805e090"
+recorded_at: "2026-11-15T19:02:14Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8
+    body: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''MAILBOX'')/messages(id,internetMessageId,conversationId,subject,from,sender,toRecipients,ccRecipients,replyTo,body,receivedDateTime,hasAttachments,isDraft,internetMessageHeaders)/$entity","@odata.etag":"W/\"CQAAABYAAABaRConLZxXRJVDKKZ/sBC/AAAAAAha\"","id":"AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD_wAA","receivedDateTime":"2001-02-01T11:30:00Z","hasAttachments":false,"internetMessageId":"<uma-inbound-3@recording.invalid>","subject":"uma inbound recording 3","conversationId":"AAQkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjLTZjN2I4NWRlZGYyMwAQAPd79LuKxJJMrR4SiRbIhoA=","isDraft":false,"body":{"contentType":"text","content":"Message 3 of the uma inbound recording."},"sender":{"emailAddress":{"name":"PEER","address":"PEER"}},"from":{"emailAddress":{"name":"PEER","address":"PEER"}},"toRecipients":[{"emailAddress":{"name":"uma test","address":"MAILBOX"}}],"ccRecipients":[],"replyTo":[]}'

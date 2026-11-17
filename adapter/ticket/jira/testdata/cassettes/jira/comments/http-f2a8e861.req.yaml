@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: f2a8e861
+recorded_at: "2026-11-17T05:56:32Z"
+payload:
+    method: DELETE
+    url: https://sandbox.example.atlassian.net/rest/api/3/issue/10001/comment/10004

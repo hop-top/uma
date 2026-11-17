@@ -1,0 +1,18 @@
+{
+  "name": "Support desk",
+  "description": "Answers support requests",
+  "supportedInterfaces": [
+    {"url": "https://agent.example.com/a2a", "protocolBinding": "JSONRPC", "protocolVersion": "1.0"}
+  ],
+  "version": "1.0.0",
+  "capabilities": {"streaming": false, "pushNotifications": false, "extendedAgentCard": false},
+  "securitySchemes": {
+    "bearer": {"httpAuthSecurityScheme": {"scheme": "Bearer"}}
+  },
+  "securityRequirements": [{"schemes": {"bearer": {"list": []}}}],
+  "defaultInputModes": ["text/plain"],
+  "defaultOutputModes": ["text/plain"],
+  "skills": [
+    {"id": "support", "name": "Support", "description": "Handles requests", "tags": ["support"]}
+  ]
+}

@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 078f01d3
+recorded_at: "2026-10-12T23:37:22Z"
+payload:
+    method: POST
+    url: https://api.twilio.com/2010-04-01/Accounts/ACCOUNT_SID/Messages.json
+    headers:
+        Content-Type: application/x-www-form-urlencoded
+    body: Body=recorded+test+message%3A+please+reply+recorded+test+reply&From=FROM_NUMBER_QUERY&To=TO_NUMBER_QUERY

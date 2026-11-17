@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 4e28afbe
+recorded_at: "2026-11-17T02:07:13Z"
+payload:
+    method: GET
+    url: https://discord.com/api/v10/channels/DISCORD_CHANNEL_ID/messages?after=1456074423009280000&limit=100

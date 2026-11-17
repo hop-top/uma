@@ -1,0 +1,13 @@
+xrr: "1"
+adapter: http
+fingerprint: 5ad56b34
+recorded_at: "2026-11-17T02:07:13Z"
+payload:
+    status: 204
+    headers:
+        Content-Type: text/html; charset=utf-8
+        X-Ratelimit-Bucket: acca06189c86c292e9013a444ec3184d
+        X-Ratelimit-Limit: "1"
+        X-Ratelimit-Remaining: "0"
+        X-Ratelimit-Reset: "1794881233.966"
+        X-Ratelimit-Reset-After: "0.250"

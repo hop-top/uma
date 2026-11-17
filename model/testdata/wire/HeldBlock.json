@@ -1,0 +1,61 @@
+{
+  "proposer": "Proposer",
+  "on_behalf_of": "OnBehalfOf",
+  "reason": "Reason",
+  "preview": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "intent": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "trust_key": "TrustKey",
+  "trust_labels": {
+    "TrustLabelsKey": "TrustLabels"
+  },
+  "expires_at": "2026-01-02T03:04:05.000000006Z",
+  "decision": "Decision",
+  "decided_by": "DecidedBy",
+  "decided_at": "2026-01-02T03:04:05.000000006Z",
+  "edited_args": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "edits": [
+    {
+      "by": "By",
+      "at": "2026-01-02T03:04:05.000000006Z",
+      "before": {
+        "name": "Name",
+        "version": 1,
+        "data": {
+          "field": "Data"
+        }
+      },
+      "after": {
+        "name": "Name",
+        "version": 1,
+        "data": {
+          "field": "Data"
+        }
+      }
+    }
+  ],
+  "proposed_fingerprint": "AQ==",
+  "applies": true,
+  "local": true,
+  "target_revision": "TargetRevision",
+  "decision_note": "DecisionNote",
+  "carried_over_at": "2026-01-02T03:04:05.000000006Z",
+  "scope": "Scope"
+}

@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 48c570e6
+recorded_at: "2026-11-15T19:01:54Z"
+payload:
+    method: GET
+    url: https://gmail.googleapis.com/gmail/v1/users/MAILBOX/messages/e3d474cb0c33e1e?format=raw

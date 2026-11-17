@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: "71508392"
+recorded_at: "2026-10-12T04:56:01Z"
+payload:
+    method: PATCH
+    url: https://api.github.com/repos/example/uma-sandbox/issues/4242
+    headers:
+        Content-Type: application/json
+    body: |
+        {"state":"closed","state_reason":"not_planned"}

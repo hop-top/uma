@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 1d24b04f
+recorded_at: "2026-10-20T12:52:34Z"
+payload:
+    status: 201
+    headers:
+        Content-Type: application/json;charset=utf-8
+    body: '{"account_sid": "ACCOUNT_SID", "api_version": "2010-04-01", "body": "recorded test message", "date_created": "Tue, 20 Oct 2026 12:52:34 +0000", "date_sent": null, "date_updated": "Tue, 20 Oct 2026 12:52:34 +0000", "direction": "outbound-api", "error_code": null, "error_message": null, "from": "whatsapp:FROM_NUMBER", "messaging_service_sid": null, "num_media": "0", "num_segments": "1", "price": null, "price_unit": null, "sid": "SM8ff264facc350b4ecb44c8950564d2fb", "status": "queued", "subresource_uris": {"media": "/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM8ff264facc350b4ecb44c8950564d2fb/Media.json"}, "to": "whatsapp:TO_NUMBER", "uri": "/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM8ff264facc350b4ecb44c8950564d2fb.json"}'

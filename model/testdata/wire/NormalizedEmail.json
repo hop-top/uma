@@ -1,0 +1,17 @@
+{
+  "message_id": "MessageID",
+  "references": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "in_reply_to": "InReplyTo",
+  "automated": true
+}

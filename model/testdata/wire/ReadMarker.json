@@ -1,0 +1,13 @@
+{
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "actor": "Actor",
+  "read_through": "2026-01-02T03:04:05.000000006Z",
+  "updated_at": "2026-01-02T03:04:05.000000006Z",
+  "revision": "Revision"
+}

@@ -1,0 +1,24 @@
+{
+  "ref": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "channel": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "key": "Key",
+  "name": "Name",
+  "destinations": [
+    "Destinations"
+  ],
+  "selection": {
+    "mode": "Mode",
+    "policy": "Policy",
+    "lock_to_single": true,
+    "lifecycle_rules": "LifecycleRules"
+  },
+  "disabled": true,
+  "deliver_notes": true,
+  "revision": "Revision"
+}

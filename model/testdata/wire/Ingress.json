@@ -1,0 +1,254 @@
+{
+  "correlation": "Correlation",
+  "envelope": {
+    "event_id": "EventID",
+    "message_id": "MessageID",
+    "in_reply_to": "InReplyTo",
+    "destination": "Destination",
+    "kind": "Kind",
+    "sender": {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    },
+    "assurance": "Assurance",
+    "system_actor": true,
+    "references": [
+      {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      }
+    ],
+    "content": {
+      "parts": [
+        {
+          "kind": "Kind",
+          "text": "Text",
+          "attachment": {
+            "inbox": {
+              "tenant": "Tenant",
+              "id": "ID"
+            },
+            "id": "ID"
+          },
+          "structured": {
+            "name": "Name",
+            "version": 1,
+            "data": {
+              "field": "Data"
+            }
+          }
+        }
+      ]
+    },
+    "audience": {
+      "visibility": "Visibility",
+      "policy_ref": "PolicyRef"
+    },
+    "occurred_at": "2026-01-02T03:04:05.000000006Z",
+    "source_revision": "SourceRevision",
+    "payload": {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    },
+    "interaction": {
+      "id": "ID",
+      "kind": "Kind",
+      "bot": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "action": "Action",
+      "command": "Command",
+      "arguments": "Arguments",
+      "actor": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "context": [
+        {
+          "channel": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "namespace": "Namespace",
+          "kind": "Kind",
+          "id": "ID",
+          "parent_id": "ParentID"
+        }
+      ],
+      "message": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "fields": {
+        "name": "Name",
+        "version": 1,
+        "data": {
+          "field": "Data"
+        }
+      },
+      "response_token": "ResponseToken",
+      "response_expires_at": "2026-01-02T03:04:05.000000006Z",
+      "deadline": "2026-01-02T03:04:05.000000006Z"
+    },
+    "work_item": {
+      "subject": "Subject",
+      "url": "URL",
+      "status": "Status",
+      "raw_status": "RawStatus",
+      "requester": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "assignees": [
+        {
+          "channel": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "namespace": "Namespace",
+          "kind": "Kind",
+          "id": "ID",
+          "parent_id": "ParentID"
+        }
+      ],
+      "fields": [
+        {
+          "name": "Name",
+          "version": 1,
+          "data": {
+            "field": "Data"
+          }
+        }
+      ],
+      "binding": "Binding",
+      "successor": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "local_fields": [
+        "LocalFields"
+      ]
+    },
+    "delivery": {
+      "state": "State",
+      "failure": {
+        "code": "Code",
+        "retry": "Retry",
+        "safe_message": "SafeMessage"
+      },
+      "read_at": "2026-01-02T03:04:05.000000006Z"
+    },
+    "task": {
+      "external": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "open": true
+    },
+    "event": {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    },
+    "sender_kind": "SenderKind",
+    "sender_attributes": [
+      {
+        "kind": "Kind",
+        "value": "Value",
+        "verified": true
+      }
+    ],
+    "state": {
+      "conversation": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "state": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "archived": true,
+        "folder": {
+          "id": "ID",
+          "name": "Name",
+          "role": "Role"
+        },
+        "labels": [
+          {
+            "id": "ID",
+            "name": "Name"
+          }
+        ],
+        "read": true,
+        "flags": [
+          "Flags"
+        ],
+        "trashed": true,
+        "observed_at": "2026-01-02T03:04:05.000000006Z",
+        "complete": true
+      }
+    }
+  },
+  "receiver_cursor": "ReceiverCursor"
+}

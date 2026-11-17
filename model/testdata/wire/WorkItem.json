@@ -1,0 +1,94 @@
+{
+  "ref": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "external": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "subject": "Subject",
+  "url": "URL",
+  "status": "Status",
+  "raw_status": "RawStatus",
+  "requester": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "assignees": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "fields": [
+    {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    }
+  ],
+  "binding": "Binding",
+  "successor": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "history": [
+    {
+      "from": "From",
+      "to": "To",
+      "successor": {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      },
+      "occurred_at": "2026-01-02T03:04:05.000000006Z",
+      "source_revision": "SourceRevision"
+    }
+  ],
+  "local_fields": [
+    "LocalFields"
+  ],
+  "source": {
+    "revision": "Revision",
+    "occurred_at": "2026-01-02T03:04:05.000000006Z"
+  },
+  "revision": "Revision"
+}

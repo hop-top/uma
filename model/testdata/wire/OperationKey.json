@@ -1,0 +1,11 @@
+{
+  "caller": "Caller",
+  "kind": "Kind",
+  "target": {
+    "tenant": "Tenant",
+    "kind": "Kind",
+    "inbox": "Inbox",
+    "id": "ID"
+  },
+  "id": "ID"
+}

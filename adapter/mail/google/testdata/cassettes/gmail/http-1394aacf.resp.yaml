@@ -1,0 +1,36 @@
+xrr: "1"
+adapter: http
+fingerprint: 1394aacf
+recorded_at: "2026-11-15T19:01:49Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "e3d4627bc29f584",
+          "historyId": "1582599",
+          "messages": [
+            {
+              "id": "e3d4627bc29f584",
+              "threadId": "e3d4627bc29f584",
+              "labelIds": [
+                "UNREAD",
+                "INBOX"
+              ],
+              "snippet": "First message of the uma sync recording window.",
+              "payload": {
+                "mimeType": "text/plain",
+                "headers": [
+                  {
+                    "name": "To",
+                    "value": "MAILBOX"
+                  }
+                ]
+              },
+              "sizeEstimate": 401,
+              "historyId": "1582599",
+              "internalDate": "978520800000"
+            }
+          ]
+        }

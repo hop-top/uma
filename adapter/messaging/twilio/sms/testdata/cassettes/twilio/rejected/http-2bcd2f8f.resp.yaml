@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 2bcd2f8f
+recorded_at: "2026-10-12T00:53:10Z"
+payload:
+    status: 400
+    headers:
+        Content-Type: application/json
+    body: '{"code":21266,"message":"''To'' and ''From'' number cannot be the same: MASKED_NUMBER","more_info":"https://www.twilio.com/docs/errors/21266","status":400}'

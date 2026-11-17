@@ -1,0 +1,20 @@
+xrr: "1"
+adapter: http
+fingerprint: 57bb4367
+recorded_at: "2026-11-15T19:01:50Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "1a1e09649e4f1bb8",
+          "threadId": "1a1e09649e4f1bb8",
+          "labelIds": [
+            "SENT"
+          ],
+          "snippet": "uma recorded scenario",
+          "sizeEstimate": 461,
+          "historyId": "1582888",
+          "internalDate": "1794769307000"
+        }

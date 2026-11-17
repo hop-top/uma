@@ -1,0 +1,34 @@
+{
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "link": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "work_item": {
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "id": "ID"
+    }
+  },
+  "trigger": "Trigger",
+  "previous_revision": "PreviousRevision",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

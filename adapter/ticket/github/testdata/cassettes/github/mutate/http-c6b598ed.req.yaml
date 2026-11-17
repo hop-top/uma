@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: c6b598ed
+recorded_at: "2026-10-12T07:53:30Z"
+payload:
+    method: DELETE
+    url: https://api.github.com/repos/example/uma-sandbox/issues/comments/6120080740/reactions/438460310

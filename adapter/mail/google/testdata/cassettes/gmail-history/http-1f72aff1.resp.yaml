@@ -1,0 +1,21 @@
+xrr: "1"
+adapter: http
+fingerprint: 1f72aff1
+recorded_at: "2026-11-15T17:37:36Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "e3c9959687ed77f",
+          "threadId": "e3c9959687ed77f",
+          "labelIds": [
+            "UNREAD",
+            "INBOX"
+          ],
+          "snippet": "First message of the uma history recording window.",
+          "sizeEstimate": 410,
+          "historyId": "1582188",
+          "internalDate": "978339600000"
+        }

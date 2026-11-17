@@ -1,0 +1,18 @@
+xrr: "1"
+adapter: http
+fingerprint: 3e9f5c68
+recorded_at: "2026-11-16T00:00:00Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "labels": [
+            {"id": "INBOX", "name": "INBOX", "type": "system"},
+            {"id": "SENT", "name": "SENT", "type": "system"},
+            {"id": "TRASH", "name": "TRASH", "type": "system"},
+            {"id": "CATEGORY_PERSONAL", "name": "CATEGORY_PERSONAL", "type": "system"},
+            {"id": "CATEGORY_UPDATES", "name": "CATEGORY_UPDATES", "type": "system"}
+          ]
+        }

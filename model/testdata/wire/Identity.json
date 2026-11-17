@@ -1,0 +1,26 @@
+{
+  "ref": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "contact": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "source_id": "SourceID",
+  "namespace": "Namespace",
+  "assurance": "Assurance",
+  "kind": "Kind",
+  "link_assurance": "LinkAssurance",
+  "attributes": [
+    {
+      "kind": "Kind",
+      "value": "Value",
+      "verified": true
+    }
+  ],
+  "revision": "Revision"
+}

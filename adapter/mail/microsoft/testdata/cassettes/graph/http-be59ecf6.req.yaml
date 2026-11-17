@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: be59ecf6
+recorded_at: "2026-11-15T18:30:52Z"
+payload:
+    method: POST
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAwUwAA/send

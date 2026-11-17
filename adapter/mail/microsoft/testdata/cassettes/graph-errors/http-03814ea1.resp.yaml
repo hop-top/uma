@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 03814ea1
+recorded_at: "2026-11-15T19:06:02Z"
+payload:
+    status: 400
+    headers:
+        Content-Type: application/json
+    body: '{"error":{"code":"BadRequest","message":"Badly formed token.","innerError":{"date":"2026-11-15T19:06:02","request-id":"6c6baacd-1375-4121-9dbf-3b6e8df71870","client-request-id":"6c6baacd-1375-4121-9dbf-3b6e8df71870"}}}'

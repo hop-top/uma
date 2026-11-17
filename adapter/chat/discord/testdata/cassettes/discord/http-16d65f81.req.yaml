@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 16d65f81
+recorded_at: "2026-11-17T02:07:13Z"
+payload:
+    method: PATCH
+    url: https://discord.com/api/v10/channels/DISCORD_CHANNEL_ID/messages/1572070572299657318
+    headers:
+        Content-Type: application/json
+    body: '{"allowed_mentions":{"parse":[]},"components":[],"content":"uma recorded edit"}'

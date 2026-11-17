@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: b094562c
+recorded_at: "2026-11-15T18:31:09Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/archive?%24select=id%2CdisplayName

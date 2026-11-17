@@ -1,0 +1,36 @@
+{
+  "interaction": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "trigger": "Trigger",
+  "source": "Source",
+  "kind": "Kind",
+  "actor": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "actor_kind": "ActorKind",
+  "action": "Action",
+  "command": "Command",
+  "message": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "conversation_created": true
+}

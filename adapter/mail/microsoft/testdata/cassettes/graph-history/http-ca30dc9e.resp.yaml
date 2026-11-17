@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: ca30dc9e
+recorded_at: "2026-11-15T18:27:03Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8
+    body: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''MAILBOX'')/messages(''AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAY3wAA'')/attachments(id,name,contentType,size,isInline)","value":[{"@odata.type":"#microsoft.graph.fileAttachment","@odata.mediaContentType":"text/plain","id":"AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAY3wAAARIAEAAHIICjJA2KSboJOnteje-q","name":"notes.txt","contentType":"text/plain","size":197,"isInline":false}]}'

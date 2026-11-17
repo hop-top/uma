@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 1a0adb43
+recorded_at: "2026-11-15T18:31:09Z"
+payload:
+    method: POST
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAwUwAA/move
+    headers:
+        Content-Type: application/json
+    body: '{"destinationId":"AQMkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjAC02YzdiODVkZWRmMjMALgAAA3Xx9XZ9DvNOl-wV29jiFwsBAFpEKictnFdElUMopn_wEL8AAAIBCQAAAA=="}'

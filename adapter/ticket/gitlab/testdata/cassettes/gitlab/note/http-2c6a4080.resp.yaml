@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: 2c6a4080
+recorded_at: "2026-11-17T05:49:17Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json
+        Ratelimit-Limit: "100"
+        Ratelimit-Name: burst_traffic_per_user_free_plan
+        Ratelimit-Observed: "18"
+        Ratelimit-Remaining: "82"
+        Ratelimit-Reset: "1794894600"
+    body: '{"message":"404 Not found"}'

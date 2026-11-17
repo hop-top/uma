@@ -1,0 +1,18 @@
+{
+  "kind": "Kind",
+  "text": "Text",
+  "attachment": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "structured": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  }
+}

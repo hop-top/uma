@@ -1,0 +1,21 @@
+xrr: "1"
+adapter: http
+fingerprint: 988cb24a
+recorded_at: "2026-11-15T17:37:36Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "e3c9cc8526ed2cf",
+          "threadId": "e3c9cc8526ed2cf",
+          "labelIds": [
+            "UNREAD",
+            "INBOX"
+          ],
+          "snippet": "Second message, with a small text attachment.",
+          "sizeEstimate": 695,
+          "historyId": "1582217",
+          "internalDate": "978343200000"
+        }

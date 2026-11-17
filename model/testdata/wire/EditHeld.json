@@ -1,0 +1,21 @@
+{
+  "correlation": "Correlation",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "expected_revision": "ExpectedRevision",
+  "force": true,
+  "note": "Note",
+  "batch": "Batch",
+  "args": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "corrected_keys": [
+    "CorrectedKeys"
+  ]
+}

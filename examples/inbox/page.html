@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inbox demo chat</title>
+<style>
+  body { font: 15px/1.4 system-ui, sans-serif; max-width: 36rem; margin: 2rem auto; padding: 0 1rem; }
+  #log { border: 1px solid #ccc; border-radius: 6px; padding: .5rem; min-height: 12rem; }
+  .you { text-align: right; color: #145; }
+  .them { color: #333; }
+  form { display: flex; gap: .5rem; margin-top: .5rem; }
+  input { flex: 1; padding: .4rem; }
+</style>
+</head>
+<body>
+<h1>Chat with support</h1>
+<div id="log"></div>
+<form id="form"><input id="text" autocomplete="off" placeholder="Type a message"><button>Send</button></form>
+<script>
+// The widget protocol: POST /widget/session for a token, POST
+// /widget/messages to send, and an EventSource on /widget/events to receive.
+// The browser resumes from Last-Event-ID on its own after a reconnect.
+const log = document.getElementById("log");
+const show = (who, text) => {
+  const p = document.createElement("p");
+  p.className = who;
+  p.textContent = text;
+  log.append(p);
+};
+const post = (path, body, token) => fetch(path, {
+  method: "POST",
+  headers: Object.assign({"Content-Type": "application/json"}, token ? {Authorization: "Bearer " + token} : {}),
+  body: JSON.stringify(body),
+});
+(async () => {
+  let session = JSON.parse(sessionStorage.getItem("session") || "null");
+  if (!session || new Date(session.expires_at) <= new Date()) {
+    session = await (await post("/widget/session", {})).json();
+    sessionStorage.setItem("session", JSON.stringify(session));
+  }
+  const events = new EventSource("/widget/events?token=" + encodeURIComponent(session.token));
+  events.addEventListener("message", (e) => {
+    const ev = JSON.parse(e.data);
+    show("them", (ev.parts || []).map((p) => p.text || "").join(" "));
+  });
+  document.getElementById("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const input = document.getElementById("text");
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = "";
+    const res = await post("/widget/messages", {id: crypto.randomUUID(), text}, session.token);
+    show("you", res.ok ? text : text + " (not sent: " + res.status + ")");
+  });
+})();
+</script>
+</body>
+</html>

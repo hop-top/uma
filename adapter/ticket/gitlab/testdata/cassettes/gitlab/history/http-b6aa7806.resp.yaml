@@ -1,0 +1,17 @@
+xrr: "1"
+adapter: http
+fingerprint: b6aa7806
+recorded_at: "2026-11-17T05:49:21Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json
+        Ratelimit-Limit: "100"
+        Ratelimit-Name: burst_traffic_per_user_free_plan
+        Ratelimit-Observed: "26"
+        Ratelimit-Remaining: "74"
+        Ratelimit-Reset: "1794894600"
+        X-Next-Page: "2"
+        X-Page: "1"
+        X-Per-Page: "2"
+    body: '[{"author":{"avatar_url":"https://gitlab.example.com/uploads/-/system/user/avatar/9100001/avatar.png","id":9100001,"locked":false,"name":"uma-sandbox-account","state":"active","username":"uma-sandbox-account","web_url":"https://gitlab.example.com/uma-sandbox-account"},"body":"Recorded history one.\n\n\u003c!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0c1 --\u003e","commands_changes":{},"confidential":false,"created_at":"2026-11-17T05:49:19.202Z","id":4251523103,"imported":false,"imported_from":"none","internal":false,"noteable_id":3004242,"noteable_iid":4242,"noteable_type":"Issue","project_id":700000001,"resolvable":false,"system":false,"type":null,"updated_at":"2026-11-17T05:49:19.202Z"},{"author":{"avatar_url":"https://gitlab.example.com/uploads/-/system/user/avatar/9100001/avatar.png","id":9100001,"locked":false,"name":"uma-sandbox-account","state":"active","username":"uma-sandbox-account","web_url":"https://gitlab.example.com/uma-sandbox-account"},"body":"Recorded history two.\n\n\u003c!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0c2 --\u003e","commands_changes":{},"confidential":false,"created_at":"2026-11-17T05:49:19.825Z","id":4251523133,"imported":false,"imported_from":"none","internal":false,"noteable_id":3004242,"noteable_iid":4242,"noteable_type":"Issue","project_id":700000001,"resolvable":false,"system":false,"type":null,"updated_at":"2026-11-17T05:49:19.825Z"}]'

@@ -1,0 +1,34 @@
+{
+  "zen": "Keep it logically awesome.",
+  "hook_id": 1,
+  "hook": {
+    "type": "App",
+    "id": 1,
+    "events": [
+      "issues",
+      "issue_comment"
+    ]
+  },
+  "repository": {
+    "id": 700000001,
+    "node_id": "R_kgDOexample",
+    "name": "uma-sandbox",
+    "full_name": "example/uma-sandbox",
+    "private": true,
+    "owner": {
+      "login": "example",
+      "id": 9000001,
+      "type": "Organization",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/example/uma-sandbox",
+    "url": "https://api.github.com/repos/example/uma-sandbox"
+  },
+  "sender": {
+    "login": "staff-member",
+    "id": 5000002,
+    "node_id": "U_staff",
+    "type": "User",
+    "site_admin": false
+  }
+}

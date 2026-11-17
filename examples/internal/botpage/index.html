@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>uma bot</title>
+<style>
+  body { font: 16px system-ui, sans-serif; max-width: 40em; margin: 2em auto; padding: 0 1em; }
+  .controls { display: flex; flex-wrap: wrap; gap: .4em; margin: .3em 0; }
+  .ephemeral { color: #666; font-style: italic; }
+</style>
+<h1>uma bot</h1>
+<p>Say anything, type <code>/help</code>, or press <button id="help" type="button">Help</button></p>
+<ul id="log"></ul>
+<form id="form"><input id="text" autocomplete="off" autofocus> <button>Send</button></form>
+<script>
+  const log = document.getElementById("log");
+  const lines = new Map(); // message ID -> its list item, to update it in place
+
+  const show = (who, text, id) => {
+    const li = document.createElement("li");
+    li.textContent = who + ": " + text;
+    if (id) lines.set(id, li);
+    log.append(li);
+    return li;
+  };
+  const post = (path, body, token) => fetch("/widget/" + path, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...(token && { Authorization: "Bearer " + token }) },
+    body: JSON.stringify(body),
+  });
+
+  // Text parts are shown as text. A controls part is rendered as buttons,
+  // selects and a form; any other structured part is not ours to render and
+  // is left out, never shown as text.
+  const CONTROLS = "native.webwidget.controls";
+  const fill = (li, who, parts, messageID, act, submit) => {
+    li.replaceChildren(who + ": " + parts.filter((p) => p.kind === "text").map((p) => p.text).join(""));
+    for (const p of parts) {
+      if (p.kind !== "structured" || p.structured?.name !== CONTROLS || p.structured.version !== 1) continue;
+      const c = p.structured.data, box = document.createElement("div");
+      box.className = "controls";
+      for (const b of c.buttons ?? []) {
+        const el = Object.assign(document.createElement("button"), { type: "button", textContent: b.label });
+        el.onclick = () => act(b.action, b.value, b.label, messageID);
+        box.append(el);
+      }
+      for (const s of c.selects ?? []) {
+        const el = document.createElement("select");
+        el.append(Object.assign(document.createElement("option"), { textContent: s.label, value: "" }));
+        for (const o of s.options) el.append(Object.assign(document.createElement("option"), { textContent: o.label, value: o.value }));
+        el.onchange = () => el.value && act(s.action, el.value, s.label + ": " + el.selectedOptions[0].textContent, messageID);
+        box.append(el);
+      }
+      if (c.form) {
+        const f = document.createElement("form");
+        for (const field of c.form.fields) {
+          const input = Object.assign(document.createElement("input"), {
+            name: field.name, placeholder: field.label, required: !!field.required,
+            type: field.type === "checkbox" ? "checkbox" : field.type === "textarea" ? "text" : field.type,
+          });
+          f.append(input, " ");
+        }
+        f.append(Object.assign(document.createElement("button"), { textContent: c.form.submit }));
+        f.onsubmit = (e) => {
+          e.preventDefault();
+          const values = {};
+          for (const input of f.elements) {
+            if (input.name) values[input.name] = input.type === "checkbox" ? input.checked : input.type === "number" ? input.valueAsNumber : input.value;
+          }
+          submit(c.form.schema, values, c.form.submit, messageID);
+        };
+        box.append(f);
+      }
+      li.append(box);
+    }
+  };
+
+  (async () => {
+    const session = await (await post("session", {})).json();
+    const send = async (path, body, label) => {
+      show("you", label);
+      // One ID per user action, reused by every attempt: the server treats a
+      // retry as a duplicate of the first request, not as a second one.
+      const request = { id: crypto.randomUUID(), ...body };
+      let res;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          res = await post(path, request, session.token);
+        } catch {
+          res = undefined; // network failure: the request may or may not have arrived
+        }
+        if (res?.ok || (res && res.status < 500)) break;
+        await new Promise((resolve) => setTimeout(resolve, 250 * attempt));
+      }
+      if (!res?.ok) show("error", path + " failed: " + (res ? res.status : "network error"));
+    };
+    const act = (action, value, label, message) => send("actions", { action, value, message }, label);
+    const submit = (schema, data, label, message) =>
+      send("submissions", { message, fields: { name: schema, version: 1, data } }, label);
+    const render = (who, ev, li) => fill(li ?? show(who, "", ev.message), who, ev.parts ?? [], ev.message, act, submit);
+
+    // EventSource cannot set headers: the token goes in the query.
+    const events = new EventSource("/widget/events?token=" + encodeURIComponent(session.token));
+    const on = (name, handler) => events.addEventListener(name, (e) => handler(JSON.parse(e.data)));
+    on("message", (ev) => render("bot", ev));
+    on("interaction.response", (ev) => {
+      if (ev.mode === "update" && lines.has(ev.message)) return render("bot", ev, lines.get(ev.message));
+      const li = show("bot", "", ev.message);
+      render(ev.mode === "ephemeral" ? "bot (only you)" : "bot", ev, li);
+      if (ev.mode === "ephemeral") {
+        li.classList.add("ephemeral");
+        if (ev.expires_at) setTimeout(() => li.remove(), Math.max(0, Date.parse(ev.expires_at) - Date.now()));
+      }
+    });
+
+    document.getElementById("help").addEventListener("click", () => act("help", undefined, "Help"));
+    document.getElementById("form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const input = document.getElementById("text");
+      const text = input.value;
+      if (!text) return;
+      input.value = "";
+      // "/name arguments" is a command, an interaction; anything else is a message.
+      const command = text.match(/^\/(\S+)\s*(.*)$/);
+      if (command) return send("actions", { kind: "command", command: command[1], arguments: command[2] || undefined }, text);
+      await send("messages", { text }, text);
+    });
+  })();
+</script>
+</html>

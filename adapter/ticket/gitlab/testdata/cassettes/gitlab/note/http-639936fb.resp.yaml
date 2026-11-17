@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: 639936fb
+recorded_at: "2026-11-17T05:49:16Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json
+        Ratelimit-Limit: "100"
+        Ratelimit-Name: burst_traffic_per_user_free_plan
+        Ratelimit-Observed: "15"
+        Ratelimit-Remaining: "85"
+        Ratelimit-Reset: "1794894600"
+    body: '{"author":{"avatar_url":"https://gitlab.example.com/uploads/-/system/user/avatar/9100001/avatar.png","id":9100001,"locked":false,"name":"uma-sandbox-account","state":"active","username":"uma-sandbox-account","web_url":"https://gitlab.example.com/uma-sandbox-account"},"body":"Recorded reply, edited.\n\n\u003c!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b2 --\u003e","commands_changes":{},"confidential":false,"created_at":"2026-11-17T05:49:14.291Z","id":4251522729,"imported":false,"imported_from":"none","internal":false,"noteable_id":3004242,"noteable_iid":4242,"noteable_type":"Issue","project_id":700000001,"resolvable":false,"system":false,"type":null,"updated_at":"2026-11-17T05:49:16.198Z"}'

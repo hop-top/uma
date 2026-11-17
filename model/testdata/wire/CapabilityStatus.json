@@ -1,0 +1,12 @@
+{
+  "name": "Name",
+  "available": true,
+  "reason": "Reason",
+  "limits": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  }
+}

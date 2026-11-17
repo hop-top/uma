@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 86c410ac
+recorded_at: "2026-11-17T02:07:15Z"
+payload:
+    method: GET
+    url: https://discord.com/api/v10/channels/DISCORD_THREAD_ID/thread-members/DISCORD_MEMBER_ID

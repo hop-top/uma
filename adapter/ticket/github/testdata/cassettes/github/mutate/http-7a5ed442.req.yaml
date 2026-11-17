@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: 7a5ed442
+recorded_at: "2026-10-12T07:53:28Z"
+payload:
+    method: POST
+    url: https://api.github.com/repos/example/uma-sandbox/issues/4242/comments
+    headers:
+        Content-Type: application/json
+    body: |
+        {"body":"Recorded mutation target.\n\n<!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b1 -->"}

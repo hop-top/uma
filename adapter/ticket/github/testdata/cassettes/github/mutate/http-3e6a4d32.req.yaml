@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: 3e6a4d32
+recorded_at: "2026-10-12T07:53:30Z"
+payload:
+    method: POST
+    url: https://api.github.com/repos/example/uma-sandbox/issues/comments/6120080740/reactions
+    headers:
+        Content-Type: application/json
+    body: |
+        {"content":"+1"}

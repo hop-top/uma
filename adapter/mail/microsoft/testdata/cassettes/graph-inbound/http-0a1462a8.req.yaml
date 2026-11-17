@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 0a1462a8
+recorded_at: "2026-11-15T19:02:13Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD8wAA/attachments/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD8wAAARIAEACC0KV6U5gMT5W5YLUTSo5V/$value

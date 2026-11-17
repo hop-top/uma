@@ -1,0 +1,12 @@
+{
+  "field_errors": {
+    "FieldErrorsKey": "FieldErrors"
+  },
+  "options": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  }
+}

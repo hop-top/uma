@@ -1,0 +1,11 @@
+{
+  "correlation": "Correlation",
+  "kind": "Kind",
+  "target": {
+    "tenant": "Tenant",
+    "kind": "Kind",
+    "inbox": "Inbox",
+    "id": "ID"
+  },
+  "id": "ID"
+}

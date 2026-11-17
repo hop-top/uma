@@ -1,0 +1,17 @@
+{
+  "ref": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "key": "Key",
+  "type": "Type",
+  "configuration": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "credential_ref": "CredentialRef",
+  "revision": "Revision"
+}

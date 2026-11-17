@@ -1,0 +1,29 @@
+{
+  "id": "ID",
+  "name": "Name",
+  "description": "Description",
+  "content": {
+    "parts": [
+      {
+        "kind": "Kind",
+        "text": "Text",
+        "attachment": {
+          "inbox": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "id": "ID"
+        },
+        "structured": {
+          "name": "Name",
+          "version": 1,
+          "data": {
+            "field": "Data"
+          }
+        }
+      }
+    ]
+  },
+  "append": true,
+  "complete": true
+}

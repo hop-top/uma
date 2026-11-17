@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 244e9005
+recorded_at: "2026-11-15T17:37:36Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: '{"historyId":"1582217","id":"e3c9cc8526ed2cf","internalDate":"978343200000","labelIds":["UNREAD","INBOX"],"raw":"UmVjZWl2ZWQ6IGZyb20gMDAwMDAwMDAwMDAwCW5hbWVkIHVua25vd24JYnkgZ21haWxhcGkuZ29vZ2xlLmNvbQl3aXRoIEhUVFBSRVNUOwlTdW4sIDE1IE5vdiAyMDI2IDA5OjM1OjAxIC0wODAwDQpGcm9tOiBQRUVSQHBlZXIuaW52YWxpZA0KVG86IE1BSUxCT1hAbWFpbGJveC5pbnZhbGlkDQpTdWJqZWN0OiB1bWEgaGlzdG9yeSByZWNvcmRpbmcgMg0KRGF0ZTogTW9uLCAwMSBKYW4gMjAwMSAxMDowMDowMCArMDAwMA0KTWVzc2FnZS1JRDogPHVtYS1oaXN0b3J5LTJAcmVjb3JkaW5nLmludmFsaWQ-DQpNSU1FLVZlcnNpb246IDEuMA0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PSJ1bWEtYm91bmRhcnkiDQoNCi0tdW1hLWJvdW5kYXJ5DQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9dXRmLTgNCg0KU2Vjb25kIG1lc3NhZ2UsIHdpdGggYSBzbWFsbCB0ZXh0IGF0dGFjaG1lbnQuDQotLXVtYS1ib3VuZGFyeQ0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBuYW1lPSJub3Rlcy50eHQiDQpDb250ZW50LURpc3Bvc2l0aW9uOiBhdHRhY2htZW50OyBmaWxlbmFtZT0ibm90ZXMudHh0Ig0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmFzZTY0DQoNCmRXMWhJR2hwYzNSdmNua2djbVZqYjNKa2FXNW5JR0YwZEdGamFHMWxiblFLDQotLXVtYS1ib3VuZGFyeS0tDQo=","sizeEstimate":695,"snippet":"Second message, with a small text attachment.","threadId":"e3c9cc8526ed2cf"}'

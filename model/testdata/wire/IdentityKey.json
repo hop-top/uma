@@ -1,0 +1,8 @@
+{
+  "inbox": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "namespace": "Namespace",
+  "source_id": "SourceID"
+}

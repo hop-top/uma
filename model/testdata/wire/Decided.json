@@ -1,0 +1,227 @@
+{
+  "operation": {
+    "ref": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "state": "State",
+    "result": {
+      "tenant": "Tenant",
+      "kind": "Kind",
+      "inbox": "Inbox",
+      "id": "ID"
+    },
+    "result_message": {
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "result_stream": {
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "result_task": {
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "provider_references": [
+      {
+        "channel": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "namespace": "Namespace",
+        "kind": "Kind",
+        "id": "ID",
+        "parent_id": "ParentID"
+      }
+    ],
+    "read_confirmed_at": "2026-01-02T03:04:05.000000006Z",
+    "failure": {
+      "code": "Code",
+      "safe_message": "SafeMessage",
+      "correlation": "Correlation",
+      "retry": "Retry",
+      "reason": "Reason",
+      "retry_after_ms": 1500
+    },
+    "progress": {
+      "done": 1,
+      "partial": true
+    },
+    "pending": {
+      "operation": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "base_revision": "BaseRevision",
+      "base_last_edit": {
+        "actor": "Actor",
+        "by": {
+          "inbox": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "id": "ID"
+        },
+        "at": "2026-01-02T03:04:05.000000006Z",
+        "operation": {
+          "tenant": "Tenant",
+          "id": "ID"
+        }
+      },
+      "content": {
+        "parts": [
+          {
+            "kind": "Kind",
+            "text": "Text",
+            "attachment": {
+              "inbox": {
+                "tenant": "Tenant",
+                "id": "ID"
+              },
+              "id": "ID"
+            },
+            "structured": {
+              "name": "Name",
+              "version": 1,
+              "data": {
+                "field": "Data"
+              }
+            }
+          }
+        ]
+      },
+      "delete": true,
+      "reaction": {
+        "emoji": "Emoji",
+        "remove": true
+      }
+    },
+    "pending_state": {
+      "operation": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "verb": "Verb",
+      "destination": {
+        "id": "ID",
+        "role": "Role"
+      },
+      "add": [
+        "Add"
+      ],
+      "remove": [
+        "Remove"
+      ],
+      "kind": "Kind"
+    },
+    "next_attempt_at": "2026-01-02T03:04:05.000000006Z",
+    "updated_at": "2026-01-02T03:04:05.000000006Z",
+    "revision": "Revision",
+    "key": {
+      "caller": "Caller",
+      "kind": "Kind",
+      "target": {
+        "tenant": "Tenant",
+        "kind": "Kind",
+        "inbox": "Inbox",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "held": {
+      "proposer": "Proposer",
+      "on_behalf_of": "OnBehalfOf",
+      "reason": "Reason",
+      "preview": {
+        "name": "Name",
+        "version": 1,
+        "data": {
+          "field": "Data"
+        }
+      },
+      "intent": {
+        "name": "Name",
+        "version": 1,
+        "data": {
+          "field": "Data"
+        }
+      },
+      "trust_key": "TrustKey",
+      "trust_labels": {
+        "TrustLabelsKey": "TrustLabels"
+      },
+      "expires_at": "2026-01-02T03:04:05.000000006Z",
+      "decision": "Decision",
+      "decided_by": "DecidedBy",
+      "decided_at": "2026-01-02T03:04:05.000000006Z",
+      "edited_args": {
+        "name": "Name",
+        "version": 1,
+        "data": {
+          "field": "Data"
+        }
+      },
+      "edits": [
+        {
+          "by": "By",
+          "at": "2026-01-02T03:04:05.000000006Z",
+          "before": {
+            "name": "Name",
+            "version": 1,
+            "data": {
+              "field": "Data"
+            }
+          },
+          "after": {
+            "name": "Name",
+            "version": 1,
+            "data": {
+              "field": "Data"
+            }
+          }
+        }
+      ],
+      "proposed_fingerprint": "AQ==",
+      "applies": true,
+      "local": true,
+      "target_revision": "TargetRevision",
+      "decision_note": "DecisionNote",
+      "carried_over_at": "2026-01-02T03:04:05.000000006Z",
+      "scope": "Scope"
+    }
+  },
+  "durable": true,
+  "replayed": true,
+  "decision": "Decision",
+  "trust_key": "TrustKey",
+  "trust_labels": {
+    "TrustLabelsKey": "TrustLabels"
+  },
+  "correction": true
+}

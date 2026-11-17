@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: da6e393d
+recorded_at: "2026-11-15T18:31:08Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/deleteditems?%24select=id%2CdisplayName

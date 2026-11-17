@@ -1,0 +1,412 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "pull-request-title-pattern": "chore(release):${component} ${version}",
+  "include-component-in-tag": false,
+  "separate-pull-requests": false,
+  "packages": {
+    ".": {
+      "release-type": "go",
+      "component": "uma",
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "exclude-paths": [
+        "adapter/chat/discord",
+        "adapter/chat/slack",
+        "adapter/chat/teams",
+        "adapter/chat/telegram",
+        "adapter/mail",
+        "adapter/mail/google",
+        "adapter/mail/microsoft",
+        "adapter/messaging/meta",
+        "adapter/messaging/twilio",
+        "adapter/ticket/github",
+        "adapter/ticket/gitlab",
+        "adapter/ticket/jira",
+        "adapter/ticket/linear",
+        "adapter/ticket/zendesk",
+        "contrib/kit",
+        "contrib/otel",
+        "examples",
+        "examples/fakeprovider",
+        "examples/imessagegateway",
+        "examples/inbox",
+        "examples/triage",
+        "store/postgres",
+        "testing/xrrtest"
+      ],
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        },
+        {
+          "type": "generic",
+          "path": "examples/inbox/go.mod"
+        },
+        {
+          "type": "generic",
+          "path": "examples/triage/go.mod"
+        }
+      ]
+    },
+    "adapter/mail": {
+      "release-type": "go",
+      "component": "adapter/mail",
+      "exclude-paths": [
+        "adapter/mail/google",
+        "adapter/mail/microsoft"
+      ],
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/messaging/meta": {
+      "release-type": "go",
+      "component": "adapter/messaging/meta",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "contrib/kit": {
+      "release-type": "go",
+      "component": "contrib/kit",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "contrib/otel": {
+      "release-type": "go",
+      "component": "contrib/otel",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "testing/xrrtest": {
+      "release-type": "go",
+      "component": "testing/xrrtest",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "store/postgres": {
+      "release-type": "go",
+      "component": "store/postgres",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/mail/microsoft": {
+      "release-type": "go",
+      "component": "adapter/mail/microsoft",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/messaging/twilio": {
+      "release-type": "go",
+      "component": "adapter/messaging/twilio",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/chat/discord": {
+      "release-type": "go",
+      "component": "adapter/chat/discord",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/chat/slack": {
+      "release-type": "go",
+      "component": "adapter/chat/slack",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/chat/teams": {
+      "release-type": "go",
+      "component": "adapter/chat/teams",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/chat/telegram": {
+      "release-type": "go",
+      "component": "adapter/chat/telegram",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/ticket/zendesk": {
+      "release-type": "go",
+      "component": "adapter/ticket/zendesk",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/ticket/github": {
+      "release-type": "go",
+      "component": "adapter/ticket/github",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/ticket/gitlab": {
+      "release-type": "go",
+      "component": "adapter/ticket/gitlab",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/ticket/jira": {
+      "release-type": "go",
+      "component": "adapter/ticket/jira",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/ticket/linear": {
+      "release-type": "go",
+      "component": "adapter/ticket/linear",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    },
+    "adapter/mail/google": {
+      "release-type": "go",
+      "component": "adapter/mail/google",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "include-v-in-tag": true,
+      "initial-version": "0.1.0-alpha.0",
+      "prerelease": true,
+      "prerelease-type": "alpha.0",
+      "versioning": "prerelease",
+      "bump-minor-pre-major": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "go.mod"
+        }
+      ]
+    }
+  },
+  "group-pull-request-title-pattern": "chore(release): uma ${version}",
+  "plugins": [
+    {
+      "type": "linked-versions",
+      "groupName": "uma",
+      "components": [
+        "uma",
+        "adapter/mail",
+        "adapter/messaging/meta",
+        "contrib/kit",
+        "contrib/otel",
+        "testing/xrrtest",
+        "store/postgres",
+        "adapter/mail/microsoft",
+        "adapter/messaging/twilio",
+        "adapter/chat/discord",
+        "adapter/chat/slack",
+        "adapter/chat/teams",
+        "adapter/chat/telegram",
+        "adapter/ticket/zendesk",
+        "adapter/ticket/github",
+        "adapter/ticket/gitlab",
+        "adapter/ticket/jira",
+        "adapter/ticket/linear",
+        "adapter/mail/google"
+      ]
+    }
+  ]
+}

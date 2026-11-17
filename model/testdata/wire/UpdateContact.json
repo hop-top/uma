@@ -1,0 +1,33 @@
+{
+  "correlation": "Correlation",
+  "operation": "Operation",
+  "expected_revision": "ExpectedRevision",
+  "hold": {
+    "on_behalf_of": "OnBehalfOf",
+    "reason": "Reason",
+    "preview": {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    },
+    "trust_key": "TrustKey",
+    "trust_labels": {
+      "TrustLabelsKey": "TrustLabels"
+    },
+    "expires_at": "2026-01-02T03:04:05.000000006Z"
+  },
+  "contact": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "display_name": "DisplayName",
+  "attributes": [
+    {
+      "kind": "Kind",
+      "value": "Value",
+      "verified": true
+    }
+  ]
+}

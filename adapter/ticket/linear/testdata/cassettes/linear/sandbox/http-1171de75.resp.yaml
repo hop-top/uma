@@ -1,0 +1,15 @@
+xrr: "1"
+adapter: http
+fingerprint: 1171de75
+recorded_at: "2026-11-17T05:45:58Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Complexity-Limit: "3000000"
+        X-Ratelimit-Complexity-Remaining: "2999991"
+        X-Ratelimit-Complexity-Reset: "1794897958310"
+        X-Ratelimit-Requests-Limit: "2500"
+        X-Ratelimit-Requests-Remaining: "2498"
+        X-Ratelimit-Requests-Reset: "1794897958310"
+    body: '{"data":{"comment":{"archivedAt":null,"body":"Recorded reply.\n\n<!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b1 -->","botActor":null,"createdAt":"2026-11-17T05:45:58.151Z","editedAt":null,"id":"1e4402e6-2c18-4fde-b6a8-9f982f3baa62","issue":{"id":"00000000-0000-4000-8000-0000000042a2","identifier":"SBX-1","team":{"key":"SBX"},"title":"Get familiar with Linear","url":"https://linear.app/uma-sandbox/issue/SBX-1/get-familiar-with-linear"},"issueId":"00000000-0000-4000-8000-0000000042a2","parentId":null,"updatedAt":"2026-11-17T05:45:58.133Z","url":"https://linear.app/uma-sandbox/issue/SBX-1/get-familiar-with-linear#comment-1e4402e6","user":{"app":false,"id":"00000000-0000-4000-8000-000000910001","name":"uma-sandbox-account"}}}}'

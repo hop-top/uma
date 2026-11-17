@@ -1,0 +1,19 @@
+{
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "work_item": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  }
+}

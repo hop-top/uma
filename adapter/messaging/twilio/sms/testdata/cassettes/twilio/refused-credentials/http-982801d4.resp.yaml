@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 982801d4
+recorded_at: "2026-10-12T00:49:16Z"
+payload:
+    status: 401
+    headers:
+        Content-Type: application/json
+    body: '{"code":20003,"message":"authentication failed, auth token is not valid for account ACCOUNT_SID","more_info":"https://www.twilio.com/docs/errors/20003","status":401}'

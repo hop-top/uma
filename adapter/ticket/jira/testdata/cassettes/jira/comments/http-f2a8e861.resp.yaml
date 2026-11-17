@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: f2a8e861
+recorded_at: "2026-11-17T05:56:32Z"
+payload:
+    status: 204
+    headers:
+        X-Ratelimit-Limit: "400"
+        X-Ratelimit-Remaining: "399"

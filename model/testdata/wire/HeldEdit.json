@@ -1,0 +1,18 @@
+{
+  "by": "By",
+  "at": "2026-01-02T03:04:05.000000006Z",
+  "before": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "after": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  }
+}

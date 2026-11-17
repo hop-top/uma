@@ -1,0 +1,39 @@
+{
+  "ref": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "mode": "Mode",
+  "state": "State",
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "next_sequence": 1,
+  "applied_sequence": 1,
+  "last_operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "provider_stream_ref": "ProviderStreamRef",
+  "provider_references": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "deadline": "2026-01-02T03:04:05.000000006Z",
+  "revision": "Revision"
+}

@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 1d24b04f
+recorded_at: "2026-10-20T12:52:34Z"
+payload:
+    method: POST
+    url: https://api.twilio.com/2010-04-01/Accounts/ACCOUNT_SID/Messages.json
+    headers:
+        Content-Type: application/x-www-form-urlencoded
+    body: Body=recorded+test+message&From=whatsapp%3AFROM_NUMBER_QUERY&To=whatsapp%3ATO_NUMBER

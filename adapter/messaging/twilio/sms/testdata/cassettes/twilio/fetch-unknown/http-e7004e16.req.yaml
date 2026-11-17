@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: e7004e16
+recorded_at: "2026-10-12T00:49:16Z"
+payload:
+    method: GET
+    url: https://api.twilio.com/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM00000000000000000000000000000000.json

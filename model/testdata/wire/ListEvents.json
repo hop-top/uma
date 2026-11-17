@@ -1,0 +1,88 @@
+{
+  "correlation": "Correlation",
+  "filter": {
+    "inboxes": [
+      {
+        "tenant": "Tenant",
+        "id": "ID"
+      }
+    ],
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "contact": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "kinds": [
+      "Kinds"
+    ],
+    "statuses": [
+      "Statuses"
+    ],
+    "identity": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "labels": {
+      "any": [
+        {
+          "tenant": "Tenant",
+          "id": "ID"
+        }
+      ],
+      "all": [
+        {
+          "tenant": "Tenant",
+          "id": "ID"
+        }
+      ],
+      "none": [
+        {
+          "tenant": "Tenant",
+          "id": "ID"
+        }
+      ]
+    },
+    "task": {
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "text": "Text",
+    "since": "2026-01-02T03:04:05.000000006Z",
+    "before": "2026-01-02T03:04:05.000000006Z",
+    "attachments": {
+      "has": true,
+      "media_types": [
+        "MediaTypes"
+      ]
+    },
+    "assignee": {
+      "actor": "Actor",
+      "self": true,
+      "none": true
+    },
+    "snoozed": true,
+    "linked": true,
+    "unread": {
+      "actor": "Actor"
+    },
+    "actor": "Actor"
+  },
+  "start": "Start",
+  "after": "After",
+  "limit": 1
+}

@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: cdefe39f
+recorded_at: "2026-11-15T19:02:30Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders('inbox')/messages/delta?%24deltatoken=C6OsPvEWPXaz0AXmJW5srgBZDXDkLDgAHaoLJ_bIVhqS4dQByHrdi9nMSA6yNvQwqfbUgJpPl9W2E9LY3s32boDmFp8ad2ZFccmy4NP5BMe2AM2WRjs052-aIl37jfjVdu9MDRGRzRDQe_JElRO3BXKFbm4pFvr50dguVljvMMHylAY8sAhQK-sxb4Gooa4ZLuR_L-zkLPpsSNKjwtXMyw.uKjIUc5bRzp0MZfhScBvZ561A9C0UNhXu4XdNJMRe9A

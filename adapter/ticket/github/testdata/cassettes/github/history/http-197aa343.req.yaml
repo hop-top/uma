@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 197aa343
+recorded_at: "2026-10-12T23:39:45Z"
+payload:
+    method: GET
+    url: https://api.github.com/repos/example/uma-sandbox/issues/comments?direction=asc&page=2&per_page=2&since=2026-10-12T23%3A39%3A40Z&sort=created

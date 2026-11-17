@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: fe78e1bf
+recorded_at: "2026-11-17T02:07:15Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json
+        X-Ratelimit-Bucket: d2d6d106b80cab1d648e20868579b3bb
+        X-Ratelimit-Limit: "5"
+        X-Ratelimit-Remaining: "3"
+        X-Ratelimit-Reset: "1794881237.546"
+        X-Ratelimit-Reset-After: "1.816"
+    body: '{"message": "Unknown Message", "code": 10008}'

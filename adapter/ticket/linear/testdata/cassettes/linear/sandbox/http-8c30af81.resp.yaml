@@ -1,0 +1,15 @@
+xrr: "1"
+adapter: http
+fingerprint: 8c30af81
+recorded_at: "2026-11-17T05:45:59Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Complexity-Limit: "3000000"
+        X-Ratelimit-Complexity-Remaining: "2999991"
+        X-Ratelimit-Complexity-Reset: "1794897959227"
+        X-Ratelimit-Requests-Limit: "2500"
+        X-Ratelimit-Requests-Remaining: "2491"
+        X-Ratelimit-Requests-Reset: "1794897959227"
+    body: '{"data":{"issue":{"archivedAt":null,"assignee":null,"createdAt":"2026-11-17T05:24:18.959Z","creator":null,"description":"Welcome to Linear! \n\nWatch an introductory video and access a list of resources below.\n\n[LinearH264Version_1.mp4](https://uploads.linear.app/00000000-0000-4000-8000-0000000000c1/00000000-0000-4000-8000-0000000000c2/00000000-0000-4000-8000-0000000000c3)\n\n### **Choose your setup guide** based on your company stage:\n\n* [Small teams](<https://linear.app/docs/how-to-use-linear-small-teams>)\n  For early-stage startups and projects\n* [Startups & mid-size companies](<https://linear.app/docs/how-to-use-linear-startups-mid-size-companies>)\n  For growing teams with cross-functional needs\n* [Large & scaling companies](<https://linear.app/docs/how-to-use-linear-large-scaling-companies>)\n  For enterprise and high-growth teams with complex workflows\n\n### **Need help getting started?**\n\n* [Join our Slack community](<https://linear.app/join-slack>)\n  Connect with other Linear users and get tips\n* [Join a live ](<https://lu.ma/welcome-to-linear?utm_source=docs>)[onboarding](<https://lu.ma/welcome-to-linear?utm_source=onboarding>)[ ](<https://lu.ma/welcome-to-linear?utm_source=docs>)[session](<https://lu.ma/welcome-to-linear?utm_source=onboarding>)\n  Learn the essentials and see demos of core workflows\n\n---\n\nIf you have any questions hit `?` in the bottom left > Contact us.\n\n![contactlinear (1).gif](https://uploads.linear.app/00000000-0000-4000-8000-0000000000c1/00000000-0000-4000-8000-0000000000c4/00000000-0000-4000-8000-0000000000c5)","id":"00000000-0000-4000-8000-0000000042a2","identifier":"SBX-1","labels":{"nodes":[]},"number":1,"state":{"id":"00000000-0000-4000-8000-0000000000b1","name":"Todo","type":"unstarted"},"team":{"id":"00000000-0000-4000-8000-0000000000a1","key":"SBX"},"title":"Get familiar with Linear","trashed":null,"updatedAt":"2026-11-17T05:45:58.133Z","url":"https://linear.app/uma-sandbox/issue/SBX-1/get-familiar-with-linear"}}}'

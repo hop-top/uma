@@ -1,0 +1,15 @@
+{
+  "contact": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "changes": [
+    "Changes"
+  ],
+  "trigger": "Trigger",
+  "previous_revision": "PreviousRevision",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

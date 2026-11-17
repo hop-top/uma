@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 954e5915
+recorded_at: "2026-11-17T02:07:15Z"
+payload:
+    method: DELETE
+    url: https://discord.com/api/v10/channels/DISCORD_CHANNEL_ID/messages/1572070572299657318

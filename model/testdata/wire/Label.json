@@ -1,0 +1,10 @@
+{
+  "ref": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "name": "Name",
+  "description": "Description",
+  "color": "Color",
+  "revision": "Revision"
+}

@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 3a03b9b8
+recorded_at: "2026-11-15T19:06:02Z"
+payload:
+    status: 400
+    headers:
+        Content-Type: application/json
+    body: '{"error":{"code":"InvalidRequest","message":"''expirationDateTime'' property should be greater than current time.","innerError":{"date":"2026-11-15T19:06:02","request-id":"0ac7b79b-cb17-464c-a14b-47c35308940e","client-request-id":"0ac7b79b-cb17-464c-a14b-47c35308940e"}}}'

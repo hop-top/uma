@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 42d60b65
+recorded_at: "2026-11-17T05:06:36Z"
+payload:
+    method: DELETE
+    url: https://TEAMS_SERVICE_HOST_AND_PATH/v3/conversations/a:TEAMS_CONVERSATION_ID/activities/1794891995171/reactions/like

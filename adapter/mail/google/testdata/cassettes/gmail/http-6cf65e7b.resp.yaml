@@ -1,0 +1,22 @@
+xrr: "1"
+adapter: http
+fingerprint: 6cf65e7b
+recorded_at: "2026-11-15T19:01:52Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "1a1e09649e4f1bb8",
+          "messages": [
+            {
+              "id": "1a1e09649e4f1bb8",
+              "threadId": "1a1e09649e4f1bb8",
+              "labelIds": [
+                "CATEGORY_UPDATES",
+                "SENT"
+              ]
+            }
+          ]
+        }

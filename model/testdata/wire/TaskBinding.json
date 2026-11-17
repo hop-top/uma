@@ -1,0 +1,13 @@
+{
+  "external": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "open": true
+}

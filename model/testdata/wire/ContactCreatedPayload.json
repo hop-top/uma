@@ -1,0 +1,12 @@
+{
+  "contact": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "kind": "Kind",
+  "trigger": "Trigger",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

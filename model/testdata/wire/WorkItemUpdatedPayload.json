@@ -1,0 +1,28 @@
+{
+  "work_item": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "changes": [
+    "Changes"
+  ],
+  "trigger": "Trigger",
+  "status": {
+    "from": "From",
+    "to": "To",
+    "raw_from": "RawFrom",
+    "raw_to": "RawTo"
+  },
+  "previous_revision": "PreviousRevision",
+  "source_revision": "SourceRevision",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

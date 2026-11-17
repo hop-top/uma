@@ -1,0 +1,10 @@
+{
+  "name": "Name",
+  "media_type": "MediaType",
+  "size": 1,
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "digest": "Digest"
+}

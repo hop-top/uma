@@ -1,0 +1,16 @@
+{
+  "from": "From",
+  "to": "To",
+  "successor": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "occurred_at": "2026-01-02T03:04:05.000000006Z",
+  "source_revision": "SourceRevision"
+}

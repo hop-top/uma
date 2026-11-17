@@ -1,0 +1,8 @@
+{
+  "ref": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "checkpoint": "Checkpoint",
+  "revision": "Revision"
+}

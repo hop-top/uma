@@ -1,0 +1,51 @@
+{
+  "subject": "Subject",
+  "url": "URL",
+  "status": "Status",
+  "raw_status": "RawStatus",
+  "requester": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "assignees": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "fields": [
+    {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    }
+  ],
+  "binding": "Binding",
+  "successor": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "local_fields": [
+    "LocalFields"
+  ]
+}

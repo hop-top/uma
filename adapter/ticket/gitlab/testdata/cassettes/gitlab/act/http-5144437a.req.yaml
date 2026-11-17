@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 5144437a
+recorded_at: "2026-11-17T05:49:12Z"
+payload:
+    method: PUT
+    url: https://gitlab.example.com/api/v4/projects/700000001/issues/4242
+    headers:
+        Content-Type: application/json
+    body: '{"state_event":"close"}'

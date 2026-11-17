@@ -1,0 +1,12 @@
+{
+  "verifier": "Verifier",
+  "reference": "Reference",
+  "facts": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "assurance": "Assurance"
+}

@@ -1,0 +1,23 @@
+xrr: "1"
+adapter: http
+fingerprint: 152eadd1
+recorded_at: "2026-11-15T19:01:54Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "error": {
+            "code": 404,
+            "message": "Requested entity was not found.",
+            "errors": [
+              {
+                "message": "Requested entity was not found.",
+                "domain": "global",
+                "reason": "notFound"
+              }
+            ],
+            "status": "NOT_FOUND"
+          }
+        }

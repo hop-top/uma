@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 0a1462a8
+recorded_at: "2026-11-15T19:02:13Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: text/plain
+    body: |
+        uma inbound recording attachment

@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: c362e3d0
+recorded_at: "2026-11-17T05:06:32Z"
+payload:
+    method: GET
+    url: https://login.botframework.com/v1/.well-known/openidconfiguration

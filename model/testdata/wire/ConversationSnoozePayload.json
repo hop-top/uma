@@ -1,0 +1,16 @@
+{
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "until": "2026-01-02T03:04:05.000000006Z",
+  "trigger": "Trigger",
+  "previous_revision": "PreviousRevision",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "items": [
+    {
+      "conversation": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "id": "ID"
+    }
+  ],
+  "next": "Next",
+  "complete": true
+}

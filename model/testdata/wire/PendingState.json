@@ -1,0 +1,25 @@
+{
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "verb": "Verb",
+  "destination": {
+    "id": "ID",
+    "role": "Role"
+  },
+  "add": [
+    "Add"
+  ],
+  "remove": [
+    "Remove"
+  ],
+  "kind": "Kind"
+}

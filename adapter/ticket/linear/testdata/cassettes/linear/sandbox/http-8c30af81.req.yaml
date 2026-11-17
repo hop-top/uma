@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 8c30af81
+recorded_at: "2026-11-17T05:45:59Z"
+payload:
+    method: POST
+    url: https://api.linear.app/graphql
+    headers:
+        Content-Type: application/json
+    body: '{"query":"query UmaIssue($id: String!) {\n  issue(id: $id) {\n    id identifier number title url description createdAt updatedAt archivedAt trashed\n    team { id key }\n    state { id name type }\n    creator { id name }\n    assignee { id name }\n    labels(first: 250) { nodes { name } }\n  }\n}","variables":{"id":"00000000-0000-4000-8000-0000000042a2"}}'

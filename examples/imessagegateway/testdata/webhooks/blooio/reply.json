@@ -1,0 +1,30 @@
+{
+  "api_version": "2026-10-01",
+  "created_at": 1791952146482,
+  "data": {
+    "attachments": [],
+    "channel_address": "+15550100002",
+    "channel_id": "ch_01a138a8-4944-7330-b520-b21a1279c6bb",
+    "channel_type": "blooio",
+    "chat_id": "chat_01a138ab-561c-78e5-b6e8-cfaff107600d",
+    "contact": {
+      "contact_id": "ct_01a138ab-55e5-71cd-9281-a29e56c4f6e1",
+      "identifier": "+15550100001",
+      "name": null
+    },
+    "direction": "inbound",
+    "group": null,
+    "kind": "received",
+    "message_id": "A9rk9dBG58AEY63Xl-sWP",
+    "message_type": "text",
+    "protocol": "imessage",
+    "recipient": "+15550100002",
+    "reply_to_message_id": null,
+    "sender": "+15550100001",
+    "status": "received",
+    "text": "recorded test reply"
+  },
+  "id": "evt_01a138ab-d138-700a-be14-e1469252de0b",
+  "organization_id": "org_test",
+  "type": "message.received"
+}

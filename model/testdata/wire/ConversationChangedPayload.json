@@ -1,0 +1,22 @@
+{
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "changes": [
+    "Changes"
+  ],
+  "trigger": "Trigger",
+  "status": {
+    "from": "From",
+    "to": "To"
+  },
+  "previous_revision": "PreviousRevision",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

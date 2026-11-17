@@ -1,0 +1,8 @@
+{
+  "code": "Code",
+  "safe_message": "SafeMessage",
+  "correlation": "Correlation",
+  "retry": "Retry",
+  "reason": "Reason",
+  "retry_after_ms": 1500
+}

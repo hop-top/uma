@@ -1,0 +1,32 @@
+{
+  "intent": "Intent",
+  "identity": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "current": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "expected_revision": "ExpectedRevision",
+  "target": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "reason": "Reason",
+  "evidence": {
+    "verifier": "Verifier",
+    "reference": "Reference",
+    "facts": {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    },
+    "assurance": "Assurance"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "correlation": "Correlation",
+  "conversation": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "kind": "Kind",
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "expires_at": "2026-01-02T03:04:05.000000006Z"
+}

@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: ce186c10
+recorded_at: "2026-10-14T04:28:38Z"
+payload:
+    method: POST
+    url: https://api.blooio.com/v4/messages
+    headers:
+        Content-Type: application/json
+    body: '{"from":"SENDER_NUMBER","text":"uma recorded test message: please reply recorded test reply","to":"RECIPIENT_HANDLE"}'

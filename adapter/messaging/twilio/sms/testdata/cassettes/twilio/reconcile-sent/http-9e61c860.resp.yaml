@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 9e61c860
+recorded_at: "2026-10-12T07:21:11Z"
+payload:
+    status: 201
+    headers:
+        Content-Type: application/json;charset=utf-8
+    body: '{"account_sid": "ACCOUNT_SID", "api_version": "2010-04-01", "body": "recorded test message", "date_created": "Mon, 12 Oct 2026 07:21:11 +0000", "date_sent": null, "date_updated": "Mon, 12 Oct 2026 07:21:11 +0000", "direction": "outbound-api", "error_code": null, "error_message": null, "from": "FROM_NUMBER", "messaging_service_sid": null, "num_media": "0", "num_segments": "1", "price": null, "price_unit": "USD", "sid": "SM384286b5f38bc736aada4d81c7d6064b", "status": "queued", "subresource_uris": {"media": "/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM384286b5f38bc736aada4d81c7d6064b/Media.json"}, "to": "TO_NUMBER", "uri": "/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM384286b5f38bc736aada4d81c7d6064b.json"}'

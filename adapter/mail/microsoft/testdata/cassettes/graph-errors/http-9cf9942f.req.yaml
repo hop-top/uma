@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 9cf9942f
+recorded_at: "2026-11-15T19:06:03Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/AQMkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjAC02YzdiODVkZWRmMjMALgAAA3Xx9XZ9DvNOl-wV29jiFwsBAFpEKictnFdElUMopn_wEL8AAAIBDAAAAA==/messages/delta?%24select=id%2CparentFolderId%2CisRead%2CisDraft%2Cflag%2Cimportance%2ClastModifiedDateTime

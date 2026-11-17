@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: d7705b3f
+recorded_at: "2026-11-17T05:56:30Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json;charset=UTF-8
+        X-Ratelimit-Limit: "350"
+        X-Ratelimit-Remaining: "349"
+    body: '{"key":"uma.echo","value":{"attempt":"00000ad0-0000-7000-8000-0000000000f2","operation":"00000ad0-0000-7000-8000-0000000000f1"}}'

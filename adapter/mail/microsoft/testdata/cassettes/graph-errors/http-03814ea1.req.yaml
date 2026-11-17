@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 03814ea1
+recorded_at: "2026-11-15T19:06:02Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders('inbox')/messages/delta?%24deltatoken=corrupt

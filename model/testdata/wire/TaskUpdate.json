@@ -1,0 +1,60 @@
+{
+  "state": "State",
+  "status_message": {
+    "parts": [
+      {
+        "kind": "Kind",
+        "text": "Text",
+        "attachment": {
+          "inbox": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "id": "ID"
+        },
+        "structured": {
+          "name": "Name",
+          "version": 1,
+          "data": {
+            "field": "Data"
+          }
+        }
+      }
+    ]
+  },
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "artifacts": [
+    {
+      "id": "ID",
+      "name": "Name",
+      "description": "Description",
+      "content": {
+        "parts": [
+          {
+            "kind": "Kind",
+            "text": "Text",
+            "attachment": {
+              "inbox": {
+                "tenant": "Tenant",
+                "id": "ID"
+              },
+              "id": "ID"
+            },
+            "structured": {
+              "name": "Name",
+              "version": 1,
+              "data": {
+                "field": "Data"
+              }
+            }
+          }
+        ]
+      },
+      "append": true,
+      "complete": true
+    }
+  ]
+}

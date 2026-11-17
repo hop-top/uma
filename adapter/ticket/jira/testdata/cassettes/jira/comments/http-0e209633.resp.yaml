@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: "0e209633"
+recorded_at: "2026-11-17T05:56:32Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json;charset=UTF-8
+        X-Ratelimit-Limit: "400"
+        X-Ratelimit-Remaining: "398"
+    body: '{"errorMessages":["Can not find a comment for the id: 10004."],"errors":{}}'

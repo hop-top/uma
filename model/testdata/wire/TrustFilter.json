@@ -1,0 +1,14 @@
+{
+  "correlation": "Correlation",
+  "channel": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "labels": {
+    "LabelsKey": "Labels"
+  },
+  "page": {
+    "limit": 1,
+    "after": "After"
+  }
+}

@@ -1,0 +1,15 @@
+xrr: "1"
+adapter: http
+fingerprint: 9cf9d738
+recorded_at: "2026-11-15T19:01:48Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "emailAddress": "MAILBOX",
+          "messagesTotal": 0,
+          "threadsTotal": 0,
+          "historyId": "1582869"
+        }

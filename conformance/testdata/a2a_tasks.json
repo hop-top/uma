@@ -1,0 +1,123 @@
+{
+  "schema": "uma.conformance.a2a_tasks/v1",
+  "rules": [
+    {
+      "id": "A2A-01",
+      "rule": "A message-only exchange creates no task: only a reply to the message answers it.",
+      "cases": [
+        "MessageOnlyExchangeCreatesNoTask"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestSendMessageMessageOnly"
+      ]
+    },
+    {
+      "id": "A2A-02",
+      "rule": "A context holds many tasks; each reaches its own terminal state, and completing one leaves the others and the conversation open.",
+      "cases": [
+        "MultiTaskPerContextIndependentTerminal"
+      ],
+      "tests": []
+    },
+    {
+      "id": "A2A-03",
+      "rule": "An initial request allocates its context and conversation atomically: sixteen concurrent deliveries leave one conversation, one message and one task, and fifteen duplicates; a crash around the unit leaves all of it or none.",
+      "cases": [
+        "InitialRequestAllocatesContextAndConversationAtomically",
+        "AgentIngressCrashBeforeCommit"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestConcurrentSameMessageIdOneTask"
+      ]
+    },
+    {
+      "id": "A2A-04",
+      "rule": "A retry of an accepted message with a fresh context recovers the first context, conversation, message and task, and records nothing twice, also after a crash that lost the answer.",
+      "cases": [
+        "RetryRecoversSameContext",
+        "AgentIngressLostAfterCommit"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestRetrySameMessageIdRecoversContext"
+      ]
+    },
+    {
+      "id": "A2A-05",
+      "rule": "A context and task mismatch, a task the caller does not own and a terminal task are rejected, and write nothing.",
+      "cases": [
+        "MismatchedContextTaskRejected",
+        "UnauthorizedTaskPairRejected",
+        "TerminalTaskRejectsContinuation"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestContinuationMismatch",
+        "adapter/agent/a2a:TestContextAndTaskBelongToTheirOwner",
+        "adapter/agent/a2a:TestContinuationTerminal"
+      ]
+    },
+    {
+      "id": "A2A-06",
+      "rule": "A blocking wait that runs out is the documented deadline error; a task that failed or was canceled during the wait is answered as a task.",
+      "cases": [],
+      "tests": [
+        "adapter/agent/a2a:TestSendMessageBlockingExpiryIsDeadlineError",
+        "adapter/agent/a2a:TestSendMessageBlockingTaskFailedOrCanceledIsTask"
+      ]
+    },
+    {
+      "id": "A2A-07",
+      "rule": "A task opened and completed after the waiting side is gone stays inspectable with its events; nothing is canceled.",
+      "cases": [
+        "WaiterGoneTaskStillInspectable"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestSendMessageBlockingExpiryIsDeadlineError"
+      ]
+    },
+    {
+      "id": "A2A-08",
+      "rule": "A cancel request is recorded and answered with the task as it is; only the host reports canceled, which clears the request.",
+      "cases": [
+        "CancellationRoundTrip"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestCancelTask",
+        "adapter/agent/a2a:TestCancelTaskTerminal"
+      ]
+    },
+    {
+      "id": "A2A-09",
+      "rule": "A status change without content records no message; status content records exactly one message of origin task_status, and bots see it only when they opt in to message.created.",
+      "cases": [
+        "StatusOnlyUpdateEmitsNoMessage",
+        "StatusWithMessageEmitsOne",
+        "RedactedStatusMessageKeepsTaskRef"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestStatusContentAndArtifactsRender",
+        "companions/bot:TestBotIgnoresTaskStatusUnlessOptedIn"
+      ]
+    },
+    {
+      "id": "A2A-10",
+      "rule": "Only protocol version 1.0 is served; streaming, push notifications and the extended card are rejected.",
+      "cases": [],
+      "tests": [
+        "adapter/agent/a2a:TestVersionHeaderRequired",
+        "adapter/agent/a2a:TestStreamingUnsupported",
+        "adapter/agent/a2a:TestPushUnsupported"
+      ]
+    },
+    {
+      "id": "A2A-11",
+      "rule": "The two roles stay separate: the adapter reaches the engine through public packages only, its sink can neither open nor update a task, and nothing an agent writes changes who wrote it or acts as a command.",
+      "cases": [
+        "RoleSeparation",
+        "SenderKindFixedByFirstClaim"
+      ],
+      "tests": [
+        "adapter/agent/a2a:TestImportsStandardLibraryAndPublicContractsOnly"
+      ]
+    }
+  ]
+}

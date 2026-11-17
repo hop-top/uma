@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: e60d9212
+recorded_at: "2026-11-15T19:06:02Z"
+payload:
+    status: 401
+    headers:
+        Content-Type: application/json
+    body: '{"error":{"code":"InvalidAuthenticationToken","message":"Protocol ''Bearer'' failed to validate because The token could not be read.","innerError":{"date":"2026-11-15T19:06:02","request-id":"31c0a7d3-a8f0-48b8-949b-5d7276b2892a","client-request-id":"31c0a7d3-a8f0-48b8-949b-5d7276b2892a"}}}'

@@ -1,0 +1,31 @@
+{
+  "from": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "into": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "from_revision": "FromRevision",
+  "into_revision": "IntoRevision",
+  "identities": [
+    {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    }
+  ],
+  "conversations": [
+    {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    }
+  ],
+  "more_conversations": true
+}

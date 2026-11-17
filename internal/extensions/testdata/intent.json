@@ -1,0 +1,20 @@
+{
+  "target": {
+    "tenant": "tenant-a",
+    "kind": "conversation",
+    "inbox": "00000004-0000-7000-8000-000000000003",
+    "id": "00000004-0000-7000-8000-000000000004"
+  },
+  "audience": {
+    "visibility": "internal",
+    "policy_ref": "staff-only"
+  },
+  "action": {
+    "name": "com.example.chat.messages.pin",
+    "version": 1,
+    "data": {
+      "message": "m1",
+      "x_future": true
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "link": "Link",
+  "class": "Class",
+  "from": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "to": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "assurance": "Assurance"
+}

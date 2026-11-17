@@ -1,0 +1,26 @@
+{
+  "from": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "into": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "identities": [
+    {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    }
+  ],
+  "links": [
+    "Links"
+  ],
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

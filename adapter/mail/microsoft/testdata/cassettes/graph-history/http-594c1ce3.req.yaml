@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 594c1ce3
+recorded_at: "2026-11-15T18:27:03Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/inbox/messages?%24filter=receivedDateTime+ge+2001-01-01T00%3A00%3A00Z+and+receivedDateTime+lt+2001-01-02T00%3A00%3A00Z&%24orderby=receivedDateTime+asc&%24select=id%2CinternetMessageId%2CconversationId%2Csubject%2Cfrom%2Csender%2CtoRecipients%2CccRecipients%2CreplyTo%2Cbody%2CreceivedDateTime%2ChasAttachments%2CisDraft%2CinternetMessageHeaders&%24top=2

@@ -1,0 +1,49 @@
+{
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "base_revision": "BaseRevision",
+  "base_last_edit": {
+    "actor": "Actor",
+    "by": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "at": "2026-01-02T03:04:05.000000006Z",
+    "operation": {
+      "tenant": "Tenant",
+      "id": "ID"
+    }
+  },
+  "content": {
+    "parts": [
+      {
+        "kind": "Kind",
+        "text": "Text",
+        "attachment": {
+          "inbox": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "id": "ID"
+        },
+        "structured": {
+          "name": "Name",
+          "version": 1,
+          "data": {
+            "field": "Data"
+          }
+        }
+      }
+    ]
+  },
+  "delete": true,
+  "reaction": {
+    "emoji": "Emoji",
+    "remove": true
+  }
+}

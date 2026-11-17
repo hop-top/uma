@@ -1,0 +1,16 @@
+xrr: "1"
+adapter: http
+fingerprint: cdb70094
+recorded_at: "2026-11-17T05:45:58Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Complexity-Limit: "3000000"
+        X-Ratelimit-Complexity-Remaining: "2999998"
+        X-Ratelimit-Complexity-Reset: "1794897958129"
+        X-Ratelimit-Requests-Limit: "2500"
+        X-Ratelimit-Requests-Remaining: "2499"
+        X-Ratelimit-Requests-Reset: "1794897958129"
+    body: |
+        {"data":{"commentCreate":{"success":true,"comment":{"id":"1e4402e6-2c18-4fde-b6a8-9f982f3baa62"}}}}

@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: ce186c10
+recorded_at: "2026-10-14T04:28:38Z"
+payload:
+    status: 201
+    headers:
+        Content-Type: application/json
+    body: '{"id":"msg_01a138ab-5650-7ce6-85c6-7196eebf8a77","chat_id":"chat_01a138ab-561c-78e5-b6e8-cfaff107600d","from":"SENDER_NUMBER","channel_id":"ch_01a138a8-4944-7330-b520-b21a1279c6bb","channel_type":"blooio","protocol":"pending","direction":"outbound","type":"text","status":"queued","routing":{"mode":"explicit","channel_type":"blooio","number":"SENDER_NUMBER"}}'

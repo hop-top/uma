@@ -1,0 +1,36 @@
+xrr: "1"
+adapter: http
+fingerprint: ba2aa633
+recorded_at: "2026-11-15T19:01:55Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "e3d474cb0c33e1e",
+          "historyId": "1582623",
+          "messages": [
+            {
+              "id": "e3d474cb0c33e1e",
+              "threadId": "e3d474cb0c33e1e",
+              "labelIds": [
+                "UNREAD",
+                "INBOX"
+              ],
+              "snippet": "Reply in the same thread, second message of the window.",
+              "payload": {
+                "mimeType": "text/plain",
+                "headers": [
+                  {
+                    "name": "To",
+                    "value": "MAILBOX"
+                  }
+                ]
+              },
+              "sizeEstimate": 502,
+              "historyId": "1582623",
+              "internalDate": "978522000000"
+            }
+          ]
+        }

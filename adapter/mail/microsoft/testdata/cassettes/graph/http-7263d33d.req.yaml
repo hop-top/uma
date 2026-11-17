@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 7263d33d
+recorded_at: "2026-11-15T18:31:07Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/sentitems/messages?%24filter=singleValueExtendedProperties%2FAny%28ep%3A+ep%2Fid+eq+%27String+%7B31c7380f-d7fb-4c46-affc-b4bed2fb34b9%7D+Name+uma-attempt%27+and+ep%2Fvalue+eq+%27t1%2F00000000-0000-7000-8000-0000000000e1%2F00000000-0000-7000-8000-0000000000a1%27%29&%24select=id%2CinternetMessageId%2CisDraft

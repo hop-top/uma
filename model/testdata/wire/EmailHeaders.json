@@ -1,0 +1,7 @@
+{
+  "message_id": "MessageID",
+  "in_reply_to": "InReplyTo",
+  "references": "References",
+  "list_id": "ListID",
+  "auto_submitted": "AutoSubmitted"
+}

@@ -1,0 +1,6 @@
+# Tools only this repo's own targets use; kept out of the kit-managed block
+# in mise.toml so `kit init --update` leaves them alone. mise loads this file
+# together with mise.toml.
+[tools]
+# store/postgres query generation (`make gen`, `make gen-check`).
+sqlc = "1.31.1"

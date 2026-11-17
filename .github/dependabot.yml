@@ -1,0 +1,52 @@
+version: 2
+updates:
+  - package-ecosystem: gomod
+    directories:
+      - "/"
+      - "/adapter/chat/discord"
+      - "/adapter/chat/slack"
+      - "/adapter/chat/teams"
+      - "/adapter/chat/telegram"
+      - "/adapter/mail"
+      - "/adapter/mail/google"
+      - "/adapter/mail/microsoft"
+      - "/adapter/messaging/meta"
+      - "/adapter/messaging/twilio"
+      - "/adapter/ticket/github"
+      - "/adapter/ticket/gitlab"
+      - "/adapter/ticket/jira"
+      - "/adapter/ticket/linear"
+      - "/adapter/ticket/zendesk"
+      - "/contrib/kit"
+      - "/contrib/otel"
+      - "/examples"
+      - "/examples/fakeprovider"
+      - "/examples/imessagegateway"
+      - "/examples/inbox"
+      - "/examples/triage"
+      - "/store/postgres"
+      - "/testing/xrrtest"
+    schedule:
+      interval: weekly
+    groups:
+      go-modules:
+        patterns:
+          - "*"
+        group-by: dependency-name
+      go-security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    cooldown:
+      default-days: 14
+    commit-message:
+      prefix: "build(deps):"
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 14
+    commit-message:
+      prefix: "ci(deps):"

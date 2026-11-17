@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: ab9aafd1
+recorded_at: "2026-11-17T02:07:15Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json
+        X-Ratelimit-Bucket: f3f6402fab459d6ea06c2655a11fd1e4
+        X-Ratelimit-Limit: "5"
+        X-Ratelimit-Remaining: "3"
+        X-Ratelimit-Reset: "1794881235.943"
+        X-Ratelimit-Reset-After: "0.529"
+    body: '{"message": "Unknown Member", "code": 10007}'

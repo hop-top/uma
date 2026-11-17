@@ -1,0 +1,10 @@
+{
+  "correlation": "Correlation",
+  "channel": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "keys": [
+    "Keys"
+  ]
+}

@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: "12127938"
+recorded_at: "2026-11-17T05:56:30Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json;charset=UTF-8
+        X-Ratelimit-Limit: "350"
+        X-Ratelimit-Remaining: "349"
+    body: '{"comments":[{"author":{"accountId":"5b10ac8d82e05b22cc7d4ef5","accountType":"atlassian","active":true,"avatarUrls":{},"displayName":"Sandbox User","emailAddress":"sandbox@example.com","self":"https://sandbox.example.atlassian.net/rest/api/3/user?accountId=5b10ac8d82e05b22cc7d4ef5","timeZone":"UTC"},"body":{"content":[{"content":[{"text":"uma recorded reply","type":"text"}],"type":"paragraph"}],"type":"doc","version":1},"created":"2026-11-17T00:56:30.159-0500","id":"10004","jsdPublic":true,"self":"https://sandbox.example.atlassian.net/rest/api/3/issue/10001/comment/10004","updateAuthor":{"accountId":"5b10ac8d82e05b22cc7d4ef5","accountType":"atlassian","active":true,"avatarUrls":{},"displayName":"Sandbox User","emailAddress":"sandbox@example.com","self":"https://sandbox.example.atlassian.net/rest/api/3/user?accountId=5b10ac8d82e05b22cc7d4ef5","timeZone":"UTC"},"updated":"2026-11-17T00:56:30.159-0500"}],"maxResults":100,"startAt":0,"total":1}'

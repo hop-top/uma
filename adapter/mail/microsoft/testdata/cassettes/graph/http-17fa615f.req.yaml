@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 17fa615f
+recorded_at: "2026-11-15T18:31:08Z"
+payload:
+    method: PATCH
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAwUwAA
+    headers:
+        Content-Type: application/json
+    body: '{"isRead":true}'

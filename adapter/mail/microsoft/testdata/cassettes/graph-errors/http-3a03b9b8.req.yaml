@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 3a03b9b8
+recorded_at: "2026-11-15T19:06:02Z"
+payload:
+    method: POST
+    url: https://graph.microsoft.com/v1.0/subscriptions
+    headers:
+        Content-Type: application/json
+    body: '{"changeType":"created","notificationUrl":"https://uma-recording.invalid/graph","lifecycleNotificationUrl":"https://uma-recording.invalid/graph","resource":"users/MAILBOX/mailFolders(''inbox'')/messages","expirationDateTime":"2001-03-04T12:00:00Z","clientState":"VqqzqtommXJ2fcWSJqFiBt9xsmOYQ-9Q4x8HfZuCji4"}'

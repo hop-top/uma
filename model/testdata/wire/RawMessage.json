@@ -1,0 +1,15 @@
+{
+  "ref": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "media_type": "MediaType",
+  "size": 1,
+  "bytes": "AQ=="
+}

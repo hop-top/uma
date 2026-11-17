@@ -1,0 +1,11 @@
+{
+  "emoji": "Emoji",
+  "by": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "count": 1
+}

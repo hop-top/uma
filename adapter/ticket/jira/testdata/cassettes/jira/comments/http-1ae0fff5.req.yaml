@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 1ae0fff5
+recorded_at: "2026-11-17T05:56:31Z"
+payload:
+    method: GET
+    url: https://sandbox.example.atlassian.net/rest/api/3/comment/10004/properties/uma.echo

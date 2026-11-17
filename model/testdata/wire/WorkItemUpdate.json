@@ -1,0 +1,26 @@
+{
+  "status": "Status",
+  "status_reason": "StatusReason",
+  "subject": "Subject",
+  "assignees": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "fields": [
+    {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    }
+  ]
+}

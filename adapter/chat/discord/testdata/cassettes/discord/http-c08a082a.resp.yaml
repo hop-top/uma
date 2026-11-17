@@ -1,0 +1,15 @@
+xrr: "1"
+adapter: http
+fingerprint: c08a082a
+recorded_at: "2026-11-17T02:07:14Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json
+        X-Ratelimit-Bucket: d2d6d106b80cab1d648e20868579b3bb
+        X-Ratelimit-Limit: "5"
+        X-Ratelimit-Remaining: "3"
+        X-Ratelimit-Reset: "1794881235.553"
+        X-Ratelimit-Reset-After: "1.547"
+    body: |
+        {"type":0,"content":"uma recorded edit","mentions":[],"mention_roles":[],"attachments":[],"embeds":[],"timestamp":"2026-11-17T02:07:12.095000+00:00","edited_timestamp":"2026-11-17T02:07:13.218000+00:00","flags":0,"components":[],"id":"1572070572299657318","channel_id":"DISCORD_CHANNEL_ID","author":{"id":"DISCORD_BOT_USER_ID","username":"uma-adapter-test-bot","avatar":null,"discriminator":"0000","public_flags":0,"flags":0,"bot":true,"banner":null,"accent_color":null,"global_name":null,"avatar_decoration_data":null,"collectibles":null,"display_name_styles":null,"banner_color":null,"clan":null,"primary_guild":null},"pinned":false,"mention_everyone":false,"tts":false,"reactions":[{"emoji":{"id":null,"name":"\ud83d\udc4d"},"count":1,"count_details":{"burst":0,"normal":1},"burst_colors":[],"me_burst":false,"burst_me":false,"me":true,"burst_count":0}]}

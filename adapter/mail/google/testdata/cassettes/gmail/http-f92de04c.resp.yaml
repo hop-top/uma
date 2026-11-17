@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: f92de04c
+recorded_at: "2026-11-15T19:01:54Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: '{"historyId":"1582599","id":"e3d4627bc29f584","internalDate":"978520800000","labelIds":["UNREAD","INBOX"],"raw":"UmVjZWl2ZWQ6IGZyb20gMDAwMDAwMDAwMDAwCW5hbWVkIHVua25vd24JYnkgZ21haWxhcGkuZ29vZ2xlLmNvbQl3aXRoIEhUVFBSRVNUOwlTdW4sIDE1IE5vdiAyMDI2IDEwOjU3OjE0IC0wODAwDQpGcm9tOiBQRUVSQHBlZXIuaW52YWxpZA0KVG86IE1BSUxCT1hAbWFpbGJveC5pbnZhbGlkDQpTdWJqZWN0OiB1bWEgc3luYyByZWNvcmRpbmcgMQ0KRGF0ZTogV2VkLCAwMyBKYW4gMjAwMSAxMToyMDowMCArMDAwMA0KTWVzc2FnZS1JRDogPHVtYS1zeW5jLTFAcmVjb3JkaW5nLmludmFsaWQ-DQpNSU1FLVZlcnNpb246IDEuMA0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04DQoNCkZpcnN0IG1lc3NhZ2Ugb2YgdGhlIHVtYSBzeW5jIHJlY29yZGluZyB3aW5kb3cuDQo=","sizeEstimate":401,"snippet":"First message of the uma sync recording window.","threadId":"e3d4627bc29f584"}'

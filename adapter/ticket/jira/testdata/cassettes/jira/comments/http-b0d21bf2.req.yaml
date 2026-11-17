@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: b0d21bf2
+recorded_at: "2026-11-17T05:56:31Z"
+payload:
+    method: PUT
+    url: https://sandbox.example.atlassian.net/rest/api/3/issue/10001/comment/10004
+    headers:
+        Content-Type: application/json
+    body: '{"body":{"content":[{"content":[{"text":"uma recorded edit","type":"text"}],"type":"paragraph"}],"type":"doc","version":1},"properties":[{"key":"uma.echo","value":{"attempt":"00000ad0-0000-7000-8000-0000000000f3","operation":"00000ad0-0000-7000-8000-0000000000f1"}}]}'

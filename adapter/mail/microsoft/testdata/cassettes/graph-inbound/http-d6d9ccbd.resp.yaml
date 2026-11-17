@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: d6d9ccbd
+recorded_at: "2026-11-15T19:02:15Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8
+    body: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''MAILBOX'')/messages/$entity","@odata.etag":"W/\"CQAAABYAAABaRConLZxXRJVDKKZ/sBC/AAAAAAhj\"","id":"AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD-gAA","createdDateTime":"2026-11-15T19:02:15Z","lastModifiedDateTime":"2026-11-15T19:02:15Z","changeKey":"CQAAABYAAABaRConLZxXRJVDKKZ/sBC/AAAAAAhj","categories":[],"receivedDateTime":"2026-11-15T19:02:15Z","sentDateTime":"2026-11-15T19:02:15Z","hasAttachments":false,"internetMessageId":"<msgid-0001@uma-recording.invalid>","subject":"RE: uma inbound recording 1","bodyPreview":"uma inbound recording reply","importance":"normal","parentFolderId":"AQMkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjAC02YzdiODVkZWRmMjMALgAAA3Xx9XZ9DvNOl-wV29jiFwsBAFpEKictnFdElUMopn_wEL8AAAIBDwAAAA==","conversationId":"AAQkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjLTZjN2I4NWRlZGYyMwAQAMIxW8UbKZZFqzWvKYwZphQ=","conversationIndex":"AQHddTPSwjFbxRsplkWrNa8pjBmmFLcvfUBx","isDeliveryReceiptRequested":false,"isReadReceiptRequested":false,"isRead":true,"isDraft":true,"webLink":"https://outlook.office365.com/owa/?ItemID=AAkALgAAAAAAHYQDEapmEc2byACqAC%2FEWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD%2FgAA&exvsurl=1&viewmodel=ReadMessageItem","inferenceClassification":"focused","body":{"contentType":"text","content":"uma inbound recording reply"},"sender":{"emailAddress":{"name":"uma test","address":"MAILBOX"}},"from":{"emailAddress":{"name":"uma test","address":"MAILBOX"}},"toRecipients":[{"emailAddress":{"name":"PEER","address":"PEER"}}],"ccRecipients":[],"bccRecipients":[],"replyTo":[],"flag":{"flagStatus":"notFlagged"}}'

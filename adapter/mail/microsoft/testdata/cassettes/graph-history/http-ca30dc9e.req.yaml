@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: ca30dc9e
+recorded_at: "2026-11-15T18:27:03Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAY3wAA/attachments?%24select=id%2Cname%2CcontentType%2Csize%2CisInline

@@ -1,0 +1,11 @@
+{
+  "correlation": "Correlation",
+  "from": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "into": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

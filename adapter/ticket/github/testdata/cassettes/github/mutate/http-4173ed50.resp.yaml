@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: 4173ed50
+recorded_at: "2026-10-12T07:53:30Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Limit: "5000"
+        X-Ratelimit-Remaining: "4993"
+        X-Ratelimit-Reset: "1791795208"
+        X-Ratelimit-Resource: core
+        X-Ratelimit-Used: "7"
+    body: '[{"content":"+1","created_at":"2026-10-12T07:53:30Z","id":438460310,"node_id":"NODE_ID","user":{"avatar_url":"https://avatars.githubusercontent.com/u/9100001?v=4","events_url":"https://api.github.com/users/uma-sandbox-account/events{/privacy}","followers_url":"https://api.github.com/users/uma-sandbox-account/followers","following_url":"https://api.github.com/users/uma-sandbox-account/following{/other_user}","gists_url":"https://api.github.com/users/uma-sandbox-account/gists{/gist_id}","gravatar_id":"","html_url":"https://github.com/uma-sandbox-account","id":9100001,"login":"uma-sandbox-account","node_id":"NODE_ID","organizations_url":"https://api.github.com/users/uma-sandbox-account/orgs","received_events_url":"https://api.github.com/users/uma-sandbox-account/received_events","repos_url":"https://api.github.com/users/uma-sandbox-account/repos","site_admin":false,"starred_url":"https://api.github.com/users/uma-sandbox-account/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/uma-sandbox-account/subscriptions","type":"User","url":"https://api.github.com/users/uma-sandbox-account","user_view_type":"public"}}]'

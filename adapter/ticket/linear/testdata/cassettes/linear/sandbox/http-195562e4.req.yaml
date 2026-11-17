@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: "195562e4"
+recorded_at: "2026-11-17T05:45:58Z"
+payload:
+    method: POST
+    url: https://api.linear.app/graphql
+    headers:
+        Content-Type: application/json
+    body: '{"query":"mutation UmaCommentUpdate($id: String!, $input: CommentUpdateInput!) {\n  commentUpdate(id: $id, input: $input) { success comment { id } }\n}","variables":{"id":"1e4402e6-2c18-4fde-b6a8-9f982f3baa62","input":{"body":"Recorded edit.\n\n\u003c!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b2 --\u003e"}}}'

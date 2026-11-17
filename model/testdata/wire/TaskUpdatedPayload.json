@@ -1,0 +1,35 @@
+{
+  "task": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "changes": [
+    "Changes"
+  ],
+  "trigger": "Trigger",
+  "state": {
+    "from": "From",
+    "to": "To"
+  },
+  "previous_revision": "PreviousRevision",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "message": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "action": "transferred",
+  "changes": {
+    "new_issue": {
+      "url": "https://api.github.com/repos/example/uma-archive/issues/42",
+      "repository_url": "https://api.github.com/repos/example/uma-sandbox",
+      "html_url": "https://github.com/example/uma-archive/issues/42",
+      "id": 3000000042,
+      "node_id": "I_kwDOexample7",
+      "number": 42,
+      "title": "Export fails on large files",
+      "user": {
+        "login": "reporter",
+        "id": 5000001,
+        "node_id": "U_reporter",
+        "type": "User",
+        "site_admin": false
+      },
+      "labels": [],
+      "state": "open",
+      "locked": false,
+      "assignee": null,
+      "assignees": [],
+      "milestone": null,
+      "comments": 0,
+      "created_at": "2026-10-11T09:00:00Z",
+      "updated_at": "2026-10-11T11:30:00Z",
+      "closed_at": null,
+      "author_association": "NONE",
+      "body": "Exports over 2 GB stop at 99%.",
+      "state_reason": null
+    },
+    "new_repository": {
+      "id": 700000002,
+      "node_id": "R_kgDOexample",
+      "name": "uma-archive",
+      "full_name": "example/uma-archive",
+      "private": true,
+      "owner": {
+        "login": "example",
+        "id": 9000001,
+        "type": "Organization",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/example/uma-archive",
+      "url": "https://api.github.com/repos/example/uma-archive"
+    }
+  },
+  "issue": {
+    "url": "https://api.github.com/repos/example/uma-sandbox/issues/7",
+    "repository_url": "https://api.github.com/repos/example/uma-sandbox",
+    "html_url": "https://github.com/example/uma-sandbox/issues/7",
+    "id": 3000000007,
+    "node_id": "I_kwDOexample7",
+    "number": 7,
+    "title": "Export fails on large files",
+    "user": {
+      "login": "reporter",
+      "id": 5000001,
+      "node_id": "U_reporter",
+      "type": "User",
+      "site_admin": false
+    },
+    "labels": [],
+    "state": "open",
+    "locked": false,
+    "assignee": null,
+    "assignees": [],
+    "milestone": null,
+    "comments": 0,
+    "created_at": "2026-10-11T09:00:00Z",
+    "updated_at": "2026-10-11T11:30:00Z",
+    "closed_at": null,
+    "author_association": "NONE",
+    "body": "Exports over 2 GB stop at 99%.",
+    "state_reason": null
+  },
+  "repository": {
+    "id": 700000001,
+    "node_id": "R_kgDOexample",
+    "name": "uma-sandbox",
+    "full_name": "example/uma-sandbox",
+    "private": true,
+    "owner": {
+      "login": "example",
+      "id": 9000001,
+      "type": "Organization",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/example/uma-sandbox",
+    "url": "https://api.github.com/repos/example/uma-sandbox"
+  },
+  "sender": {
+    "login": "staff-member",
+    "id": 5000002,
+    "node_id": "U_staff",
+    "type": "User",
+    "site_admin": false
+  },
+  "installation": {
+    "id": 60000001,
+    "node_id": "MDIzOkludGVncmF0aW9uSW5zdGFsbGF0aW9uNjAwMDAwMDE="
+  }
+}

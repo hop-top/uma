@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 48c570e6
+recorded_at: "2026-11-15T19:01:54Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: '{"historyId":"1582623","id":"e3d474cb0c33e1e","internalDate":"978522000000","labelIds":["UNREAD","INBOX"],"raw":"UmVjZWl2ZWQ6IGZyb20gMDAwMDAwMDAwMDAwCW5hbWVkIHVua25vd24JYnkgZ21haWxhcGkuZ29vZ2xlLmNvbQl3aXRoIEhUVFBSRVNUOwlTdW4sIDE1IE5vdiAyMDI2IDEwOjU3OjE0IC0wODAwDQpGcm9tOiBQRUVSQHBlZXIuaW52YWxpZA0KVG86IE1BSUxCT1hAbWFpbGJveC5pbnZhbGlkDQpTdWJqZWN0OiBSZTogdW1hIHN5bmMgcmVjb3JkaW5nIDENCkRhdGU6IFdlZCwgMDMgSmFuIDIwMDEgMTE6NDA6MDAgKzAwMDANCk1lc3NhZ2UtSUQ6IDx1bWEtc3luYy0yQHJlY29yZGluZy5pbnZhbGlkPg0KTUlNRS1WZXJzaW9uOiAxLjANCkluLVJlcGx5LVRvOiA8dW1hLXN5bmMtMUByZWNvcmRpbmcuaW52YWxpZD4NClJlZmVyZW5jZXM6IDx1bWEtc3luYy0xQHJlY29yZGluZy5pbnZhbGlkPg0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04DQoNClJlcGx5IGluIHRoZSBzYW1lIHRocmVhZCwgc2Vjb25kIG1lc3NhZ2Ugb2YgdGhlIHdpbmRvdy4NCg==","sizeEstimate":502,"snippet":"Reply in the same thread, second message of the window.","threadId":"e3d474cb0c33e1e"}'

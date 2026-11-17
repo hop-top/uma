@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: ecd76a4d
+recorded_at: "2026-11-15T18:27:03Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8
+    body: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#users(''MAILBOX'')/mailFolders(''inbox'')/messages(id,internetMessageId,conversationId,subject,from,sender,toRecipients,ccRecipients,replyTo,body,receivedDateTime,hasAttachments,isDraft,internetMessageHeaders)","value":[{"@odata.etag":"W/\"CQAAABYAAABaRConLZxXRJVDKKZ/sBC/AAAAAADX\"","id":"AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAY4gAA","receivedDateTime":"2001-01-01T11:00:00Z","hasAttachments":false,"internetMessageId":"<uma-history-3@recording.invalid>","subject":"uma history recording 3","conversationId":"AAQkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjLTZjN2I4NWRlZGYyMwAQABpfgK9Bo3RGkOPD_uChNwI=","isDraft":false,"body":{"contentType":"text","content":"Third and last message of the window."},"sender":{"emailAddress":{"name":"PEER","address":"PEER"}},"from":{"emailAddress":{"name":"PEER","address":"PEER"}},"toRecipients":[{"emailAddress":{"name":"uma test","address":"MAILBOX"}}],"ccRecipients":[],"replyTo":[]}]}'

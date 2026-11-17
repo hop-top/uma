@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 1171de75
+recorded_at: "2026-11-17T05:45:58Z"
+payload:
+    method: POST
+    url: https://api.linear.app/graphql
+    headers:
+        Content-Type: application/json
+    body: '{"query":"query UmaComment($id: String!) {\n  comment(id: $id) {\n    id body createdAt updatedAt editedAt archivedAt url issueId parentId\n    user { id name app }\n    botActor { id name type }\n    issue { id identifier title url team { key } }\n  }\n}","variables":{"id":"1e4402e6-2c18-4fde-b6a8-9f982f3baa62"}}'

@@ -1,0 +1,20 @@
+{
+  "correlation": "Correlation",
+  "target": {
+    "tenant": "Tenant",
+    "kind": "Kind",
+    "inbox": "Inbox",
+    "id": "ID"
+  },
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "query": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  }
+}

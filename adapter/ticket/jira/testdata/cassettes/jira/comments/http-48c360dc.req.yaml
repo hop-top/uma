@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 48c360dc
+recorded_at: "2026-11-17T05:56:31Z"
+payload:
+    method: GET
+    url: https://sandbox.example.atlassian.net/rest/api/3/issue/10001?fields=summary%2Cdescription%2Cstatus%2Clabels%2Cproject%2Creporter%2Ccreator%2Cassignee%2Ccreated%2Cupdated

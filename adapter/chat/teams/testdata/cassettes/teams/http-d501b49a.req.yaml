@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: d501b49a
+recorded_at: "2026-11-17T05:06:35Z"
+payload:
+    method: PUT
+    url: https://TEAMS_SERVICE_HOST_AND_PATH/v3/conversations/a:TEAMS_CONVERSATION_ID/activities/1794891995171
+    headers:
+        Content-Type: application/json; charset=utf-8
+    body: '{"type":"message","id":"1794891995171","text":"uma recorded edit","textFormat":"plain"}'

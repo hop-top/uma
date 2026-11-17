@@ -1,0 +1,125 @@
+{
+  "ref": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "kind": "Kind",
+  "actor": {
+    "identity": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "external": {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    },
+    "kind": "Kind",
+    "assurance": "Assurance"
+  },
+  "bot": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "action": "Action",
+  "command": "Command",
+  "arguments": "Arguments",
+  "fields": {
+    "name": "Name",
+    "version": 1,
+    "data": {
+      "field": "Data"
+    }
+  },
+  "message": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "message_external": {
+    "channel": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "kind": "Kind",
+    "id": "ID",
+    "parent_id": "ParentID"
+  },
+  "context": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "external": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "occurred_at": "2026-01-02T03:04:05.000000006Z",
+  "recorded_at": "2026-01-02T03:04:05.000000006Z",
+  "deadline": "2026-01-02T03:04:05.000000006Z",
+  "respond_until": "2026-01-02T03:04:05.000000006Z",
+  "response": {
+    "initial": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "follow_ups": 1
+  },
+  "revision": "Revision",
+  "redacted": true,
+  "source": "Source",
+  "metadata": [
+    {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    }
+  ]
+}

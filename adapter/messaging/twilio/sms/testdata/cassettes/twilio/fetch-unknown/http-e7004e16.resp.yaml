@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: e7004e16
+recorded_at: "2026-10-12T00:49:16Z"
+payload:
+    status: 404
+    headers:
+        Content-Type: application/json
+    body: '{"code":20404,"message":"The requested resource /2010-04-01/Accounts/ACCOUNT_SID/Messages/SM00000000000000000000000000000000.json was not found","more_info":"https://www.twilio.com/docs/errors/20404","status":404}'

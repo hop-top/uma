@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: 48c360dc
+recorded_at: "2026-11-17T05:56:31Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json;charset=UTF-8
+        X-Ratelimit-Limit: "400"
+        X-Ratelimit-Remaining: "399"
+    body: '{"expand":"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations","fields":{"assignee":null,"created":"2026-11-17T00:44:32.516-0500","creator":{"accountId":"5b10ac8d82e05b22cc7d4ef5","accountType":"atlassian","active":true,"avatarUrls":{},"displayName":"Sandbox User","emailAddress":"sandbox@example.com","self":"https://sandbox.example.atlassian.net/rest/api/3/user?accountId=5b10ac8d82e05b22cc7d4ef5","timeZone":"UTC"},"description":null,"labels":[],"project":{"avatarUrls":{},"id":"10001","key":"SBX","name":"Sandbox Project","projectTypeKey":"software","self":"https://sandbox.example.atlassian.net/rest/api/3/project/10001","simplified":true},"reporter":{"accountId":"5b10ac8d82e05b22cc7d4ef5","accountType":"atlassian","active":true,"avatarUrls":{},"displayName":"Sandbox User","emailAddress":"sandbox@example.com","self":"https://sandbox.example.atlassian.net/rest/api/3/user?accountId=5b10ac8d82e05b22cc7d4ef5","timeZone":"UTC"},"status":{"description":"","iconUrl":"https://sandbox.example.atlassian.net/images/icons/statuses/generic.png","id":"10004","name":"To Do","self":"https://sandbox.example.atlassian.net/rest/api/3/status/10004","statusCategory":{"colorName":"blue-gray","id":2,"key":"new","name":"To Do","self":"https://sandbox.example.atlassian.net/rest/api/3/statuscategory/2"}},"summary":"sandbox issue","updated":"2026-11-17T00:56:31.325-0500"},"id":"10001","key":"SBX-1","self":"https://sandbox.example.atlassian.net/rest/api/3/issue/10001"}'

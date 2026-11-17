@@ -1,0 +1,178 @@
+{
+  "ref": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "author": {
+    "identity": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "external": {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    },
+    "kind": "Kind",
+    "assurance": "Assurance"
+  },
+  "content": {
+    "parts": [
+      {
+        "kind": "Kind",
+        "text": "Text",
+        "attachment": {
+          "inbox": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "id": "ID"
+        },
+        "structured": {
+          "name": "Name",
+          "version": 1,
+          "data": {
+            "field": "Data"
+          }
+        }
+      }
+    ]
+  },
+  "audience": {
+    "visibility": "Visibility",
+    "policy_ref": "PolicyRef"
+  },
+  "external": [
+    {
+      "channel": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "namespace": "Namespace",
+      "kind": "Kind",
+      "id": "ID",
+      "parent_id": "ParentID"
+    }
+  ],
+  "task": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "occurred_at": "2026-01-02T03:04:05.000000006Z",
+  "recorded_at": "2026-01-02T03:04:05.000000006Z",
+  "revision": "Revision",
+  "redacted": true,
+  "deleted": true,
+  "origin": {
+    "actor": "Actor",
+    "operation": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "application": "Application"
+  },
+  "imported_by": "ImportedBy",
+  "source": "Source",
+  "metadata": [
+    {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    }
+  ],
+  "echo_of": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "reactions": [
+    {
+      "emoji": "Emoji",
+      "by": {
+        "inbox": {
+          "tenant": "Tenant",
+          "id": "ID"
+        },
+        "id": "ID"
+      },
+      "actor": "Actor",
+      "count": 1,
+      "external": [
+        {
+          "channel": {
+            "tenant": "Tenant",
+            "id": "ID"
+          },
+          "namespace": "Namespace",
+          "kind": "Kind",
+          "id": "ID",
+          "parent_id": "ParentID"
+        }
+      ],
+      "at": "2026-01-02T03:04:05.000000006Z"
+    }
+  ],
+  "reactions_complete": true,
+  "last_edit": {
+    "actor": "Actor",
+    "by": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "at": "2026-01-02T03:04:05.000000006Z",
+    "operation": {
+      "tenant": "Tenant",
+      "id": "ID"
+    }
+  },
+  "in_reply_to": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "in_response_to": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  }
+}

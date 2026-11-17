@@ -1,0 +1,22 @@
+xrr: "1"
+adapter: http
+fingerprint: fd84835b
+recorded_at: "2026-11-15T19:01:48Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "messages": [
+            {
+              "id": "e3d474cb0c33e1e",
+              "threadId": "e3d474cb0c33e1e"
+            },
+            {
+              "id": "e3d4627bc29f584",
+              "threadId": "e3d4627bc29f584"
+            }
+          ],
+          "resultSizeEstimate": 2
+        }

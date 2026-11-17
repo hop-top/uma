@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 326a665d
+recorded_at: "2026-11-15T19:01:48Z"
+payload:
+    method: POST
+    url: https://gmail.googleapis.com/gmail/v1/users/MAILBOX/messages/1a1e09649e4f1bb8/modify
+    headers:
+        Content-Type: application/json
+    body: '{"removeLabelIds":["STARRED"]}'

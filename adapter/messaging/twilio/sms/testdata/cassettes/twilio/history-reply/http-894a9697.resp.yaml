@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 894a9697
+recorded_at: "2026-10-12T23:37:51Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json;charset=utf-8
+    body: '{"end":0,"first_page_uri":"/2010-04-01/Accounts/ACCOUNT_SID/Messages.json?PageSize=1000\u0026Page=0\u0026To=FROM_NUMBER_QUERY\u0026From=TO_NUMBER_QUERY\u0026DateSent%3E=2026-10-12T00%3A00%3A00Z","messages":[{"account_sid":"ACCOUNT_SID","api_version":"2010-04-01","body":"recorded test reply","date_created":"Mon, 12 Oct 2026 23:37:48 +0000","date_sent":"Mon, 12 Oct 2026 23:37:49 +0000","date_updated":"Mon, 12 Oct 2026 23:37:49 +0000","direction":"inbound","error_code":null,"error_message":null,"from":"TO_NUMBER","messaging_service_sid":null,"num_media":"0","num_segments":"1","price":null,"price_unit":"USD","sid":"SM8d407f9ffb4b1a6b832245a002aac4ae","status":"received","subresource_uris":{"feedback":"/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM8d407f9ffb4b1a6b832245a002aac4ae/Feedback.json","media":"/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM8d407f9ffb4b1a6b832245a002aac4ae/Media.json"},"to":"FROM_NUMBER","uri":"/2010-04-01/Accounts/ACCOUNT_SID/Messages/SM8d407f9ffb4b1a6b832245a002aac4ae.json"}],"next_page_uri":null,"page":0,"page_size":1000,"previous_page_uri":null,"start":0,"uri":"/2010-04-01/Accounts/ACCOUNT_SID/Messages.json?PageSize=1000\u0026Page=0\u0026To=FROM_NUMBER_QUERY\u0026From=TO_NUMBER_QUERY\u0026DateSent%3E=2026-10-12T00%3A00%3A00Z"}'

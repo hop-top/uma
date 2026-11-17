@@ -1,0 +1,20 @@
+{
+  "ref": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "display_name": "DisplayName",
+  "kind": "Kind",
+  "attributes": [
+    {
+      "kind": "Kind",
+      "value": "Value",
+      "verified": true
+    }
+  ],
+  "revision": "Revision",
+  "merged_into": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

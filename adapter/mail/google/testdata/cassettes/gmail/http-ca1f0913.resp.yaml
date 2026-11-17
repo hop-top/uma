@@ -1,0 +1,12 @@
+xrr: "1"
+adapter: http
+fingerprint: ca1f0913
+recorded_at: "2026-11-15T19:01:47Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "resultSizeEstimate": 0
+        }

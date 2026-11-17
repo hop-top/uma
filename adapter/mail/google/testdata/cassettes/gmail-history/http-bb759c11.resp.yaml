@@ -1,0 +1,21 @@
+xrr: "1"
+adapter: http
+fingerprint: bb759c11
+recorded_at: "2026-11-15T17:37:36Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=UTF-8
+    body: |
+        {
+          "id": "e3ca03728fb1be4",
+          "threadId": "e3ca03728fb1be4",
+          "labelIds": [
+            "UNREAD",
+            "INBOX"
+          ],
+          "snippet": "Third and last message of the window.",
+          "sizeEstimate": 397,
+          "historyId": "1582241",
+          "internalDate": "978346800000"
+        }

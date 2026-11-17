@@ -1,0 +1,63 @@
+{
+  "id": "ID",
+  "tenant": "Tenant",
+  "identity": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "identity_key": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "namespace": "Namespace",
+    "source_id": "SourceID"
+  },
+  "class": "Class",
+  "from": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "to": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "supersedes": "Supersedes",
+  "evidence": {
+    "verifier": "Verifier",
+    "reference": "Reference",
+    "facts": {
+      "name": "Name",
+      "version": 1,
+      "data": {
+        "field": "Data"
+      }
+    },
+    "assurance": "Assurance"
+  },
+  "verifier_version": "VerifierVersion",
+  "assurance": "Assurance",
+  "anchor": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "actor": "Actor",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "correlation": "Correlation",
+  "policy_version": "PolicyVersion",
+  "reason_code": "ReasonCode",
+  "revision_before": "RevisionBefore",
+  "revision_after": "RevisionAfter",
+  "recorded_at": "2026-01-02T03:04:05.000000006Z",
+  "reason": "Reason",
+  "redacted": true
+}

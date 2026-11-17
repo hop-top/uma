@@ -1,0 +1,2225 @@
+{
+  "schema": "uma.conformance.contact_lifecycle/v1",
+  "rule_set": "contact-lifecycle/v1",
+  "status": "approved",
+  "time_format": "RFC3339",
+  "cases": [
+    {
+      "id": "CFG-01",
+      "group": "config",
+      "mode": "per_contact",
+      "flag": null,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "per-contact requires explicit flag",
+      "judgment": false
+    },
+    {
+      "id": "CFG-02",
+      "group": "config",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "expect": {
+        "outcome": "accept"
+      },
+      "note": "",
+      "judgment": false
+    },
+    {
+      "id": "CFG-03",
+      "group": "config",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "expect": {
+        "outcome": "accept"
+      },
+      "note": "",
+      "judgment": false
+    },
+    {
+      "id": "CFG-04",
+      "group": "config",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "no silent default rule set",
+      "judgment": false
+    },
+    {
+      "id": "CFG-05",
+      "group": "config",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v0",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "unknown rule set",
+      "judgment": false
+    },
+    {
+      "id": "CFG-06",
+      "group": "config",
+      "mode": "per_room",
+      "flag": true,
+      "lifecycle_rules": "",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "flag outside per-contact",
+      "judgment": false
+    },
+    {
+      "id": "CFG-07",
+      "group": "config",
+      "mode": "per_room",
+      "flag": false,
+      "lifecycle_rules": "",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "false is not unset",
+      "judgment": false
+    },
+    {
+      "id": "CFG-08",
+      "group": "config",
+      "mode": "per_thread",
+      "flag": null,
+      "lifecycle_rules": "",
+      "expect": {
+        "outcome": "accept"
+      },
+      "note": "",
+      "judgment": false
+    },
+    {
+      "id": "CFG-09",
+      "group": "config",
+      "mode": "per_work_item",
+      "flag": true,
+      "lifecycle_rules": "",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "",
+      "judgment": false
+    },
+    {
+      "id": "CFG-10",
+      "group": "config",
+      "mode": "per_agent_context",
+      "flag": false,
+      "lifecycle_rules": "",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "",
+      "judgment": false
+    },
+    {
+      "id": "CFG-11",
+      "group": "config",
+      "mode": "per_room",
+      "flag": null,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "rule set outside per-contact",
+      "judgment": false
+    },
+    {
+      "id": "LC-01",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "first conversation; becomes canonical"
+    },
+    {
+      "id": "LC-02",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-03",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "pending",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "status stays pending"
+    },
+    {
+      "id": "LC-04",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse_reopen",
+        "conversation": "c1",
+        "reopen": true
+      },
+      "judgment": false,
+      "note": "status resolved -> open"
+    },
+    {
+      "id": "LC-05",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "closed is terminal; new conversation becomes canonical"
+    },
+    {
+      "id": "LC-06",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "automated sender still starts a conversation"
+    },
+    {
+      "id": "LC-07",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-08",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "pending",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-09",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": true,
+      "note": "attach without reopen"
+    },
+    {
+      "id": "LC-10",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": ""
+    },
+    {
+      "id": "LC-11",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-12",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-13",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "pending",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "status stays pending"
+    },
+    {
+      "id": "LC-14",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "resolved not eligible"
+    },
+    {
+      "id": "LC-15",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-16",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": ""
+    },
+    {
+      "id": "LC-17",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-18",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "pending",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "LC-19",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "auto-reply after resolution opens a new conversation"
+    },
+    {
+      "id": "LC-20",
+      "group": "lifecycle",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": ""
+    },
+    {
+      "id": "TB-01",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c2",
+        "reopen": false
+      },
+      "judgment": true,
+      "note": "newest created wins"
+    },
+    {
+      "id": "TB-02",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "pending",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c2",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "open and pending rank equal"
+    },
+    {
+      "id": "TB-03",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "pending",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "open and pending rank equal"
+    },
+    {
+      "id": "TB-04",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "resolved",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "resolved ineligible"
+    },
+    {
+      "id": "TB-05",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c2",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "equal time: greatest ID"
+    },
+    {
+      "id": "TB-06",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "0001-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "conflict",
+        "error": "conflict"
+      },
+      "judgment": false,
+      "note": "unorderable candidate"
+    },
+    {
+      "id": "TB-07",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c2",
+        "reopen": false
+      },
+      "judgment": true,
+      "note": "flag change left several; same order"
+    },
+    {
+      "id": "TB-08",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "resolved",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": true,
+      "note": "active beats resolved; no reopen"
+    },
+    {
+      "id": "TB-09",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "resolved",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "reuse_reopen",
+        "conversation": "c2",
+        "reopen": true
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "TB-10",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "closed",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "closed never eligible"
+    },
+    {
+      "id": "TB-11",
+      "group": "tie_break",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "closed",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "RC-01",
+      "group": "race",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "expect": {
+        "outcome": "create"
+      },
+      "note": "first of two concurrent firsts",
+      "judgment": false
+    },
+    {
+      "id": "RC-02",
+      "group": "race",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "expect": {
+        "outcome": "create",
+        "same_create_key_as": "RC-01"
+      },
+      "note": "same snapshot -> same create key -> one conversation",
+      "judgment": false
+    },
+    {
+      "id": "RC-03",
+      "group": "race",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "successor of closed canonical"
+    },
+    {
+      "id": "RC-04",
+      "group": "race",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "expect": {
+        "outcome": "create",
+        "same_create_key_as": "RC-03"
+      },
+      "judgment": true,
+      "note": "concurrent successor converges"
+    },
+    {
+      "id": "UP-01T",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": {
+        "id": "c1",
+        "status": "open"
+      },
+      "candidates": [],
+      "expect": {
+        "outcome": "follow_target",
+        "conversation": "c1"
+      },
+      "judgment": false,
+      "note": "edit/delete/reaction joins target's conversation"
+    },
+    {
+      "id": "UP-01F",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": {
+        "id": "c1",
+        "status": "open"
+      },
+      "candidates": [],
+      "expect": {
+        "outcome": "follow_target",
+        "conversation": "c1"
+      },
+      "judgment": false,
+      "note": "edit/delete/reaction joins target's conversation"
+    },
+    {
+      "id": "UP-02T",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": {
+        "id": "c1",
+        "status": "resolved"
+      },
+      "candidates": [],
+      "expect": {
+        "outcome": "follow_target",
+        "conversation": "c1"
+      },
+      "judgment": true,
+      "note": "never reopens"
+    },
+    {
+      "id": "UP-02F",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": {
+        "id": "c1",
+        "status": "resolved"
+      },
+      "candidates": [],
+      "expect": {
+        "outcome": "follow_target",
+        "conversation": "c1"
+      },
+      "judgment": true,
+      "note": "never reopens"
+    },
+    {
+      "id": "UP-03T",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": {
+        "id": "c1",
+        "status": "closed"
+      },
+      "candidates": [],
+      "expect": {
+        "outcome": "follow_target",
+        "conversation": "c1"
+      },
+      "judgment": true,
+      "note": "applied to stored message; no reopen"
+    },
+    {
+      "id": "UP-03F",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": {
+        "id": "c1",
+        "status": "closed"
+      },
+      "candidates": [],
+      "expect": {
+        "outcome": "follow_target",
+        "conversation": "c1"
+      },
+      "judgment": true,
+      "note": "applied to stored message; no reopen"
+    },
+    {
+      "id": "UP-04T",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": null,
+      "candidates": [],
+      "expect": {
+        "outcome": "not_found",
+        "error": "not_found"
+      },
+      "judgment": false,
+      "note": "quarantine; never creates"
+    },
+    {
+      "id": "UP-04F",
+      "group": "message_update",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "message_update",
+      "target_conversation": null,
+      "candidates": [],
+      "expect": {
+        "outcome": "not_found",
+        "error": "not_found"
+      },
+      "judgment": false,
+      "note": "quarantine; never creates"
+    },
+    {
+      "id": "EM-01",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "EM-02",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "<m0@a.example> <m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "missing In-Reply-To"
+    },
+    {
+      "id": "EM-03",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m0@a.example> <m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m0@a.example>",
+            "conversation": "c2",
+            "inbox": "self",
+            "direction": "inbound"
+          },
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "In-Reply-To beats References"
+    },
+    {
+      "id": "EM-04",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "<m0@a.example> <m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m0@a.example>",
+            "conversation": "c2",
+            "inbox": "self",
+            "direction": "inbound"
+          },
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "nearest parent (last) wins"
+    },
+    {
+      "id": "EM-05",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "your message of Monday <m1@a.example> (Jane)",
+        "references": "",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "first valid msg-id token"
+    },
+    {
+      "id": "EM-06",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse_reopen",
+        "conversation": "c1",
+        "reopen": true
+      },
+      "judgment": true,
+      "note": "header match overrides flag=false resolved rule"
+    },
+    {
+      "id": "EM-07",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse_reopen",
+        "conversation": "c1",
+        "reopen": true
+      },
+      "judgment": false,
+      "note": ""
+    },
+    {
+      "id": "EM-08",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "successor conversation; closed stays closed"
+    },
+    {
+      "id": "EM-09",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "",
+        "subject": "Invoice 42",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": []
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "same sender != same topic; subject unused"
+    },
+    {
+      "id": "EM-10",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "",
+        "subject": "Something else",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": []
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": true,
+      "note": "explicit opt-in: one conversation per contact"
+    },
+    {
+      "id": "EM-11",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "email": {
+        "message_id": "<m5@a.example>",
+        "in_reply_to": "<r1@a.example>",
+        "references": "<r0@a.example> <r1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": []
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "key = thread root r0"
+    },
+    {
+      "id": "EM-12",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "email": {
+        "message_id": "<m6@a.example>",
+        "in_reply_to": "<r2@a.example>",
+        "references": "<r0@a.example> <r2@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": []
+      },
+      "expect": {
+        "outcome": "create",
+        "same_create_key_as": "EM-11"
+      },
+      "judgment": false,
+      "note": "out-of-order siblings converge"
+    },
+    {
+      "id": "EM-13",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c7",
+            "inbox": "other",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "inbox scope; no cross-inbox match"
+    },
+    {
+      "id": "EM-14",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "other",
+          "sender_is_participant": false
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false,
+        "add_participant": true
+      },
+      "judgment": true,
+      "note": "reply-all/CC; reply route unchanged"
+    },
+    {
+      "id": "EM-15",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "",
+        "subject": "",
+        "list_id": "<dev.lists.example>",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": []
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "no per-contact fallback for list traffic"
+    },
+    {
+      "id": "EM-16",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "auto_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "auto-replied",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "outbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": true,
+      "note": "RFC 3834 auto-reply never reopens"
+    },
+    {
+      "id": "EM-17",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        },
+        {
+          "id": "c2",
+          "status": "open",
+          "created_at": "2026-01-02T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          },
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c2",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "conflict",
+        "error": "conflict"
+      },
+      "judgment": false,
+      "note": "duplicate Message-ID across conversations"
+    },
+    {
+      "id": "EM-18",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "",
+        "subject": "Fwd: Invoice 42",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {
+          "X-Forwarded-Message-Id": "<m1@a.example>"
+        },
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "forward indicator ignored"
+    },
+    {
+      "id": "EM-19",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {
+          "Resent-Message-ID": "<m1@a.example>"
+        },
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "RFC 5322 3.6.6: Resent-* MUST NOT drive replies"
+    },
+    {
+      "id": "EM-20",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<out1@uma.example>",
+        "references": "<out1@uma.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<out1@uma.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "outbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "outbound IDs stored, incl. provider-rewritten"
+    },
+    {
+      "id": "EM-21",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "",
+        "in_reply_to": "<m1@a.example>",
+        "references": "",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "reuse",
+        "conversation": "c1",
+        "reopen": false
+      },
+      "judgment": false,
+      "note": "own ID absent: still threads"
+    },
+    {
+      "id": "EM-22",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "",
+        "references": "",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {
+          "Thread-Index": "AQHZabc="
+        },
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": false,
+      "note": "Thread-Index preserved, not used"
+    },
+    {
+      "id": "EM-23",
+      "group": "email",
+      "mode": "per_contact",
+      "flag": true,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "email": {
+        "message_id": "<m9@a.example>",
+        "in_reply_to": "<m1@a.example>",
+        "references": "<m1@a.example>",
+        "subject": "",
+        "list_id": "",
+        "auto_submitted": "",
+        "extra_headers": {},
+        "stored_messages": [
+          {
+            "message_id": "<m1@a.example>",
+            "conversation": "c1",
+            "inbox": "self",
+            "direction": "inbound"
+          }
+        ]
+      },
+      "expect": {
+        "outcome": "create"
+      },
+      "judgment": true,
+      "note": "successor becomes canonical"
+    },
+    {
+      "id": "CK-01",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {
+        "existing": "c9"
+      },
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "existing not in snapshot",
+      "judgment": false
+    },
+    {
+      "id": "CK-02",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {
+        "existing": "c1",
+        "create_key": "k"
+      },
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "both existing and create key",
+      "judgment": false
+    },
+    {
+      "id": "CK-03",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {},
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "neither existing nor create key",
+      "judgment": false
+    },
+    {
+      "id": "CK-04",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "open",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {
+        "existing": "c1",
+        "reopen": true
+      },
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "reopen on non-resolved",
+      "judgment": false
+    },
+    {
+      "id": "CK-05",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {
+        "existing": "c1"
+      },
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "closed selected for new message",
+      "judgment": false
+    },
+    {
+      "id": "CK-06",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "closed",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {
+        "existing": "c1",
+        "reopen": true
+      },
+      "expect": {
+        "outcome": "reject",
+        "error": "validation"
+      },
+      "note": "reopen closed",
+      "judgment": false
+    },
+    {
+      "id": "CK-07",
+      "group": "core_check",
+      "mode": "per_contact",
+      "flag": false,
+      "lifecycle_rules": "contact-lifecycle/v1",
+      "event": "contact_message",
+      "candidates": [
+        {
+          "id": "c1",
+          "status": "resolved",
+          "created_at": "2026-01-01T00:00:00Z",
+          "owner": "sender",
+          "sender_is_participant": true
+        }
+      ],
+      "selector_result": {
+        "existing": "c1",
+        "reopen": true
+      },
+      "expect": {
+        "outcome": "accept"
+      },
+      "note": "valid reopen",
+      "judgment": false
+    }
+  ]
+}

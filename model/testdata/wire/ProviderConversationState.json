@@ -1,0 +1,25 @@
+{
+  "channel": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "archived": true,
+  "folder": {
+    "id": "ID",
+    "name": "Name",
+    "role": "Role"
+  },
+  "labels": [
+    {
+      "id": "ID",
+      "name": "Name"
+    }
+  ],
+  "read": true,
+  "flags": [
+    "Flags"
+  ],
+  "trashed": true,
+  "observed_at": "2026-01-02T03:04:05.000000006Z",
+  "complete": true
+}

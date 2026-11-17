@@ -1,0 +1,21 @@
+{
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "key": {
+    "caller": "Caller",
+    "kind": "Kind",
+    "target": {
+      "tenant": "Tenant",
+      "kind": "Kind",
+      "inbox": "Inbox",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "proposer": "Proposer",
+  "trust_key": "TrustKey",
+  "decision": "Decision",
+  "decided_by": "DecidedBy"
+}

@@ -1,0 +1,124 @@
+name: CI (Go)
+
+on:
+  push:
+    branches: [next]
+    # The workflow file, Makefile and mise.toml are in the filter so
+    # toolchain and workflow repairs verify themselves instead of waiting
+    # for the next .go push. **/go.mod covers every module; **.sql and
+    # sqlc.yaml cover migrations and generated-query sources.
+    paths: ["**.go", "**/go.mod", "**/go.sum", "**.sql", "**/sqlc.yaml", "go.work", "go.work.sum", "Makefile", "mise.toml", ".config/mise.toml", ".github/workflows/ci-go.yml", "scripts/min-toolchain.sh", "scripts/release-check.sh", ".github/release-please-config.json", ".github/.release-please-manifest.json"]
+  pull_request:
+    branches: [next]
+    paths: ["**.go", "**/go.mod", "**/go.sum", "**.sql", "**/sqlc.yaml", "go.work", "go.work.sum", "Makefile", "mise.toml", ".config/mise.toml", ".github/workflows/ci-go.yml", "scripts/min-toolchain.sh", "scripts/release-check.sh", ".github/release-please-config.json", ".github/.release-please-manifest.json"]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # >>> kit-managed: toolchain >>>
+      - uses: jdx/mise-action@v5
+        with:
+          install: true
+          cache: true
+      - run: mise run install
+      # <<< kit-managed: toolchain <<<
+
+      # Every module: go.work lists them all, go.mod/go.sum are tidy,
+      # vet + golangci-lint pass. The Makefile runs each module with
+      # GOWORK=off, as a consumer resolves it.
+      - name: go.work + tidy + release wiring (every module)
+        run: mise exec -- make work-check tidy-check release-check
+
+      # Committed sqlc output matches migrations/ and queries/.
+      - name: generated queries up to date
+        run: mise exec -- make gen-check
+
+      - name: vet + golangci-lint (every module)
+        run: mise exec -- make lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # >>> kit-managed: toolchain >>>
+      - uses: jdx/mise-action@v5
+        with:
+          install: true
+          cache: true
+      - run: mise run install
+      # <<< kit-managed: toolchain <<<
+
+      - name: Run tests
+        # -race requires cgo, but mise.toml pins CGO_ENABLED=0 for
+        # static builds — and `mise exec` re-applies [env] over the
+        # job/step env, silently clobbering a step-level override. The
+        # env(1) wrapper AFTER mise exec is the only layer that wins.
+        # UMA_REQUIRE_DOCKER=1: container-backed tests (PostgreSQL store,
+        # Kerberos KDC + Dovecot) fail instead of skipping when Docker is
+        # unreachable; the runner has Docker.
+        run: mise exec -- env CGO_ENABLED=1 UMA_REQUIRE_DOCKER=1 make test TESTFLAGS="-race -coverprofile=coverage.out"
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-go
+          # One profile per module that has tests.
+          path: "**/coverage.out"
+          if-no-files-found: ignore
+
+  # The pinned toolchain in mise.toml (go 1.27.3) is the newest module
+  # floor. The library and the modules that need little else declare go
+  # 1.26.0; the ones that depend on hop.top/xrr declare go 1.26.1;
+  # contrib/kit declares go 1.27.3, the floor of hop.top/kit, and the
+  # pinned toolchain covers it. A consumer builds each module on its floor, so this job runs every
+  # floor: scripts/min-toolchain.sh picks the modules whose go directive the
+  # matrix version satisfies and lists the rest as skipped. Install the older
+  # Go alongside the pin; `mise exec go@<v>` fetches it on demand.
+  test-min-go:
+    name: Test (minimum Go ${{ matrix.go }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go: ["1.26.0", "1.26.1"]
+    steps:
+      - uses: actions/checkout@v7
+
+      # >>> kit-managed: toolchain >>>
+      - uses: jdx/mise-action@v5
+        with:
+          install: true
+          cache: true
+      - run: mise run install
+      # <<< kit-managed: toolchain <<<
+
+      # env(1) after mise exec, as in the Test job: -race needs cgo.
+      - name: Build, vet, test on the minimum toolchain
+        run: mise exec go@${{ matrix.go }} -- env CGO_ENABLED=1 TESTFLAGS="-race" scripts/min-toolchain.sh ${{ matrix.go }}
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [lint, test, test-min-go]
+    steps:
+      - uses: actions/checkout@v7
+
+      # >>> kit-managed: toolchain >>>
+      - uses: jdx/mise-action@v5
+        with:
+          install: true
+          cache: true
+      - run: mise run install
+      # <<< kit-managed: toolchain <<<
+
+      - name: Build (every module)
+        run: mise exec -- make build

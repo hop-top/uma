@@ -1,0 +1,26 @@
+{
+  "intent": "Intent",
+  "identity": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "current": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "target": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "anchor": {
+    "inbox": {
+      "tenant": "Tenant",
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "expires_at": "2026-01-02T03:04:05.000000006Z"
+}

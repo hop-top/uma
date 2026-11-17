@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 745c2fa6
+recorded_at: "2026-11-15T19:02:30Z"
+payload:
+    method: POST
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD8AAA/move
+    headers:
+        Content-Type: application/json
+    body: '{"destinationId":"deleteditems"}'

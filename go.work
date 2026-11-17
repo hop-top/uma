@@ -1,0 +1,28 @@
+go 1.27.3
+
+use (
+	.
+	./adapter/chat/discord
+	./adapter/chat/slack
+	./adapter/chat/teams
+	./adapter/chat/telegram
+	./adapter/mail
+	./adapter/mail/google
+	./adapter/mail/microsoft
+	./adapter/messaging/meta
+	./adapter/messaging/twilio
+	./adapter/ticket/github
+	./adapter/ticket/gitlab
+	./adapter/ticket/jira
+	./adapter/ticket/linear
+	./adapter/ticket/zendesk
+	./contrib/kit
+	./contrib/otel
+	./examples
+	./examples/fakeprovider
+	./examples/imessagegateway
+	./examples/inbox
+	./examples/triage
+	./store/postgres
+	./testing/xrrtest
+)

@@ -1,0 +1,14 @@
+xrr: "1"
+adapter: http
+fingerprint: eff58b62
+recorded_at: "2026-11-17T05:49:15Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json
+        Ratelimit-Limit: "100"
+        Ratelimit-Name: burst_traffic_per_user_free_plan
+        Ratelimit-Observed: "13"
+        Ratelimit-Remaining: "87"
+        Ratelimit-Reset: "1794894600"
+    body: '{"_links":{"award_emoji":"https://gitlab.example.com/api/v4/projects/700000001/issues/4242/award_emoji","closed_as_duplicate_of":null,"notes":"https://gitlab.example.com/api/v4/projects/700000001/issues/4242/notes","project":"https://gitlab.example.com/api/v4/projects/700000001","self":"https://gitlab.example.com/api/v4/projects/700000001/issues/4242"},"assignee":null,"assignees":[],"author":{"avatar_url":"https://gitlab.example.com/uploads/-/system/user/avatar/9100001/avatar.png","id":9100001,"locked":false,"name":"uma-sandbox-account","state":"active","username":"uma-sandbox-account","web_url":"https://gitlab.example.com/uma-sandbox-account"},"blocking_issues_count":0,"closed_at":null,"closed_by":null,"confidential":false,"created_at":"2026-11-17T05:22:03.857Z","description":"Recording target for uma cassettes. Nothing real here.","discussion_locked":null,"downvotes":0,"due_date":null,"has_tasks":true,"id":3004242,"iid":4242,"imported":false,"imported_from":"none","issue_type":"issue","labels":[],"merge_requests_count":0,"milestone":null,"moved_to_id":null,"project_id":700000001,"references":{"full":"example/uma-sandbox#4242","relative":"#4242","short":"#4242"},"service_desk_reply_to":null,"severity":"UNKNOWN","start_date":null,"state":"opened","subscribed":true,"task_completion_status":{"completed_count":0,"count":0},"task_status":"0 of 0 checklist items completed","time_stats":{"human_time_estimate":null,"human_total_time_spent":null,"time_estimate":0,"total_time_spent":0},"title":"sandbox issue","type":"ISSUE","updated_at":"2026-11-17T05:49:12.392Z","upvotes":0,"user_notes_count":2,"web_url":"https://gitlab.example.com/example/uma-sandbox/-/work_items/4242"}'

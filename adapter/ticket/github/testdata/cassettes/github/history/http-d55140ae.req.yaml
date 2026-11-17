@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: d55140ae
+recorded_at: "2026-10-12T23:39:41Z"
+payload:
+    method: POST
+    url: https://api.github.com/repos/example/uma-sandbox/issues/4242/comments
+    headers:
+        Content-Type: application/json
+    body: |
+        {"body":"Recorded history one.\n\n<!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b1 -->"}

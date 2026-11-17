@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 27fc9329
+recorded_at: "2026-11-17T05:06:36Z"
+payload:
+    method: POST
+    url: https://TEAMS_SERVICE_HOST_AND_PATH/v3/conversations
+    headers:
+        Content-Type: application/json; charset=utf-8
+    body: '{"bot":{"id":"28:TEAMS_APP_ID"},"channelData":{"tenant":{"id":"TEAMS_TENANT_ID"}},"isGroup":false,"members":[{"id":"TEAMS_USER_ID"}],"tenantId":"TEAMS_TENANT_ID"}'

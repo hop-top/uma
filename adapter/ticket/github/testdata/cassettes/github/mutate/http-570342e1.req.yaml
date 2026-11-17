@@ -1,0 +1,11 @@
+xrr: "1"
+adapter: http
+fingerprint: "570342e1"
+recorded_at: "2026-10-12T07:53:32Z"
+payload:
+    method: PATCH
+    url: https://api.github.com/repos/example/uma-sandbox/issues/comments/6120080740
+    headers:
+        Content-Type: application/json
+    body: |
+        {"body":"Recorded edit.\n\n<!-- uma:00000000-0000-7000-8000-00000000a0a1:00000000-0000-7000-8000-00000000b0b3 -->"}

@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: 56ce4be5
+recorded_at: "2026-11-15T19:01:47Z"
+payload:
+    method: POST
+    url: https://gmail.googleapis.com/gmail/v1/users/MAILBOX/messages/send
+    headers:
+        Content-Type: application/json
+    body: '{"raw":"TWltZS1WZXJzaW9uOiAxLjANCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IHF1b3RlZC1wcmludGFibGUNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA0KTWVzc2FnZS1JZDogPGF6N2E3azVuYW1ienhoenJseXVqeTY2dWNicjNkamVvQG1zZ2lkLnVtYS5pbnZhbGlkPg0KU3ViamVjdDogdW1hIHJlY29yZGVkIHNjZW5hcmlvDQpUbzogPFBFRVJAcGVlci5pbnZhbGlkPg0KRnJvbTogPE1BSUxCT1hAbWFpbGJveC5pbnZhbGlkPg0KRGF0ZTogV2VkLCAwMyBKYW4gMjAwMSAxMjowMDowMCArMDAwMA0KDQp1bWEgcmVjb3JkZWQgc2NlbmFyaW8"}'

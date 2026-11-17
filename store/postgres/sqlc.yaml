@@ -1,0 +1,32 @@
+# Query bindings for the postgres store. Run `make gen` from the repository
+# root after editing migrations/ or queries/; `make gen-check` fails when the
+# committed code in internal/db is stale.
+version: "2"
+sql:
+  - engine: postgresql
+    schema: migrations
+    queries: queries
+    gen:
+      go:
+        package: db
+        out: internal/db
+        sql_package: pgx/v5
+        emit_pointers_for_null_types: true
+        overrides:
+          # Internal IDs cross the pgx boundary as plain strings: pgx sends a
+          # string argument in text format, which the uuid type accepts.
+          - db_type: uuid
+            go_type: string
+          - db_type: uuid
+            nullable: true
+            go_type:
+              type: string
+              pointer: true
+          - db_type: timestamptz
+            go_type: time.Time
+          - db_type: timestamptz
+            nullable: true
+            go_type:
+              import: time
+              type: Time
+              pointer: true

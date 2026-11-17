@@ -1,0 +1,20 @@
+{
+  "any": [
+    {
+      "tenant": "Tenant",
+      "id": "ID"
+    }
+  ],
+  "all": [
+    {
+      "tenant": "Tenant",
+      "id": "ID"
+    }
+  ],
+  "none": [
+    {
+      "tenant": "Tenant",
+      "id": "ID"
+    }
+  ]
+}

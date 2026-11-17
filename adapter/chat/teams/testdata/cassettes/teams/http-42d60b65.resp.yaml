@@ -1,0 +1,6 @@
+xrr: "1"
+adapter: http
+fingerprint: 42d60b65
+recorded_at: "2026-11-17T05:06:36Z"
+payload:
+    status: 200

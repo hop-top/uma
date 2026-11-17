@@ -1,0 +1,7 @@
+module hop.top/uma/examples
+
+go 1.26
+
+require hop.top/uma v0.0.0
+
+replace hop.top/uma => ../

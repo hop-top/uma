@@ -1,0 +1,11 @@
+{
+  "key": "Key",
+  "labels": {
+    "LabelsKey": "Labels"
+  },
+  "clean": 1,
+  "approvals": 1,
+  "corrections": 1,
+  "last_correction_at": "2026-01-02T03:04:05.000000006Z",
+  "updated_at": "2026-01-02T03:04:05.000000006Z"
+}

@@ -1,0 +1,31 @@
+{
+  "message": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "change": "Change",
+  "trigger": "Trigger",
+  "previous_revision": "PreviousRevision",
+  "source_revision": "SourceRevision",
+  "reaction": {
+    "emoji": "Emoji",
+    "by": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "count": 1
+  },
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  }
+}

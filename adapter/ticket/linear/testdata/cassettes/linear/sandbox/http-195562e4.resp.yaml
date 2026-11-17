@@ -1,0 +1,16 @@
+xrr: "1"
+adapter: http
+fingerprint: "195562e4"
+recorded_at: "2026-11-17T05:45:58Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=utf-8
+        X-Ratelimit-Complexity-Limit: "3000000"
+        X-Ratelimit-Complexity-Remaining: "2999964"
+        X-Ratelimit-Complexity-Reset: "1794897958975"
+        X-Ratelimit-Requests-Limit: "2500"
+        X-Ratelimit-Requests-Remaining: "2492"
+        X-Ratelimit-Requests-Reset: "1794897958975"
+    body: |
+        {"errors":[{"message":"Entity not found: Comment","path":["commentUpdate"],"locations":[{"line":2,"column":3}],"extensions":{"type":"invalid input","code":"INPUT_ERROR","statusCode":400,"userError":true,"userPresentableMessage":"Could not find referenced Comment."}}],"data":null}

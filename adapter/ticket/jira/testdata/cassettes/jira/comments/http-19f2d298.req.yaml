@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 19f2d298
+recorded_at: "2026-11-17T05:56:30Z"
+payload:
+    method: GET
+    url: https://sandbox.example.atlassian.net/rest/api/3/issue/10001/comment?maxResults=100&orderBy=-created&startAt=0

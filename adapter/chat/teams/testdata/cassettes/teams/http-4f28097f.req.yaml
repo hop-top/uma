@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 4f28097f
+recorded_at: "2026-11-17T05:06:33Z"
+payload:
+    method: GET
+    url: https://login.botframework.com/v1/.well-known/keys

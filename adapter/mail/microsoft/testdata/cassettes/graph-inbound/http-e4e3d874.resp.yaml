@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: e4e3d874
+recorded_at: "2026-11-15T19:02:14Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8
+    body: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#Collection(message)","value":[],"@odata.deltaLink":"https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders(''AQMkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjAC02YzdiODVkZWRmMjMALgAAA3Xx9XZ9DvNOl-wV29jiFwsBAFpEKictnFdElUMopn_wEL8AAAIBFQAAAA=='')/messages/delta?$deltatoken=Ria-5ww42ZtOB0Q0dUl5J_SBpA_nExKklSeLPV8hDXoiXCAkxJzu2PBBD2boDx_PWIytLvnhN56mtafcoHUAAwbU3dfPyPYDLgYs1Vf3kzrZR0QQRk4IJ-ruzBVfldJVQZ_dv1cWSQLAYAyPdQKKL_yRtZtR3aL6HOMHe6fHLEojyA_vw_bM9eE4IEmwy-e3e6mK7Es7SKhGdM2wu12rgsQthMwDET6zAOtV5VOy6yA.0U6qqu-FenIJ_GjIba8emuzBG94YebL-S3U8HNjazOo"}'

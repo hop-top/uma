@@ -1,0 +1,17 @@
+{
+  "task": {
+    "id": "task-uuid",
+    "contextId": "context-uuid",
+    "status": {
+      "state": "TASK_STATE_INPUT_REQUIRED",
+      "message": {
+        "messageId": "message-uuid",
+        "contextId": "context-uuid",
+        "taskId": "task-uuid",
+        "role": "ROLE_AGENT",
+        "parts": [{"text": "I need more details. Where would you like to fly from and to?"}]
+      },
+      "timestamp": "2023-11-14T22:13:21.000Z"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: dd0474cc
+recorded_at: "2026-11-17T02:07:12Z"
+payload:
+    method: POST
+    url: https://discord.com/api/v10/channels/DISCORD_CHANNEL_ID/messages
+    headers:
+        Content-Type: application/json
+    body: '{"allowed_mentions":{"parse":[]},"content":"uma recorded message **ok** \u003c@DISCORD_MEMBER_ID\u003e","enforce_nonce":true,"nonce":"u008090750a05134dfd1986b6"}'

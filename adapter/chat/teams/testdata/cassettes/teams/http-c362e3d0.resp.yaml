@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: c362e3d0
+recorded_at: "2026-11-17T05:06:32Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; charset=utf-8
+    body: '{"authorization_endpoint":"<redacted:AUTHORIZATION_ENDPOINT>","id_token_signing_alg_values_supported":["<redacted:ID_TOKEN_SIGNING_ALG_VALUES_SUPPORTED>"],"issuer":"https://api.botframework.com","jwks_uri":"https://login.botframework.com/v1/.well-known/keys","token_endpoint_auth_methods_supported":["<redacted:TOKEN_ENDPOINT_AUTH_METHODS_SUPPORTED>"]}'

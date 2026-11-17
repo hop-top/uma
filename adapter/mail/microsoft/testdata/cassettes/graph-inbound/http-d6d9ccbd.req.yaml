@@ -1,0 +1,10 @@
+xrr: "1"
+adapter: http
+fingerprint: d6d9ccbd
+recorded_at: "2026-11-15T19:02:15Z"
+payload:
+    method: PATCH
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/messages/AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAABD-gAA
+    headers:
+        Content-Type: application/json
+    body: '{"body":{"contentType":"text","content":"uma inbound recording reply"},"toRecipients":[{"emailAddress":{"address":"PEER"}}],"singleValueExtendedProperties":[{"id":"String {31c7380f-d7fb-4c46-affc-b4bed2fb34b9} Name uma-attempt","value":"t1/00000000-0000-7000-8000-0000000000e1/00000000-0000-7000-8000-0000000000b1"}]}'

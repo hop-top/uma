@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: d4944fd4
+recorded_at: "2026-11-15T19:01:53Z"
+payload:
+    method: GET
+    url: https://gmail.googleapis.com/gmail/v1/users/MAILBOX/history?historyTypes=messageAdded&historyTypes=labelAdded&historyTypes=labelRemoved&historyTypes=messageDeleted&labelId=SENT&maxResults=100&startHistoryId=1582869

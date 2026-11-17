@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 982801d4
+recorded_at: "2026-10-12T00:49:16Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json;charset=utf-8
+    body: '{"end": 0, "first_page_uri": "/2010-04-01/Accounts/ACCOUNT_SID/Messages.json?PageSize=1000&Page=0&To=TO_NUMBER_QUERY&From=FROM_NUMBER_QUERY", "messages": [ ], "next_page_uri": null, "page": 0, "page_size": 1000, "previous_page_uri": null, "start": 0, "uri": "/2010-04-01/Accounts/ACCOUNT_SID/Messages.json?PageSize=1000&Page=0&To=TO_NUMBER_QUERY&From=FROM_NUMBER_QUERY"}'

@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 0ef0cd71
+recorded_at: "2026-11-15T18:31:08Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/inbox/messages/delta?%24filter=receivedDateTime+ge+2026-10-10T23%3A00%3A00Z&%24select=id&changeType=created

@@ -1,0 +1,11 @@
+{
+  "correlation": "Correlation",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "expected_revision": "ExpectedRevision",
+  "force": true,
+  "note": "Note",
+  "batch": "Batch"
+}

@@ -1,0 +1,9 @@
+xrr: "1"
+adapter: http
+fingerprint: 649e2b67
+recorded_at: "2026-11-15T18:31:09Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json; odata.metadata=minimal; odata.streaming=true; IEEE754Compatible=false; charset=utf-8
+    body: '{"@odata.context":"https://graph.microsoft.com/v1.0/$metadata#Collection(message)","value":[{"@odata.type":"#microsoft.graph.message","@odata.etag":"W/\"CQAAABYAAABaRConLZxXRJVDKKZ/sBC/AAAAAAa/\"","id":"AAkALgAAAAAAHYQDEapmEc2byACqAC-EWg0AWkQqJy2cV0SVQyimf7AQvwAAAAAwUwAA","lastModifiedDateTime":"2026-11-15T18:31:09Z","importance":"normal","parentFolderId":"AQMkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjAC02YzdiODVkZWRmMjMALgAAA3Xx9XZ9DvNOl-wV29jiFwsBAFpEKictnFdElUMopn_wEL8AAAIBFQAAAA==","isRead":true,"isDraft":false,"flag":{"flagStatus":"notFlagged"}}],"@odata.deltaLink":"https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders(''AQMkADcxMmIzZWJjLTc0MDctNDgwYS1hM2NjAC02YzdiODVkZWRmMjMALgAAA3Xx9XZ9DvNOl-wV29jiFwsBAFpEKictnFdElUMopn_wEL8AAAIBFQAAAA=='')/messages/delta?$deltatoken=Ria-5ww42ZtOB0Q0dUl5J6dHjB53Yc6fKUOq29hKWRzw1FMhETvjQ5PB3skydyWK4VNak2UdjsXGwfudRGD41E0qouhKqwYTDHaFMnMNXW2Thzp-jpNy4UeN7pd_68lx7e9SsJ3jIOnAqXhY1_6sexoAYonUDGhptBrKHBMtM6xxi10wBWaDPNHTO4ceMzxSwdHdJTHsOjeWx2HKDs-1eDd2LS4uQoXGNLDpA_oUlgY.y4eJ8gIA6OCK4g1GwqkEpe1jrZ9SZANcGhU5gRquzmA"}'

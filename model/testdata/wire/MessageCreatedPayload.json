@@ -1,0 +1,40 @@
+{
+  "message": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "trigger": "Trigger",
+  "origin": "Origin",
+  "operation": {
+    "tenant": "Tenant",
+    "id": "ID"
+  },
+  "source": "Source",
+  "in_reply_to": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  },
+  "conversation_created": true,
+  "in_response_to": {
+    "conversation": {
+      "inbox": {
+        "tenant": "Tenant",
+        "id": "ID"
+      },
+      "id": "ID"
+    },
+    "id": "ID"
+  }
+}

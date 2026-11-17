@@ -1,0 +1,7 @@
+xrr: "1"
+adapter: http
+fingerprint: 88c646a4
+recorded_at: "2026-11-15T19:06:03Z"
+payload:
+    method: GET
+    url: https://graph.microsoft.com/v1.0/users/MAILBOX/mailFolders/junkemail?%24select=id%2CdisplayName

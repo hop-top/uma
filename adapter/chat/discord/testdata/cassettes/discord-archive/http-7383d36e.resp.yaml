@@ -1,0 +1,15 @@
+xrr: "1"
+adapter: http
+fingerprint: 7383d36e
+recorded_at: "2026-11-17T02:07:16Z"
+payload:
+    status: 200
+    headers:
+        Content-Type: application/json
+        X-Ratelimit-Bucket: 9852e1a53c06ffc5a89d65fef85ca4ce
+        X-Ratelimit-Limit: "10"
+        X-Ratelimit-Remaining: "8"
+        X-Ratelimit-Reset: "1794881250.893"
+        X-Ratelimit-Reset-After: "14.654"
+    body: |
+        {"id":"DISCORD_THREAD_ID","type":11,"last_message_id":"1572070585343672394","flags":0,"guild_id":"1000000000000000008","name":"uma-thread","parent_id":"DISCORD_CHANNEL_ID","rate_limit_per_user":0,"bitrate":64000,"user_limit":0,"rtc_region":null,"owner_id":"DISCORD_MEMBER_ID","thread_metadata":{"archived":false,"archive_timestamp":"2026-11-17T02:07:16.276550+00:00","auto_archive_duration":4320,"locked":false,"create_timestamp":"2026-10-20T05:36:38.450000+00:00"},"message_count":4,"member_count":0,"total_message_sent":4}
