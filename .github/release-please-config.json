@@ -7,7 +7,7 @@
     ".": {
       "release-type": "go",
       "component": "uma",
-      "pull-request-title-pattern": "chore(release): ${component} ${version}",
+      "pull-request-title-pattern": "chore(release): uma ${version}",
       "initial-version": "0.1.0-alpha.0",
       "prerelease": true,
       "prerelease-type": "alpha.0",
