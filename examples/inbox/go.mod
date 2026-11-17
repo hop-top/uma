@@ -8,9 +8,9 @@ require (
 	github.com/jackc/pgx/v5 v5.12.0
 	github.com/testcontainers/testcontainers-go v0.44.0
 	github.com/testcontainers/testcontainers-go/modules/postgres v0.44.0
-	hop.top/uma v0.1.0-alpha.0 // x-release-please-version
-	hop.top/uma/adapter/mail v0.1.0-alpha.0 // x-release-please-version
-	hop.top/uma/store/postgres v0.1.0-alpha.0 // x-release-please-version
+	hop.top/uma v0.1.0-alpha.1 // x-release-please-version
+	hop.top/uma/adapter/mail v0.1.0-alpha.1 // x-release-please-version
+	hop.top/uma/store/postgres v0.1.0-alpha.1 // x-release-please-version
 )
 
 require (
