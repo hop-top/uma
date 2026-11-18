@@ -24,7 +24,9 @@ const AttemptProperty = "String {31c7380f-d7fb-4c46-affc-b4bed2fb34b9} Name uma-
 // cleanupTimeout bounds the best-effort removal of an unsent draft.
 const cleanupTimeout = 10 * time.Second
 
-// Send delivers req's text to the stored route through a draft:
+// Send delivers req's text to the stored route. In SendModeDirect it is one
+// sendMail call (sendDirect); in SendModeDraft, the default, it goes through
+// a draft:
 //
 //  1. a route with ParentID (the Graph message the peer wrote) becomes
 //     createReply on that message, so Graph sets the reply subject,
@@ -61,6 +63,9 @@ func (i *instance) send(ctx context.Context, req adapter.SendRequest, subject st
 	text, err := plainText(req.Content)
 	if err != nil {
 		return adapter.Outcome{}, err
+	}
+	if i.cfg.sendMode() == SendModeDirect {
+		return i.sendDirect(ctx, req, text, subject)
 	}
 	s := i.c.session()
 	draft, err := i.draft(ctx, s, req.Route, text, attemptKey(req.Effect), subject, req.Recipients)
@@ -126,6 +131,11 @@ func rejectedOr(err error) (adapter.Outcome, error) {
 // leaves nothing in Sent Items, so "nowhere" is failed and a new attempt,
 // which repeats the idempotent request, is safe.
 func (i *instance) Reconcile(ctx context.Context, req adapter.ReconcileRequest) (adapter.Outcome, error) {
+	if i.cfg.sendMode() == SendModeDirect {
+		// A direct send leaves nothing the adapter may read back: no draft
+		// to find, and Mail.Send cannot read Sent Items.
+		return adapter.Outcome{}, &model.Error{Code: model.Unsupported, SafeMessage: "a direct-mode channel cannot reconcile", Retry: model.NoRetry}
+	}
 	eff := req.Effect
 	if err := i.checkRoute(eff.Route); err != nil {
 		return adapter.Outcome{}, err

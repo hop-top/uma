@@ -173,7 +173,7 @@ a credential: the host's `ports.Credentials` does, per call and per purpose.
 | `smtp.mail` | `smtp.relay` | `smtp.relay` |
 | `imap.mail` | `imap`, `smtp.submission` | `imap`, `smtp.submission` (one credential reference) |
 | `google.mail` | OAuth scopes `https://www.googleapis.com/auth/gmail.readonly`, `https://www.googleapis.com/auth/gmail.send` and `https://www.googleapis.com/auth/gmail.modify` (the last for the labels effect and the state verbs; it alone covers all three) | `gmail` |
-| `microsoft.mail` | `Mail.ReadWrite`, `Mail.Send` | `graph`, `graph.notifications` |
+| `microsoft.mail` | `Mail.ReadWrite`, `Mail.Send` (`Mail.Send` alone in direct send mode) | `graph`, `graph.notifications` |
 | `http.mail` | none declared | `http.mail.webhook` (the relay's shared secret, HMAC key or Ed25519 public key) |
 | `twilio.sms` | none declared | `twilio.rest`, `twilio.webhook` |
 | `twilio.whatsapp` | none declared | `twilio.rest`, `twilio.webhook` |

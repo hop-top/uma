@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"errors"
+	"slices"
 	"time"
 
 	"hop.top/uma/adapter"
@@ -54,16 +55,27 @@ var (
 // receive_http on a channel without a notification URL: no subscription
 // would ever deliver to its webhook. A revoked Graph permission surfaces
 // as model.Unauthorized on the call that needs it; Graph offers no
-// documented way to check it beforehand.
+// documented way to check it beforehand. A channel in SendModeDirect holds
+// Mail.Send alone: it reports every capability but send and
+// start_conversation unavailable (unsupported).
 func (i *instance) Capabilities(context.Context) ([]model.CapabilityStatus, error) {
-	out := make([]model.CapabilityStatus, 0, len(capabilities))
-	for _, c := range capabilities {
+	declared := capabilities
+	if i.f != nil && i.f.opts.SendOnly {
+		declared = sendOnlyCapabilities
+	}
+	out := make([]model.CapabilityStatus, 0, len(declared))
+	for _, c := range declared {
 		s := model.CapabilityStatus{Name: c, Available: true, Limits: stateLimits(c)}
 		if c == model.CapabilityReceiveHTTP && i.cfg.NotificationURL == "" {
 			s.Available, s.Reason = false, model.Unsupported
 		}
 		if c == model.CapabilityReplyRecipients {
 			s.Limits = recipients.Limits().Extension()
+		}
+		if i.cfg.sendMode() == SendModeDirect && !slices.Contains(sendOnlyCapabilities, c) {
+			// Direct mode holds Mail.Send alone: nothing here reads the
+			// mailbox, replies in a thread or looks a sent copy up.
+			s.Available, s.Reason, s.Limits = false, model.Unsupported, model.Extension{}
 		}
 		out = append(out, s)
 	}
