@@ -210,3 +210,23 @@ type gNotification struct {
 type gNotificationCollection struct {
 	Value []gNotification `json:"value"`
 }
+
+// gSendMessage is the message of a sendMail call. Bodies and recipients
+// only: the sender is the mailbox the call is made on, unless From names
+// one the token may send as.
+type gSendMessage struct {
+	Subject       string       `json:"subject"`
+	Body          gItemBody    `json:"body"`
+	From          *gRecipient  `json:"from,omitempty"`
+	ToRecipients  []gRecipient `json:"toRecipients"`
+	CcRecipients  []gRecipient `json:"ccRecipients,omitempty"`
+	BccRecipients []gRecipient `json:"bccRecipients,omitempty"`
+	ReplyTo       []gRecipient `json:"replyTo,omitempty"`
+}
+
+// gSendMail is the body of POST .../sendMail. SaveToSentItems is always
+// sent: Graph's own default is true.
+type gSendMail struct {
+	Message         gSendMessage `json:"message"`
+	SaveToSentItems bool         `json:"saveToSentItems"`
+}

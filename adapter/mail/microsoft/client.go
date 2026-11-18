@@ -51,6 +51,10 @@ type client struct {
 	channel  model.ChannelRef
 	credRef  string
 	now      func() time.Time
+	// tokens, when set, is the access token source instead of creds: the
+	// standalone Mailer's. fresh asks for a token other than the one that
+	// was rejected or has expired.
+	tokens func(ctx context.Context, fresh bool) (string, time.Time, error)
 }
 
 // session is one unit of Graph work (a send, a reconcile, a delta round, a
@@ -217,6 +221,9 @@ func (s *session) ensureToken(ctx context.Context) error {
 
 // resolve asks the host for the channel's Graph access token.
 func (c *client) resolve(ctx context.Context, fresh bool) (string, time.Time, error) {
+	if c.tokens != nil {
+		return c.tokens(ctx, fresh)
+	}
 	if c.creds == nil {
 		return "", time.Time{}, &model.Error{Code: model.Unauthorized, SafeMessage: "no credentials port", Retry: model.NoRetry}
 	}

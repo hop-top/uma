@@ -92,6 +92,54 @@ type Config struct {
 	// Email, Deleted Items, Drafts, Sent Items and the Outbox are refused,
 	// by name here and by ID when a folder is read.
 	HistoryMailboxes []string `json:"history_mailboxes,omitempty"`
+	// SendMode selects how Send delivers: SendModeDraft (the default, also
+	// when empty) creates a draft and sends it, needs Mail.ReadWrite and
+	// Mail.Send and keeps the message ID Reconcile uses; SendModeDirect
+	// posts one sendMail call and needs Mail.Send only. See SendModeDirect
+	// for what a direct send gives up.
+	SendMode string `json:"send_mode,omitempty"`
+	// SaveToSentItems, in direct mode, keeps a copy of each sent message in
+	// the mailbox's Sent Items. False (the default) keeps none. Draft mode
+	// always keeps the sent copy; the field is refused there.
+	SaveToSentItems bool `json:"save_to_sent_items,omitempty"`
+}
+
+// Send modes (Config.SendMode).
+const (
+	// SendModeDraft creates a draft (POST /messages, or createReply for a
+	// reply), updates it and sends it (POST /messages/{id}/send). It needs
+	// the Mail.ReadWrite and Mail.Send permissions, reports the draft's
+	// Graph and Internet message IDs and lets Reconcile find the sent copy
+	// by its attempt property. It is the default.
+	SendModeDraft = "draft"
+	// SendModeDirect posts the message in one call, POST
+	// /users/{mailbox}/sendMail (/me/sendMail without a mailbox), and needs
+	// Mail.Send only: no draft, no read of the mailbox. Graph answers 202
+	// with no message ID, so the outcome is provider_accepted without a
+	// provider reference, a lost answer is outcome_unknown that cannot be
+	// reconciled (the adapter reads nothing back), and a message is a new
+	// message: a reply in a thread needs a draft. Sent Items keeps a copy
+	// only with Config.SaveToSentItems.
+	SendModeDirect = "direct"
+)
+
+// sendMode is the effective send mode: draft unless direct is configured.
+func (c Config) sendMode() string {
+	if c.SendMode == SendModeDirect {
+		return SendModeDirect
+	}
+	return SendModeDraft
+}
+
+// RequiredPermissions are the Graph permissions the channel needs in its
+// send mode: Mail.Send alone in direct mode, with the receive and state
+// capabilities left unused, and Mail.ReadWrite and Mail.Send in draft mode,
+// the package's RequiredPermissions.
+func (c Config) RequiredPermissions() []string {
+	if c.sendMode() == SendModeDirect {
+		return []string{PermissionMailSend}
+	}
+	return slices.Clone(RequiredPermissions)
 }
 
 // refusedHistoryFolders are the well-known folders a history import never
@@ -219,6 +267,11 @@ func parseConfig(e model.Extension) (Config, []model.ValidationIssue) {
 			out = append(out, issue("history_mailboxes", "must be distinct mail folder IDs or well-known folder names other than junkemail, deleteditems, drafts, sentitems and outbox"))
 			break
 		}
+	}
+	switch c.SendMode {
+	case "", SendModeDraft, SendModeDirect:
+	default:
+		out = append(out, issue("send_mode", "must be draft or direct"))
 	}
 	if c.PollIntervalMS < 0 {
 		out = append(out, issue("poll_interval_ms", "must not be negative"))
