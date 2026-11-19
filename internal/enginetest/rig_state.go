@@ -2,6 +2,7 @@ package enginetest
 
 import (
 	"context"
+	"strconv"
 
 	"hop.top/uma/adapter"
 	"hop.top/uma/internal/engine"
@@ -109,7 +110,7 @@ func (r *Rig) SeedProviderMessages(n int) []model.ExternalRef {
 // alone and returns its provider reference.
 func (r *Rig) SeedProviderMessage(k int) model.ExternalRef {
 	r.T.Helper()
-	ref := model.ProviderMessageRef(r.Ch.Ref, "pm-item-"+string(rune('0'+k)))
+	ref := model.ProviderMessageRef(r.Ch.Ref, "pm-item-"+strconv.Itoa(k))
 	m := model.Message{
 		Ref:      model.MessageRef{Conversation: r.Conv.Ref, ID: SeededMessageID(k)},
 		Audience: model.Audience{Visibility: model.Public},
@@ -127,7 +128,7 @@ func (r *Rig) SeedProviderMessage(k int) model.ExternalRef {
 // SeededMessageID is the ID of the k-th message SeedProviderMessages stores
 // (1-based).
 func SeededMessageID(k int) model.ID {
-	return model.ID("00000005-0000-7000-8000-00000000010" + string(rune('0'+k)))
+	return model.ID("00000005-0000-7000-8000-00000000010" + strconv.Itoa(k))
 }
 
 // StoredConversation reads the rig's conversation.

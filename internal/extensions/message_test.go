@@ -35,7 +35,9 @@ func (x *env) seedMessages() {
 	put(msgBare)
 }
 
-func (x *env) msg(id model.ID) *model.MessageRef { return &model.MessageRef{Conversation: x.conv.Ref, ID: id} }
+func (x *env) msg(id model.ID) *model.MessageRef {
+	return &model.MessageRef{Conversation: x.conv.Ref, ID: id}
+}
 
 // An effect that names a message of the conversation reaches the adapter
 // with that message's provider reference as its target; without one the
