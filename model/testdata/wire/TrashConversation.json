@@ -25,5 +25,8 @@
     },
     "id": "ID"
   },
-  "undo": true
+  "undo": true,
+  "messages": [
+    "Messages"
+  ]
 }

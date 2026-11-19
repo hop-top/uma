@@ -22,7 +22,7 @@ func (s Conversations) Archive(ctx context.Context, req model.ArchiveConversatio
 	if req.Undo {
 		verb = model.StateVerbUnarchive
 	}
-	return s.changeState(ctx, operations.StateRequest{Command: req.Command, Conversation: req.Conversation, Verb: verb})
+	return s.changeState(ctx, operations.StateRequest{Command: req.Command, Conversation: req.Conversation, Verb: verb, Messages: req.Messages})
 }
 
 // Move queues moving a conversation at the provider, as Archive.
@@ -32,7 +32,7 @@ func (s Conversations) Move(ctx context.Context, req model.MoveConversation) (mo
 	}
 	return s.changeState(ctx, operations.StateRequest{
 		Command: req.Command, Conversation: req.Conversation, Verb: model.StateVerbMove,
-		Destination: req.Destination, Add: req.Add, Remove: req.Remove,
+		Destination: req.Destination, Add: req.Add, Remove: req.Remove, Messages: req.Messages,
 	})
 }
 
@@ -46,7 +46,7 @@ func (s Conversations) SetRead(ctx context.Context, req model.SetConversationRea
 	if req.Read {
 		verb = model.StateVerbRead
 	}
-	return s.changeState(ctx, operations.StateRequest{Command: req.Command, Conversation: req.Conversation, Verb: verb})
+	return s.changeState(ctx, operations.StateRequest{Command: req.Command, Conversation: req.Conversation, Verb: verb, Messages: req.Messages})
 }
 
 // Flag queues flagging, or unflagging, a conversation at the provider, as
@@ -60,7 +60,7 @@ func (s Conversations) Flag(ctx context.Context, req model.FlagConversation) (mo
 		verb = model.StateVerbUnflag
 	}
 	return s.changeState(ctx, operations.StateRequest{
-		Command: req.Command, Conversation: req.Conversation, Verb: verb, Kind: req.Kind,
+		Command: req.Command, Conversation: req.Conversation, Verb: verb, Kind: req.Kind, Messages: req.Messages,
 	})
 }
 
@@ -74,7 +74,7 @@ func (s Conversations) Trash(ctx context.Context, req model.TrashConversation) (
 	if req.Undo {
 		verb = model.StateVerbUntrash
 	}
-	return s.changeState(ctx, operations.StateRequest{Command: req.Command, Conversation: req.Conversation, Verb: verb})
+	return s.changeState(ctx, operations.StateRequest{Command: req.Command, Conversation: req.Conversation, Verb: verb, Messages: req.Messages})
 }
 
 // open reports the closed engine before it reports invalid, as every
@@ -119,7 +119,10 @@ func (s Conversations) gateState(ctx context.Context, req operations.StateReques
 	if err := view(ctx, c, func(r store.Reader) error {
 		var err error
 		rt, err = route.Load(ctx, r, req.Conversation)
-		return exactRef(err, rt.Conv.Ref == req.Conversation)
+		if err = exactRef(err, rt.Conv.Ref == req.Conversation); err != nil {
+			return err
+		}
+		return operations.CheckStateMessages(ctx, r, rt.Conv, req.Messages)
 	}); err != nil {
 		return model.StateLimits{}, err
 	}

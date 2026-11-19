@@ -132,7 +132,7 @@ func (s Service) Execute(ctx context.Context, req model.ExecuteExtension) (model
 	if err := validateAction(e, t.channel.Type, req.Audience, req.Action); err != nil {
 		return model.Acceptance{}, err
 	}
-	stored, err := intent{Target: req.Target, Audience: req.Audience, Action: req.Action.Clone()}.encode()
+	stored, err := intent{Target: req.Target, Audience: req.Audience, Action: req.Action.Clone(), Message: req.Message}.encode()
 	if err != nil {
 		return model.Acceptance{}, err
 	}
@@ -141,6 +141,9 @@ func (s Service) Execute(ctx context.Context, req model.ExecuteExtension) (model
 		Kind: d.AuthorizeAs, Target: req.Target, Owner: t.owner, Command: req.Command, Audience: req.Audience,
 		Fingerprint: fingerprint(d.AuthorizeAs, req), Intent: stored,
 		Precheck: func(ctx context.Context, tx store.Tx) error {
+			if _, err := messageTarget(ctx, tx, t, req.Message); err != nil {
+				return err
+			}
 			if expected == "" {
 				return nil
 			}

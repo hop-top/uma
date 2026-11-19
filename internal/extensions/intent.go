@@ -22,6 +22,8 @@ type intent struct {
 	Target   model.Ref       `json:"target"`
 	Audience model.Audience  `json:"audience"`
 	Action   model.Extension `json:"action"`
+	// Message is the conversation message the effect acts on, when named.
+	Message *model.MessageRef `json:"message,omitempty"`
 }
 
 // encode returns the stored form of in.
@@ -55,5 +57,8 @@ func fingerprint(kind string, req model.ExecuteExtension) []byte {
 	f.Set("audience", operations.Field().Audience(req.Audience))
 	f.Set("action", operations.Field().Extension(req.Action))
 	f.Set("expected_revision", operations.Field().Str(string(req.ExpectedRevision)))
+	if req.Message != nil {
+		f.Set("message", operations.Field().Str(string(req.Message.ID)))
+	}
 	return f.Sum()
 }

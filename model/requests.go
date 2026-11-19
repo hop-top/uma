@@ -169,11 +169,21 @@ type TaskAction struct {
 	Target TaskRef   `json:"target"`
 	Action Extension `json:"action"`
 }
+
+// ExecuteExtension runs a registered effect on Target.
+//
+// Message, for a conversation target, names the message of that
+// conversation the effect acts on, for an effect that acts on one message
+// (mail tags, unsubscribe); without it the effect acts on the message the
+// conversation's reply route names, which is the first message the
+// conversation held. It must belong to the conversation (else
+// model.Validation) and is refused for another kind of target.
 type ExecuteExtension struct {
 	Command
-	Target   Ref       `json:"target"`
-	Audience Audience  `json:"audience"`
-	Action   Extension `json:"action"`
+	Target   Ref         `json:"target"`
+	Audience Audience    `json:"audience"`
+	Action   Extension   `json:"action"`
+	Message  *MessageRef `json:"message,omitempty"`
 }
 type QueryExtension struct {
 	Call

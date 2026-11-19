@@ -218,11 +218,22 @@ func (ExecuteExtension) RevisionRule() RevisionRule { return RevisionOptional }
 
 // Validate checks target, audience and action shape.
 func (r ExecuteExtension) Validate() error {
+	var msg error
+	switch {
+	case r.Message == nil:
+	case r.Target.Kind != resourceConversation:
+		msg = invalidField("message", "only allowed for a conversation target")
+	default:
+		if msg = r.Message.validate("message", false); msg == nil && r.Message.Conversation.Ref() != r.Target {
+			msg = invalidField("message", "must belong to the target conversation")
+		}
+	}
 	return firstError(
 		r.Command.Validate(r.RevisionRule()),
 		r.Target.validate("target", false),
 		r.Audience.validate("audience"),
 		r.Action.validate("action", DefaultContentLimits().MaxStructuredBytes),
+		msg,
 	)
 }
 

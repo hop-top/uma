@@ -91,7 +91,9 @@ type Membership interface {
 // StateChange is the request fields of a provider state effect, handed to
 // Reconcile with the attempt.
 type StateChange struct {
-	Items        []model.ExternalRef
+	Items []model.ExternalRef
+	// Targeted: Items are the messages the caller chose.
+	Targeted     bool
 	Undo         bool
 	Read         bool
 	FlagKind     string
@@ -144,7 +146,7 @@ func reconcileRequest(job Job, eff adapter.Effect, attemptedAt time.Time) adapte
 	}
 	if st, ok := job.(StateChanging); ok {
 		c := st.StateChange()
-		req.Items, req.Undo, req.Read, req.FlagKind = c.Items, c.Undo, c.Read, c.FlagKind
+		req.Items, req.Targeted, req.Undo, req.Read, req.FlagKind = c.Items, c.Targeted, c.Undo, c.Read, c.FlagKind
 		req.Destination, req.AddLabels, req.RemoveLabels = c.Destination, c.AddLabels, c.RemoveLabels
 	}
 	if x, ok := job.(Executing); ok {

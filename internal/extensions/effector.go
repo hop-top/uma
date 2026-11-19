@@ -31,7 +31,9 @@ func (effector) Decode(e model.Extension) (runtime.Job, error) {
 type job struct {
 	intent intent
 	target target
-	def    adapter.ExtensionDefinition
+	// message is the provider reference of the message the intent names.
+	message *model.ExternalRef
+	def     adapter.ExtensionDefinition
 }
 
 func (j *job) Audience() model.Audience { return j.intent.Audience }
@@ -43,13 +45,18 @@ func (j *job) Load(ctx context.Context, e *engine.Engine, tenant model.TenantID)
 	}
 	err := e.Store().View(ctx, tenant, func(r store.Reader) error {
 		var err error
-		j.target, err = resolve(ctx, r, j.intent.Target)
+		if j.target, err = resolve(ctx, r, j.intent.Target); err != nil {
+			return err
+		}
+		j.message, err = messageTarget(ctx, r, j.target, j.intent.Message)
 		return err
 	})
 	return j.target.channel, err
 }
 
-func (j *job) Route() (model.ExternalRef, *model.ExternalRef) { return j.target.route, nil }
+// Route is the target's route and, when the intent names a message of the
+// conversation, that message's provider reference as the effect's target.
+func (j *job) Route() (model.ExternalRef, *model.ExternalRef) { return j.target.route, j.message }
 
 // Recheck finds the definition the action names in the engine's current
 // composition, so an action no longer registered, or registered with

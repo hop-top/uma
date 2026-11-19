@@ -3,6 +3,7 @@ package extensions
 import (
 	"context"
 
+	"hop.top/uma/internal/operations"
 	"hop.top/uma/model"
 	"hop.top/uma/store"
 )
@@ -71,4 +72,28 @@ func resolve(ctx context.Context, r store.Reader, ref model.Ref) (target, error)
 	}
 	t.route = model.ExternalRef{Channel: t.channel.Ref}
 	return t, nil
+}
+
+// messageTarget resolves the message an effect on a conversation names to
+// its provider reference on the conversation's channel. A nil message is
+// no target (nil, nil). A message that is not a live message of the
+// conversation with a provider reference there is model.Validation.
+func messageTarget(ctx context.Context, r store.Reader, t target, ref *model.MessageRef) (*model.ExternalRef, error) {
+	if ref == nil {
+		return nil, nil
+	}
+	m, err := r.GetMessage(ctx, *ref)
+	switch {
+	case model.IsCode(err, model.NotFound) || (err == nil && m.Ref != *ref):
+		return nil, model.NewError(model.Validation, "message is not in the conversation")
+	case err != nil:
+		return nil, err
+	case m.Deleted || m.Redacted:
+		return nil, model.NewError(model.Validation, "message is deleted or redacted")
+	}
+	p := operations.ProviderMessageRef(m, t.route.Channel)
+	if p == nil {
+		return nil, model.NewError(model.Validation, "message has no provider message on the conversation's channel")
+	}
+	return p, nil
 }

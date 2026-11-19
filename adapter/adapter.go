@@ -704,6 +704,11 @@ type ArchiveRequest struct {
 	Effect
 	Items []model.ExternalRef
 	Undo  bool
+	// Targeted marks Items as the messages the caller chose, a subset of
+	// the conversation's: the adapter changes exactly those messages and
+	// must not widen the change to a thread, folder or other grouping the
+	// provider would otherwise change as a whole.
+	Targeted bool
 }
 
 // Archiver archives and unarchives conversations (model.CapabilityArchive).
@@ -719,6 +724,11 @@ type MoveRequest struct {
 	Destination model.MoveDestination
 	Add         []string
 	Remove      []string
+	// Targeted marks Items as the messages the caller chose, a subset of
+	// the conversation's: the adapter changes exactly those messages and
+	// must not widen the change to a thread, folder or other grouping the
+	// provider would otherwise change as a whole.
+	Targeted bool
 }
 
 // Mover moves conversations between folders or changes their labels
@@ -733,6 +743,11 @@ type ReadStateRequest struct {
 	Effect
 	Items []model.ExternalRef
 	Read  bool
+	// Targeted marks Items as the messages the caller chose, a subset of
+	// the conversation's: the adapter changes exactly those messages and
+	// must not widen the change to a thread, folder or other grouping the
+	// provider would otherwise change as a whole.
+	Targeted bool
 }
 
 // ReadStateSetter marks conversations read and unread at the provider
@@ -748,6 +763,11 @@ type FlagRequest struct {
 	Items []model.ExternalRef
 	Kind  string
 	Undo  bool
+	// Targeted marks Items as the messages the caller chose, a subset of
+	// the conversation's: the adapter changes exactly those messages and
+	// must not widen the change to a thread, folder or other grouping the
+	// provider would otherwise change as a whole.
+	Targeted bool
 }
 
 // Flagger flags and unflags conversations (model.CapabilityFlag).
@@ -761,6 +781,11 @@ type TrashRequest struct {
 	Effect
 	Items []model.ExternalRef
 	Undo  bool
+	// Targeted marks Items as the messages the caller chose, a subset of
+	// the conversation's: the adapter changes exactly those messages and
+	// must not widen the change to a thread, folder or other grouping the
+	// provider would otherwise change as a whole.
+	Targeted bool
 }
 
 // Trasher trashes and restores conversations (model.CapabilityTrash). It
@@ -895,6 +920,7 @@ type ReconcileRequest struct {
 	// in the destination: a conversation found there is applied, never
 	// not found.
 	Items        []model.ExternalRef
+	Targeted     bool
 	Undo         bool
 	Read         bool
 	FlagKind     string
