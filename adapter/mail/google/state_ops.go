@@ -24,6 +24,12 @@ import (
 //	                     threads.trash for the trash role
 //	trash, untrash       threads.trash, threads.untrash
 //
+// A change that names its messages (Targeted: the caller chose a subset of
+// the conversation) is never widened to their threads: it is one
+// users.messages call per message, with the same label changes, and
+// messages.trash or messages.untrash for the trash verbs. Spam is a label
+// change (SPAM added, INBOX removed) either way.
+//
 // All five are account scope: Gmail labels change the mailbox's own view
 // and nobody else's. They need gmail.modify. Gmail IDs are stable, so no
 // verb reports a reference change.
@@ -175,34 +181,35 @@ func moveChange(dest model.MoveDestination, add, remove []string) (stateChange, 
 
 // Archive archives the conversation's threads, or unarchives them.
 func (i *instance) Archive(ctx context.Context, req adapter.ArchiveRequest) (adapter.Outcome, error) {
-	return i.change(ctx, req.Effect, req.Items, archiveChange(req.Undo), nil)
+	return i.change(ctx, req.Effect, req.Items, req.Targeted, archiveChange(req.Undo), nil)
 }
 
 // Move changes the labels of the conversation's threads.
 func (i *instance) Move(ctx context.Context, req adapter.MoveRequest) (adapter.Outcome, error) {
 	c, refusal := moveChange(req.Destination, req.Add, req.Remove)
-	return i.change(ctx, req.Effect, req.Items, c, refusal)
+	return i.change(ctx, req.Effect, req.Items, req.Targeted, c, refusal)
 }
 
 // SetReadState marks the conversation's threads read or unread.
 func (i *instance) SetReadState(ctx context.Context, req adapter.ReadStateRequest) (adapter.Outcome, error) {
-	return i.change(ctx, req.Effect, req.Items, readChange(req.Read), nil)
+	return i.change(ctx, req.Effect, req.Items, req.Targeted, readChange(req.Read), nil)
 }
 
 // Flag stars or marks important the conversation's threads, or clears it.
 func (i *instance) Flag(ctx context.Context, req adapter.FlagRequest) (adapter.Outcome, error) {
 	c, refusal := flagChange(req.Kind, req.Undo)
-	return i.change(ctx, req.Effect, req.Items, c, refusal)
+	return i.change(ctx, req.Effect, req.Items, req.Targeted, c, refusal)
 }
 
 // Trash moves the conversation's threads to the trash, or restores them.
 func (i *instance) Trash(ctx context.Context, req adapter.TrashRequest) (adapter.Outcome, error) {
-	return i.change(ctx, req.Effect, req.Items, trashChange(req.Undo), nil)
+	return i.change(ctx, req.Effect, req.Items, req.Targeted, trashChange(req.Undo), nil)
 }
 
-// change runs c on every thread of the items. A refusal found while
-// building the change is a final rejected outcome, made before any call.
-func (i *instance) change(ctx context.Context, eff adapter.Effect, items []model.ExternalRef, c stateChange, refusal *model.Error) (adapter.Outcome, error) {
+// change runs c on every thread of the items, or, when targeted, on each
+// item message alone. A refusal found while building the change is a final
+// rejected outcome, made before any call.
+func (i *instance) change(ctx context.Context, eff adapter.Effect, items []model.ExternalRef, targeted bool, c stateChange, refusal *model.Error) (adapter.Outcome, error) {
 	if err := i.checkRoute(eff.Route); err != nil {
 		return adapter.Outcome{}, err
 	}
@@ -210,27 +217,66 @@ func (i *instance) change(ctx context.Context, eff adapter.Effect, items []model
 		return rejected(refusal.Code, refusal.SafeMessage), nil
 	}
 	s := i.c.session()
-	threads, out, err := i.threadsOf(ctx, s, eff.Route, items)
-	if threads == nil {
-		return out, err
+	resource := "threads"
+	var targets []string
+	if targeted {
+		resource = "messages"
+		var out adapter.Outcome
+		if targets, out = i.targetIDs(items); targets == nil {
+			return out, nil
+		}
+	} else {
+		var (
+			out adapter.Outcome
+			err error
+		)
+		if targets, out, err = i.threadsOf(ctx, s, eff.Route, items); targets == nil {
+			return out, err
+		}
 	}
-	for n, id := range threads {
-		if status, err := i.callThread(ctx, s, id, c); err != nil {
+	for n, id := range targets {
+		if status, err := i.callResource(ctx, s, resource, id, c); err != nil {
 			return stateFailure(status, err, n > 0)
 		}
 	}
 	return adapter.Outcome{State: model.ProviderAccepted}, nil
 }
 
-// callThread makes the thread call for c on thread id and returns the HTTP
-// status of the answer, zero without one.
-func (i *instance) callThread(ctx context.Context, s *session, id string, c stateChange) (int, error) {
+// callResource makes the call for c on thread or message id (resource is
+// "threads" or "messages") and returns the HTTP status of the answer, zero
+// without one.
+func (i *instance) callResource(ctx context.Context, s *session, resource, id string, c stateChange) (int, error) {
 	var body []byte
 	if c.op == opModify {
 		body = encode(gModify{AddLabelIDs: c.add, RemoveLabelIDs: c.remove})
 	}
-	resp, err := s.do(ctx, request{method: "POST", url: i.c.api("/threads/"+url.PathEscape(id)+"/"+c.op, nil), body: body})
+	resp, err := s.do(ctx, request{method: "POST", url: i.c.api("/"+resource+"/"+url.PathEscape(id)+"/"+c.op, nil), body: body})
 	return resp.status, err
+}
+
+// targetIDs returns the Gmail message IDs of the targeted items, each once,
+// in order. It returns no IDs, and the rejected outcome to answer with, when
+// an item is not a message of this channel or none is given: a targeted
+// change never falls back to the route's message or to a thread.
+func (i *instance) targetIDs(items []model.ExternalRef) ([]string, adapter.Outcome) {
+	var ids []string
+	for _, it := range items {
+		if !i.isMessageRef(it) {
+			return nil, rejected(model.Validation, "a targeted item is not a message of this channel")
+		}
+		if !slices.Contains(ids, it.ID) {
+			ids = append(ids, it.ID)
+		}
+	}
+	if len(ids) == 0 {
+		return nil, rejected(model.Validation, "no provider message to change: the targeted set is empty")
+	}
+	return ids, adapter.Outcome{}
+}
+
+// isMessageRef reports whether r is a Gmail message of this channel.
+func (i *instance) isMessageRef(r model.ExternalRef) bool {
+	return r.Channel == i.ch.Ref && r.Namespace == model.ProviderMessageNamespace && r.Kind == model.RefKindMessage && r.ID != ""
 }
 
 // stateFailure maps a failed thread call. A call whose answer may be lost
@@ -347,6 +393,9 @@ func (i *instance) reconcileState(ctx context.Context, req adapter.ReconcileRequ
 		return rejected(refusal.Code, refusal.SafeMessage), nil
 	}
 	s := i.c.session()
+	if req.Targeted {
+		return i.reconcileMessages(ctx, s, c, req.Items)
+	}
 	threads, out, err := i.threadsOf(ctx, s, req.Route, req.Items)
 	if threads == nil {
 		return out, err
@@ -359,6 +408,34 @@ func (i *instance) reconcileState(ctx context.Context, req adapter.ReconcileRequ
 		case err != nil:
 			return adapter.Outcome{}, err
 		case !c.shows(t.Messages):
+			return adapter.Outcome{State: model.Failed, Failure: model.NewError(model.Transient, "gmail does not hold the change; a new attempt is safe")}, nil
+		}
+	}
+	return adapter.Outcome{State: model.ProviderAccepted}, nil
+}
+
+// reconcileMessages reads the labels of each targeted message back
+// (users.messages.get, format=minimal), and no other message of its thread:
+// the change is applied when each shows it. A message Gmail no longer holds
+// is a final rejected not_found.
+func (i *instance) reconcileMessages(ctx context.Context, s *session, c stateChange, items []model.ExternalRef) (adapter.Outcome, error) {
+	ids, out := i.targetIDs(items)
+	if ids == nil {
+		return out, nil
+	}
+	for _, id := range ids {
+		resp, err := s.do(ctx, request{method: "GET", url: i.c.api("/messages/"+url.PathEscape(id), url.Values{"format": {"minimal"}})})
+		if model.IsCode(err, model.NotFound) {
+			return rejected(model.NotFound, "gmail no longer holds the message"), nil
+		}
+		if err != nil {
+			return adapter.Outcome{}, transient(err)
+		}
+		m, err := decodeMessage(resp.body, id)
+		if err != nil {
+			return adapter.Outcome{}, err
+		}
+		if !c.shows([]gMessage{m}) {
 			return adapter.Outcome{State: model.Failed, Failure: model.NewError(model.Transient, "gmail does not hold the change; a new attempt is safe")}, nil
 		}
 	}

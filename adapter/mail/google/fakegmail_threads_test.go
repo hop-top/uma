@@ -163,3 +163,22 @@ func (g *fakeGmail) relabelThread(user, id string, add, remove []string) {
 		g.relabel(b, m, add, remove)
 	}
 }
+
+// messageTrash answers users.messages.trash and untrash: the one message,
+// never its thread.
+func (g *fakeGmail) messageTrash(w http.ResponseWriter, b *fakeBox, id, verb string) {
+	g.mu.Lock()
+	defer g.mu.Unlock()
+	b.messageOps = append(b.messageOps, verb+" "+id)
+	m, ok := b.messages[id]
+	if !ok {
+		googleError(w, http.StatusNotFound, "notFound", "NOT_FOUND")
+		return
+	}
+	if verb == "trash" {
+		g.relabel(b, m, []string{"TRASH"}, []string{labelInbox})
+	} else {
+		g.relabel(b, m, nil, []string{"TRASH"})
+	}
+	writeJSON(w, http.StatusOK, gMessage{ID: m.id, ThreadID: m.threadID, LabelIDs: m.labels})
+}

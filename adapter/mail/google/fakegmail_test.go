@@ -82,6 +82,9 @@ type fakeBox struct {
 	stateCalls map[string]conformance.ProviderCall
 	// threadOps are the thread requests received, "<verb> <thread>".
 	threadOps []string
+	// messageOps are the messages.trash and untrash requests received,
+	// "<verb> <message>".
+	messageOps []string
 	// userLabels are the user's own labels (see fakegmail_labels_test.go).
 	userLabels []gLabel
 	labelSeq   int
@@ -325,6 +328,10 @@ func (g *fakeGmail) serveUser(w http.ResponseWriter, r *http.Request, b *fakeBox
 	case r.Method == "POST" && strings.HasPrefix(rest, "/messages/") && strings.HasSuffix(rest, "/modify"):
 		id, _ := url.PathUnescape(strings.TrimSuffix(strings.TrimPrefix(rest, "/messages/"), "/modify"))
 		g.modify(w, r, b, id)
+	case r.Method == "POST" && strings.HasPrefix(rest, "/messages/") && (strings.HasSuffix(rest, "/trash") || strings.HasSuffix(rest, "/untrash")):
+		verb := rest[strings.LastIndex(rest, "/")+1:]
+		id, _ := url.PathUnescape(strings.TrimSuffix(strings.TrimPrefix(rest, "/messages/"), "/"+verb))
+		g.messageTrash(w, b, id, verb)
 	case rest == "/drafts" || strings.HasPrefix(rest, "/drafts/"):
 		g.draftsAPI(w, r, b, rest)
 	case strings.HasPrefix(rest, "/threads/"):

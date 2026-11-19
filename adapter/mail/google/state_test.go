@@ -64,31 +64,34 @@ type stateCase struct {
 	after func(t *testing.T, e *env, id string)
 }
 
-func stateCases() []stateCase {
+func stateCases() []stateCase { return stateCasesFor(false) }
+
+// stateCasesFor builds the cases with every request marked targeted or not.
+func stateCasesFor(targeted bool) []stateCase {
 	eff := effect(route(testPeer, "m1"), "00000000-0000-7000-8000-0000000000a1")
 	archive := func(undo bool) func(*instance, []model.ExternalRef) (adapter.Outcome, error) {
 		return func(i *instance, it []model.ExternalRef) (adapter.Outcome, error) {
-			return i.Archive(context.Background(), adapter.ArchiveRequest{Effect: eff, Items: it, Undo: undo})
+			return i.Archive(context.Background(), adapter.ArchiveRequest{Effect: eff, Items: it, Targeted: targeted, Undo: undo})
 		}
 	}
 	read := func(v bool) func(*instance, []model.ExternalRef) (adapter.Outcome, error) {
 		return func(i *instance, it []model.ExternalRef) (adapter.Outcome, error) {
-			return i.SetReadState(context.Background(), adapter.ReadStateRequest{Effect: eff, Items: it, Read: v})
+			return i.SetReadState(context.Background(), adapter.ReadStateRequest{Effect: eff, Items: it, Targeted: targeted, Read: v})
 		}
 	}
 	flag := func(kind string, undo bool) func(*instance, []model.ExternalRef) (adapter.Outcome, error) {
 		return func(i *instance, it []model.ExternalRef) (adapter.Outcome, error) {
-			return i.Flag(context.Background(), adapter.FlagRequest{Effect: eff, Items: it, Kind: kind, Undo: undo})
+			return i.Flag(context.Background(), adapter.FlagRequest{Effect: eff, Items: it, Targeted: targeted, Kind: kind, Undo: undo})
 		}
 	}
 	trash := func(undo bool) func(*instance, []model.ExternalRef) (adapter.Outcome, error) {
 		return func(i *instance, it []model.ExternalRef) (adapter.Outcome, error) {
-			return i.Trash(context.Background(), adapter.TrashRequest{Effect: eff, Items: it, Undo: undo})
+			return i.Trash(context.Background(), adapter.TrashRequest{Effect: eff, Items: it, Targeted: targeted, Undo: undo})
 		}
 	}
 	move := func(r adapter.MoveRequest) func(*instance, []model.ExternalRef) (adapter.Outcome, error) {
 		return func(i *instance, it []model.ExternalRef) (adapter.Outcome, error) {
-			r.Effect, r.Items = eff, it
+			r.Effect, r.Items, r.Targeted = eff, it, targeted
 			return i.Move(context.Background(), r)
 		}
 	}
