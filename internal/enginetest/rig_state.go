@@ -13,7 +13,9 @@ import (
 // StateCall is one provider state request that reached the provider: the
 // request fields of the verb the capability carries.
 type StateCall struct {
-	Items       []model.ExternalRef
+	Items []model.ExternalRef
+	// Targeted: Items are the messages the caller chose.
+	Targeted    bool
 	Undo        bool
 	Read        bool
 	Kind        string
@@ -64,27 +66,27 @@ func WithStateLimits(limits func(model.Capability) model.Extension, caps ...mode
 
 // Archive answers like a send, consuming the same script.
 func (i *OutInstance) Archive(ctx context.Context, r adapter.ArchiveRequest) (adapter.Outcome, error) {
-	return i.state(ctx, model.CapabilityArchive, r.Effect, StateCall{Items: r.Items, Undo: r.Undo})
+	return i.state(ctx, model.CapabilityArchive, r.Effect, StateCall{Items: r.Items, Targeted: r.Targeted, Undo: r.Undo})
 }
 
 // Move answers like a send, consuming the same script.
 func (i *OutInstance) Move(ctx context.Context, r adapter.MoveRequest) (adapter.Outcome, error) {
-	return i.state(ctx, model.CapabilityMove, r.Effect, StateCall{Items: r.Items, Destination: r.Destination, Add: r.Add, Remove: r.Remove})
+	return i.state(ctx, model.CapabilityMove, r.Effect, StateCall{Items: r.Items, Targeted: r.Targeted, Destination: r.Destination, Add: r.Add, Remove: r.Remove})
 }
 
 // SetReadState answers like a send, consuming the same script.
 func (i *OutInstance) SetReadState(ctx context.Context, r adapter.ReadStateRequest) (adapter.Outcome, error) {
-	return i.state(ctx, model.CapabilityReadState, r.Effect, StateCall{Items: r.Items, Read: r.Read})
+	return i.state(ctx, model.CapabilityReadState, r.Effect, StateCall{Items: r.Items, Targeted: r.Targeted, Read: r.Read})
 }
 
 // Flag answers like a send, consuming the same script.
 func (i *OutInstance) Flag(ctx context.Context, r adapter.FlagRequest) (adapter.Outcome, error) {
-	return i.state(ctx, model.CapabilityFlag, r.Effect, StateCall{Items: r.Items, Kind: r.Kind, Undo: r.Undo})
+	return i.state(ctx, model.CapabilityFlag, r.Effect, StateCall{Items: r.Items, Targeted: r.Targeted, Kind: r.Kind, Undo: r.Undo})
 }
 
 // Trash answers like a send, consuming the same script.
 func (i *OutInstance) Trash(ctx context.Context, r adapter.TrashRequest) (adapter.Outcome, error) {
-	return i.state(ctx, model.CapabilityTrash, r.Effect, StateCall{Items: r.Items, Undo: r.Undo})
+	return i.state(ctx, model.CapabilityTrash, r.Effect, StateCall{Items: r.Items, Targeted: r.Targeted, Undo: r.Undo})
 }
 
 func (i *OutInstance) state(ctx context.Context, c model.Capability, e adapter.Effect, s StateCall) (adapter.Outcome, error) {
@@ -98,21 +100,34 @@ func (r *Rig) SeedProviderMessages(n int) []model.ExternalRef {
 	r.T.Helper()
 	var refs []model.ExternalRef
 	for k := 1; k <= n; k++ {
-		ref := model.ProviderMessageRef(r.Ch.Ref, "pm-item-"+string(rune('0'+k)))
-		m := model.Message{
-			Ref:      model.MessageRef{Conversation: r.Conv.Ref, ID: model.ID("00000005-0000-7000-8000-00000000010" + string(rune('0'+k)))},
-			Audience: model.Audience{Visibility: model.Public},
-			Content:  model.Content{Parts: []model.Part{{Kind: model.PartText, Text: "item"}}},
-			External: []model.ExternalRef{ref},
-			Source:   OutKey, OccurredAt: r.Clock.Now().UTC(), RecordedAt: r.Clock.Now().UTC(), Revision: "m1",
-		}
-		err := r.E.Store().Transact(r.Ctx, TenantA, func(tx store.Tx) error { return tx.PutMessage(r.Ctx, m, "") })
-		if err != nil {
-			r.T.Fatalf("seed message: %v", err)
-		}
-		refs = append(refs, ref)
+		refs = append(refs, r.SeedProviderMessage(k))
 	}
 	return refs
+}
+
+// SeedProviderMessage stores the k-th message of SeedProviderMessages (1-based)
+// alone and returns its provider reference.
+func (r *Rig) SeedProviderMessage(k int) model.ExternalRef {
+	r.T.Helper()
+	ref := model.ProviderMessageRef(r.Ch.Ref, "pm-item-"+string(rune('0'+k)))
+	m := model.Message{
+		Ref:      model.MessageRef{Conversation: r.Conv.Ref, ID: SeededMessageID(k)},
+		Audience: model.Audience{Visibility: model.Public},
+		Content:  model.Content{Parts: []model.Part{{Kind: model.PartText, Text: "item"}}},
+		External: []model.ExternalRef{ref},
+		Source:   OutKey, OccurredAt: r.Clock.Now().UTC(), RecordedAt: r.Clock.Now().UTC(), Revision: "m1",
+	}
+	err := r.E.Store().Transact(r.Ctx, TenantA, func(tx store.Tx) error { return tx.PutMessage(r.Ctx, m, "") })
+	if err != nil {
+		r.T.Fatalf("seed message: %v", err)
+	}
+	return ref
+}
+
+// SeededMessageID is the ID of the k-th message SeedProviderMessages stores
+// (1-based).
+func SeededMessageID(k int) model.ID {
+	return model.ID("00000005-0000-7000-8000-00000000010" + string(rune('0'+k)))
 }
 
 // StoredConversation reads the rig's conversation.

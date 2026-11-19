@@ -3,6 +3,7 @@ package model
 import (
 	"encoding/json"
 	"slices"
+	"strconv"
 	"time"
 )
 
@@ -254,6 +255,12 @@ type ArchiveConversation struct {
 	Command
 	Conversation ConversationRef `json:"conversation"`
 	Undo         bool            `json:"undo"`
+	// Messages, when set, names the messages of the conversation the
+	// change applies to, and only those; the conversation's other
+	// messages are left alone, and a provider that changes state per
+	// thread must not widen it. Each must belong to the conversation
+	// (else model.Validation). Empty: every message of the conversation.
+	Messages []ID `json:"messages,omitempty"`
 }
 
 // MoveDestination names where Conversations.Move puts a conversation:
@@ -292,6 +299,12 @@ type MoveConversation struct {
 	Destination  MoveDestination `json:"destination"`
 	Add          []string        `json:"add,omitempty"`
 	Remove       []string        `json:"remove,omitempty"`
+	// Messages, when set, names the messages of the conversation the
+	// change applies to, and only those; the conversation's other
+	// messages are left alone, and a provider that changes state per
+	// thread must not widen it. Each must belong to the conversation
+	// (else model.Validation). Empty: every message of the conversation.
+	Messages []ID `json:"messages,omitempty"`
 }
 
 // SetConversationRead marks a conversation read or unread at the provider
@@ -300,6 +313,12 @@ type SetConversationRead struct {
 	Command
 	Conversation ConversationRef `json:"conversation"`
 	Read         bool            `json:"read"`
+	// Messages, when set, names the messages of the conversation the
+	// change applies to, and only those; the conversation's other
+	// messages are left alone, and a provider that changes state per
+	// thread must not widen it. Each must belong to the conversation
+	// (else model.Validation). Empty: every message of the conversation.
+	Messages []ID `json:"messages,omitempty"`
 }
 
 // FlagConversation sets or, with Undo, clears a flag of Kind at the
@@ -309,6 +328,12 @@ type FlagConversation struct {
 	Conversation ConversationRef `json:"conversation"`
 	Kind         string          `json:"kind"`
 	Undo         bool            `json:"undo"`
+	// Messages, when set, names the messages of the conversation the
+	// change applies to, and only those; the conversation's other
+	// messages are left alone, and a provider that changes state per
+	// thread must not widen it. Each must belong to the conversation
+	// (else model.Validation). Empty: every message of the conversation.
+	Messages []ID `json:"messages,omitempty"`
 }
 
 // TrashConversation moves the account's copy to the provider's trash, or
@@ -318,6 +343,12 @@ type TrashConversation struct {
 	Command
 	Conversation ConversationRef `json:"conversation"`
 	Undo         bool            `json:"undo"`
+	// Messages, when set, names the messages of the conversation the
+	// change applies to, and only those; the conversation's other
+	// messages are left alone, and a provider that changes state per
+	// thread must not widen it. Each must belong to the conversation
+	// (else model.Validation). Empty: every message of the conversation.
+	Messages []ID `json:"messages,omitempty"`
 }
 
 // RevisionRule is RevisionOptional: a caller may change provider state
@@ -339,13 +370,13 @@ func (TrashConversation) RevisionRule() RevisionRule { return RevisionOptional }
 
 // Validate checks the command and the conversation.
 func (r ArchiveConversation) Validate() error {
-	return firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false))
+	return firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false), validateMessages(r.Messages))
 }
 
 // Validate checks the command, the conversation, that the request names a
 // destination or label changes but not both, and the names themselves.
 func (r MoveConversation) Validate() error {
-	if err := firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false)); err != nil {
+	if err := firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false), validateMessages(r.Messages)); err != nil {
 		return err
 	}
 	labels := len(r.Add)+len(r.Remove) > 0
@@ -380,12 +411,12 @@ func (r MoveConversation) Validate() error {
 
 // Validate checks the command and the conversation.
 func (r SetConversationRead) Validate() error {
-	return firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false))
+	return firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false), validateMessages(r.Messages))
 }
 
 // Validate checks the command, the conversation and the kind.
 func (r FlagConversation) Validate() error {
-	if err := firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false)); err != nil {
+	if err := firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false), validateMessages(r.Messages)); err != nil {
 		return err
 	}
 	if !IsFlagKind(r.Kind) {
@@ -396,7 +427,7 @@ func (r FlagConversation) Validate() error {
 
 // Validate checks the command and the conversation.
 func (r TrashConversation) Validate() error {
-	return firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false))
+	return firstError(r.Command.Validate(r.RevisionRule()), r.Conversation.validate("conversation", false), validateMessages(r.Messages))
 }
 
 // StateLimitsName is the Extension name of the limits a state capability
@@ -490,4 +521,18 @@ func (p PendingState) Clone() PendingState {
 	p.Destination = clonePtr(p.Destination, same)
 	p.Add, p.Remove = slices.Clone(p.Add), slices.Clone(p.Remove)
 	return p
+}
+
+// validateMessages checks the message IDs of a state request: tokens, none
+// repeated.
+func validateMessages(ids []ID) error {
+	for i, id := range ids {
+		if err := checkToken(fieldPath("messages", strconv.Itoa(i)), string(id)); err != nil {
+			return err
+		}
+		if slices.Contains(ids[:i], id) {
+			return invalidField("messages", "must not repeat a message")
+		}
+	}
+	return nil
 }

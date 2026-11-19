@@ -241,3 +241,25 @@ func TestFlagConversationHasNoMessage(t *testing.T) {
 		t.Fatal(`IsFlagKind("pin") = true, want false`)
 	}
 }
+
+// The messages a state request names are tokens, none repeated, on every
+// verb.
+func TestStateRequestsValidateMessages(t *testing.T) {
+	for name, msgs := range map[string][]ID{"empty": {""}, "repeated": {"m1", "m1"}} {
+		for verb, r := range map[string]stateRequest{
+			"archive": ArchiveConversation{Command: stateCmd(), Conversation: convA, Messages: msgs},
+			"move":    MoveConversation{Command: stateCmd(), Conversation: convA, Destination: MoveDestination{Role: RoleArchive}, Messages: msgs},
+			"read":    SetConversationRead{Command: stateCmd(), Conversation: convA, Messages: msgs},
+			"flag":    FlagConversation{Command: stateCmd(), Conversation: convA, Kind: FlagStar, Messages: msgs},
+			"trash":   TrashConversation{Command: stateCmd(), Conversation: convA, Messages: msgs},
+		} {
+			if err := r.Validate(); !IsCode(err, Validation) {
+				t.Errorf("%s with %s messages: Validate = %v, want validation", verb, name, err)
+			}
+		}
+	}
+	ok := ArchiveConversation{Command: stateCmd(), Conversation: convA, Messages: []ID{"m1", "m2"}}
+	if err := ok.Validate(); err != nil {
+		t.Fatalf("Validate = %v", err)
+	}
+}

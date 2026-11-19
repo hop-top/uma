@@ -25,5 +25,8 @@
     },
     "id": "ID"
   },
-  "read": true
+  "read": true,
+  "messages": [
+    "Messages"
+  ]
 }

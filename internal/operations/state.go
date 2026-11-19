@@ -57,7 +57,10 @@ type StateIntent struct {
 	Add          []string              `json:"add,omitempty"`
 	Remove       []string              `json:"remove,omitempty"`
 	Kind         string                `json:"kind"`
-	Base         StateBase             `json:"base"`
+	// Messages are the conversation's messages the change is limited to,
+	// fixed at submission; empty is every message, read at apply.
+	Messages []model.ID `json:"messages,omitempty"`
+	Base     StateBase  `json:"base"`
 }
 
 // StateRequest is one state command ready for the ledger, with the scope
@@ -71,6 +74,8 @@ type StateRequest struct {
 	Destination  model.MoveDestination
 	Add, Remove  []string
 	Kind         string
+	// Messages limits the change to these messages of the conversation.
+	Messages []model.ID
 }
 
 // CheckLimits refuses, with model.Unsupported, a request the limits the
@@ -139,7 +144,7 @@ func ChangeState(ctx context.Context, c *engine.Client, req StateRequest) (model
 	in := StateIntent{
 		Conversation: req.Conversation, Channel: channel, Verb: req.Verb, Scope: req.Scope, Shape: req.Shape,
 		Destination: req.Destination, Add: slices.Clone(req.Add), Remove: slices.Clone(req.Remove),
-		Kind: req.Kind,
+		Kind: req.Kind, Messages: slices.Clone(req.Messages),
 	}
 	res := req.Conversation.Ref()
 	return submit(ctx, c, submission{
@@ -170,10 +175,33 @@ func ChangeState(ctx context.Context, c *engine.Client, req StateRequest) (model
 			case req.Command.ExpectedRevision != "" && conv.Revision != req.Command.ExpectedRevision:
 				return model.NewError(model.Conflict, "conversation revision changed")
 			}
-			return nil
+			return CheckStateMessages(ctx, tx, conv, req.Messages)
 		},
 		result: &res,
 	})
+}
+
+// CheckStateMessages checks that every message in ids is a live message of
+// conv with a provider reference on the conversation's channel, the
+// messages a state change can be limited to. A message that is not
+// (unknown, another conversation's, deleted, redacted, or never on the
+// channel) is model.Validation and nothing is queued.
+func CheckStateMessages(ctx context.Context, r store.Reader, conv model.Conversation, ids []model.ID) error {
+	for _, id := range ids {
+		ref := model.MessageRef{Conversation: conv.Ref, ID: id}
+		m, err := r.GetMessage(ctx, ref)
+		switch {
+		case model.IsCode(err, model.NotFound) || (err == nil && m.Ref != ref):
+			return model.NewError(model.Validation, "message "+string(id)+" is not in the conversation")
+		case err != nil:
+			return err
+		case m.Deleted || m.Redacted:
+			return model.NewError(model.Validation, "message "+string(id)+" is deleted or redacted")
+		case ProviderMessageRef(m, conv.ReplyRoute.Channel) == nil:
+			return model.NewError(model.Validation, "message "+string(id)+" has no provider message on the conversation's channel")
+		}
+	}
+	return nil
 }
 
 // baseState snapshots channel's provider state of conv.
@@ -209,6 +237,14 @@ func stateFingerprint(action string, req StateRequest) []byte {
 	f.Set("add", list(req.Add))
 	f.Set("remove", list(req.Remove))
 	f.Set("flag_kind", Field().Str(req.Kind))
+	if len(req.Messages) > 0 {
+		ids := make([]string, len(req.Messages))
+		for i, id := range req.Messages {
+			ids[i] = string(id)
+		}
+		slices.Sort(ids)
+		f.Set("messages", list(ids))
+	}
 	f.Set("expected_revision", Field().Str(string(req.Command.ExpectedRevision)))
 	return f.Sum()
 }

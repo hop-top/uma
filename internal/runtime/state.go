@@ -78,6 +78,8 @@ func (j *stateJob) loadItems(ctx context.Context, r store.Reader) error {
 	j.items = nil
 	channel := j.rt.Conv.ReplyRoute.Channel
 	after := model.Cursor("")
+	want := j.in.Messages
+	var found int
 	for {
 		p, err := r.Messages(ctx, model.ListRequest{
 			Filter: model.Filter{Inboxes: []model.InboxRef{j.rt.Inbox.Ref}, Conversation: &j.in.Conversation},
@@ -90,19 +92,33 @@ func (j *stateJob) loadItems(ctx context.Context, r store.Reader) error {
 			if m.Deleted || m.Redacted {
 				continue
 			}
+			if len(want) > 0 && !slices.Contains(want, m.Ref.ID) {
+				continue
+			}
 			ref := operations.ProviderMessageRef(m, channel)
 			if ref == nil {
 				continue
 			}
+			found++
 			if !slices.Contains(j.items, *ref) {
 				j.items = append(j.items, *ref)
 			}
 		}
 		if p.Complete || p.Next == "" || p.Next == after {
-			return nil
+			return j.checkTargeted(found)
 		}
 		after = p.Next
 	}
+}
+
+// checkTargeted fails a targeted change when a message it names is not
+// among the loaded items: it must never fall back to the whole
+// conversation.
+func (j *stateJob) checkTargeted(found int) error {
+	if len(j.in.Messages) > 0 && found != len(j.in.Messages) {
+		return model.NewError(model.Validation, "a targeted message is no longer a provider message of the conversation")
+	}
+	return nil
 }
 
 // Route is the conversation's stored route; the effect has no target.
@@ -120,7 +136,7 @@ func (j *stateJob) Recheck(ctx context.Context, actor *engine.Client, rec store.
 // the attempt.
 func (j *stateJob) StateChange() StateChange {
 	c := StateChange{
-		Items: slices.Clone(j.items), FlagKind: j.in.Kind,
+		Items: slices.Clone(j.items), Targeted: len(j.in.Messages) > 0, FlagKind: j.in.Kind,
 		Destination: j.in.Destination, AddLabels: slices.Clone(j.in.Add), RemoveLabels: slices.Clone(j.in.Remove),
 	}
 	switch j.in.Verb {
@@ -138,31 +154,31 @@ func (j *stateJob) Bind(inst adapter.Instance) (ProviderCall, bool) {
 	case model.CapabilityArchive:
 		if a, ok := inst.(adapter.Archiver); ok {
 			return func(ctx context.Context, eff adapter.Effect) (adapter.Outcome, error) {
-				return a.Archive(ctx, adapter.ArchiveRequest{Effect: eff, Items: c.Items, Undo: c.Undo})
+				return a.Archive(ctx, adapter.ArchiveRequest{Effect: eff, Items: c.Items, Targeted: c.Targeted, Undo: c.Undo})
 			}, true
 		}
 	case model.CapabilityMove:
 		if m, ok := inst.(adapter.Mover); ok {
 			return func(ctx context.Context, eff adapter.Effect) (adapter.Outcome, error) {
-				return m.Move(ctx, adapter.MoveRequest{Effect: eff, Items: c.Items, Destination: c.Destination, Add: c.AddLabels, Remove: c.RemoveLabels})
+				return m.Move(ctx, adapter.MoveRequest{Effect: eff, Items: c.Items, Targeted: c.Targeted, Destination: c.Destination, Add: c.AddLabels, Remove: c.RemoveLabels})
 			}, true
 		}
 	case model.CapabilityReadState:
 		if s, ok := inst.(adapter.ReadStateSetter); ok {
 			return func(ctx context.Context, eff adapter.Effect) (adapter.Outcome, error) {
-				return s.SetReadState(ctx, adapter.ReadStateRequest{Effect: eff, Items: c.Items, Read: c.Read})
+				return s.SetReadState(ctx, adapter.ReadStateRequest{Effect: eff, Items: c.Items, Targeted: c.Targeted, Read: c.Read})
 			}, true
 		}
 	case model.CapabilityFlag:
 		if f, ok := inst.(adapter.Flagger); ok {
 			return func(ctx context.Context, eff adapter.Effect) (adapter.Outcome, error) {
-				return f.Flag(ctx, adapter.FlagRequest{Effect: eff, Items: c.Items, Kind: c.FlagKind, Undo: c.Undo})
+				return f.Flag(ctx, adapter.FlagRequest{Effect: eff, Items: c.Items, Targeted: c.Targeted, Kind: c.FlagKind, Undo: c.Undo})
 			}, true
 		}
 	case model.CapabilityTrash:
 		if t, ok := inst.(adapter.Trasher); ok {
 			return func(ctx context.Context, eff adapter.Effect) (adapter.Outcome, error) {
-				return t.Trash(ctx, adapter.TrashRequest{Effect: eff, Items: c.Items, Undo: c.Undo})
+				return t.Trash(ctx, adapter.TrashRequest{Effect: eff, Items: c.Items, Targeted: c.Targeted, Undo: c.Undo})
 			}, true
 		}
 	}

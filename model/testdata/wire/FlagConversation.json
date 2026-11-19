@@ -26,5 +26,8 @@
     "id": "ID"
   },
   "kind": "Kind",
-  "undo": true
+  "undo": true,
+  "messages": [
+    "Messages"
+  ]
 }
