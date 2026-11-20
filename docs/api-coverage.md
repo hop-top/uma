@@ -113,7 +113,9 @@ labelling is an extension effect of the adapter that offers it
 label. A reply kept in the mailbox's Drafts for a person to finish is the
 `google.mail.reply_draft` and `microsoft.mail.reply_draft` effects (authorized
 as `message.reply`). `google.mail.unsubscribe` and `microsoft.mail.unsubscribe` run through
-the same method, authorized as `extension.execute`, and change no label.
+the same method, authorized as `extension.execute`, and change no label, as does
+`google.mail.forward`, which sends a message to another address with the original attached
+as `message/rfc822`.
 
 | Method | Status | memory | postgres | Notes |
 | --- | --- | --- | --- | --- |

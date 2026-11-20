@@ -64,6 +64,12 @@ func (i *instance) send(ctx context.Context, req adapter.SendRequest, subject st
 	if err != nil {
 		return rejectedOr(err)
 	}
+	return i.submit(ctx, s, body, msgID)
+}
+
+// submit posts the composed message with users.messages.send; Send and the
+// forward effect share its outcomes.
+func (i *instance) submit(ctx context.Context, s *session, body gSend, msgID string) (adapter.Outcome, error) {
 	resp, err := s.do(ctx, request{method: "POST", url: i.c.api("/messages/send", nil), body: encode(body)})
 	switch {
 	case err == nil:
@@ -176,7 +182,8 @@ func rejectedOr(err error) (adapter.Outcome, error) {
 // A labels effect (model.CapabilityExtensionExecute) is never left
 // outcome_unknown, since messages.modify is idempotent; asked anyway, the
 // answer is failed with a transient failure: a new attempt is safe. An
-// unsubscribe effect is reconciled like a send: only its mailto method
+// forward effect is reconciled like a send, under the operation's
+// Message-ID. An unsubscribe effect is reconciled like a send: only its mailto method
 // sends, and it does so under the operation's Message-ID; a one-click
 // request leaves nothing in Sent, so "not found" is failed and a new
 // attempt, which repeats the idempotent request, is safe.
@@ -191,7 +198,7 @@ func (i *instance) Reconcile(ctx context.Context, req adapter.ReconcileRequest) 
 	if req.Capability == model.CapabilityExtensionExecute && req.Action.Name == ExtensionReplyDraft {
 		return i.reconcileReplyDraft(ctx, req)
 	}
-	if req.Capability == model.CapabilityExtensionExecute && req.Action.Name != ExtensionUnsubscribe {
+	if req.Capability == model.CapabilityExtensionExecute && req.Action.Name != ExtensionUnsubscribe && req.Action.Name != ExtensionForward {
 		return adapter.Outcome{State: model.Failed, Failure: model.NewError(model.Transient, "a label change is idempotent; a new attempt is safe")}, nil
 	}
 	s := i.c.session()

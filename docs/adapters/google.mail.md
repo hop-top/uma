@@ -35,7 +35,7 @@ The matrix of all adapters is in [Adapters](README.md).
 | `start_conversation` | `Conversations.Start` sends to an address that never wrote in; the message opens a new thread under the configured `subject` |
 | `reply_recipients` | `Messages.Reply` with `Recipients` also addresses Cc, Bcc and, replying to all, the parent's other recipients; see [Reply recipients](#reply-recipients) |
 | `raw_read` | `Messages.Raw` reads the message on demand: `users.messages.get` with `format=raw`, the whole RFC 5322 message with every header and part, as Gmail holds it. Bounded like the receiver's own raw read (about 94 MiB of response, a 70 MiB message); a message over the bound is `permanent` with reason `too_large`, never truncated. Nothing is kept. Needs the readonly scope |
-| `extension_execute` | `Extensions.Execute` runs `google.mail.labels`: `users.messages.modify` on one message; and `google.mail.reply_draft`: a reply kept as a Gmail draft (`users.drafts.create`, `update`, `delete`); and `google.mail.unsubscribe`: reads one message (`format=raw`) and unsubscribes by RFC 8058 one-click or by a mailto in the sender's organization |
+| `extension_execute` | `Extensions.Execute` runs `google.mail.labels`: `users.messages.modify` on one message; and `google.mail.reply_draft`: a reply kept as a Gmail draft (`users.drafts.create`, `update`, `delete`); and `google.mail.unsubscribe`: reads one message (`format=raw`) and unsubscribes by RFC 8058 one-click or by a mailto in the sender's organization; and `google.mail.forward`: reads one message (`format=raw`) and sends it to another address with the original attached as `message/rfc822` |
 | `extension_query` | `Extensions.Query` runs `google.mail.mailboxes`: `users.labels.list`, the account's labels as `model.ProviderMailbox` ([Provider mailboxes](#provider-mailboxes)) |
 | `google.mail.mailboxes` | Gates the list: declared, with `extension_query`, when the adapter can list labels |
 | `google.mail.mailbox_create` | Gates the create: declared, with `extension_execute`, when the adapter can create a label |
@@ -159,6 +159,7 @@ invalid fields at the call (`adapter.ActionValidator`), with nothing stored;
 | `google.mail.labels` | `conversation.label` | `add` and `remove` are lists of Gmail label IDs (`INBOX`, `STARRED`, `Label_7`, ...): at least one ID overall, each ID once across both lists, at most 100 per list. Other fields are ignored and never sent |
 | `google.mail.reply_draft` | `message.reply` | `text`, `draft` and `delete`: see [Reply drafts](#reply-drafts). Other fields are ignored |
 | `google.mail.unsubscribe` | `extension.execute` | Optional `method`: `auto` (the default: one-click when the message is eligible, else mailto), `one_click` or `mailto`. See [Unsubscribe](#unsubscribe) |
+| `google.mail.forward` | `extension.execute` | `to` (one bare address, required) and `text` (an optional note, at most 16 KiB). See [Forward](#forward) |
 
 The effect names no message itself: it applies to the effect's target when
 the engine sets one naming a provider message of the channel, else to the
@@ -282,6 +283,33 @@ access ([create](https://developers.google.com/workspace/gmail/api/reference/res
 [list](https://developers.google.com/workspace/gmail/api/reference/rest/v1/users.drafts/list)),
 so `gmail.modify`, which the adapter already declares, covers it; `gmail.send`
 and `gmail.readonly` do not.
+### Forward
+
+`google.mail.forward` sends one message to another address with the original
+carried whole. It applies to the effect's target or the reply route's parent
+message, as the labels effect does. The adapter reads that message again from
+Gmail (`users.messages.get`, `format=raw`, bounded like the raw read) at the
+attempt and attaches its bytes unchanged as a `message/rfc822` part
+([RFC 2046](https://www.rfc-editor.org/rfc/rfc2046) section 5.2.1) of a new
+`multipart/mixed` message: the original's headers, body and attachments all
+survive, and the receiver's client opens it as an attached message. A message
+that is gone is `rejected` with `not_found`; one over the read bound is
+`rejected` with `validation`. The send is the adapter's own
+(`users.messages.send`), with the outcomes of [Sending](#sending), and needs
+`gmail.send` and `gmail.readonly`.
+
+| Header | Value |
+| --- | --- |
+| From, To | the mailbox; the `to` address |
+| Subject | `Fwd: ` and the original's subject (not repeated when it already starts `Fwd:` or `Fw:`) |
+| Message-ID | uma's, derived from the operation as a send's is; the outcome reports it and Reconcile searches Sent for it |
+| References | the original's Message-ID alone, so a receiver that stores threading headers finds the copy by the original's Message-ID |
+| In-Reply-To, threadId | none: a forward is not a reply and starts its own Gmail thread |
+
+The text part is the note, or "Forwarded message attached." when there is none.
+`microsoft.mail` and `imap.mail` ship no such effect: a host checks the shipped
+effects before it offers a forward.
+
 ### Unsubscribe
 
 `google.mail.unsubscribe` unsubscribes the mailbox from the sender of one
