@@ -457,3 +457,18 @@ func addresses(v string) []Address {
 	}
 	return out
 }
+
+// ParseHeader reads the header block of the RFC 5322 message in r and no
+// more: the decoded Header, as Parse reports it, without walking the body.
+// maxBytes bounds the block (zero: DefaultMaxHeaderBytes); a longer block,
+// or one that is not a header, is an error wrapping ErrMalformed.
+func ParseHeader(r io.Reader, maxBytes int64) (Header, error) {
+	if maxBytes <= 0 {
+		maxBytes = DefaultMaxHeaderBytes
+	}
+	th, err := textproto.ReadHeader(bufio.NewReader(&headerLimit{r: r, n: maxBytes}))
+	if err != nil {
+		return Header{}, fmt.Errorf("%w: header: %w", ErrMalformed, err)
+	}
+	return decodeHeader(th), nil
+}

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/mail"
+	"slices"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -33,12 +34,31 @@ type Outgoing struct {
 	References []string
 	// Text is the UTF-8 body.
 	Text string
+	// Embedded, when set, is carried whole as a message/rfc822 attachment
+	// after the text: the message is multipart/mixed.
+	Embedded *Embedded
+}
+
+// Embedded is an RFC 5322 message carried inside another as a
+// message/rfc822 part (RFC 2046 section 5.2.1), the way a mail client
+// forwards "as attachment": every header, body part and attachment of the
+// original survives untouched.
+type Embedded struct {
+	// Name is the attachment's filename, as it is shown; empty leaves the
+	// part unnamed. It is written as given: sanitize it first.
+	Name string
+	// Raw is the message's bytes, CRLF line endings, headers first.
+	Raw []byte
 }
 
 // ErrInvalid is wrapped by Compose errors caused by the Outgoing value.
 var ErrInvalid = errors.New("mime: invalid outgoing message")
 
-// Compose writes m as a single-part text/plain UTF-8 message.
+// Compose writes m as a single-part text/plain UTF-8 message, or, when
+// m.Embedded is set, as multipart/mixed: the text, then the embedded
+// message as an attachment. The embedded bytes are written as they are,
+// "7bit" when all are ASCII, else "8bit": RFC 2046 allows no other
+// transfer encoding for a message/rfc822 part.
 func Compose(w io.Writer, m Outgoing) error {
 	if err := m.validate(); err != nil {
 		return err
@@ -78,6 +98,9 @@ func Compose(w io.Writer, m Outgoing) error {
 		}
 		h.SetMsgIDList("References", refs)
 	}
+	if m.Embedded != nil {
+		return composeEmbedded(w, h, m)
+	}
 	h.SetContentType("text/plain", map[string]string{"charset": "utf-8"})
 	body, err := gomail.CreateSingleInlineWriter(w, h)
 	if err != nil {
@@ -87,6 +110,54 @@ func Compose(w io.Writer, m Outgoing) error {
 		return err
 	}
 	return body.Close()
+}
+
+// composeEmbedded writes the headers h and the multipart/mixed body of m.
+func composeEmbedded(w io.Writer, h gomail.Header, m Outgoing) error {
+	mw, err := gomail.CreateWriter(w, h)
+	if err != nil {
+		return err
+	}
+	inline, err := mw.CreateInline()
+	if err != nil {
+		return err
+	}
+	var th gomail.InlineHeader
+	th.SetContentType("text/plain", map[string]string{"charset": "utf-8"})
+	text, err := inline.CreatePart(th)
+	if err != nil {
+		return err
+	}
+	if _, err := io.WriteString(text, m.Text); err != nil {
+		return err
+	}
+	if err := text.Close(); err != nil {
+		return err
+	}
+	if err := inline.Close(); err != nil {
+		return err
+	}
+	var ah gomail.AttachmentHeader
+	ah.SetContentType("message/rfc822", nil)
+	if m.Embedded.Name != "" {
+		ah.SetFilename(m.Embedded.Name)
+	}
+	enc := "7bit"
+	if slices.ContainsFunc(m.Embedded.Raw, func(b byte) bool { return b >= 0x80 }) {
+		enc = "8bit"
+	}
+	ah.Set("Content-Transfer-Encoding", enc)
+	att, err := mw.CreateAttachment(ah)
+	if err != nil {
+		return err
+	}
+	if _, err := att.Write(m.Embedded.Raw); err != nil {
+		return err
+	}
+	if err := att.Close(); err != nil {
+		return err
+	}
+	return mw.Close()
 }
 
 func (m Outgoing) validate() error {
@@ -122,6 +193,16 @@ func (m Outgoing) validate() error {
 	}
 	if !utf8.ValidString(m.Text) {
 		return bad("text", "must be UTF-8")
+	}
+	if e := m.Embedded; e != nil {
+		switch {
+		case len(e.Raw) == 0:
+			return bad("embedded", "needs the message's bytes")
+		case slices.Contains(e.Raw, 0):
+			return bad("embedded", "must not hold NUL bytes")
+		case strings.ContainsAny(e.Name, "\r\n") || !utf8.ValidString(e.Name):
+			return bad("embedded name", "must be one line of UTF-8")
+		}
 	}
 	return nil
 }

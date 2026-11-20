@@ -321,3 +321,81 @@ func TestParseKeepsBytes(t *testing.T) {
 		}
 	}
 }
+
+func TestComposeEmbeddedRFC822(t *testing.T) {
+	orig := crlf(`From: Jane <jane@example.org>
+To: desk@example.com
+Subject: =?utf-8?q?Caf=C3=A9?= order
+Message-ID: <orig1@example.org>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="b"
+
+--b
+Content-Type: text/plain; charset=utf-8
+
+Café, please.
+--b
+Content-Type: application/pdf; name="o.pdf"
+Content-Disposition: attachment; filename="o.pdf"
+Content-Transfer-Encoding: base64
+
+JVBERi0xLjQK
+--b--
+`)
+	out := mime.Outgoing{
+		From:       mime.Address{Address: "desk@example.com"},
+		To:         []mime.Address{{Address: "dest@example.net"}},
+		Subject:    "Fwd: Café order",
+		Date:       time.Date(2026, 10, 11, 8, 0, 0, 0, time.UTC),
+		MessageID:  "<fwd1@example.com>",
+		References: []string{"<orig1@example.org>"},
+		Text:       "FYI",
+		Embedded:   &mime.Embedded{Name: "Café order.eml", Raw: []byte(orig)},
+	}
+	var buf bytes.Buffer
+	if err := mime.Compose(&buf, out); err != nil {
+		t.Fatal(err)
+	}
+	m, err := mime.Parse(bytes.NewReader(buf.Bytes()), mime.Limits{KeepBytes: 1 << 20})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if m.Text != "FYI" || m.Header.References != "<orig1@example.org>" || m.Header.InReplyTo != "" {
+		t.Errorf("text %q references %q in-reply-to %q", m.Text, m.Header.References, m.Header.InReplyTo)
+	}
+	if len(m.Attachments) != 1 || m.Attachments[0].MediaType != "message/rfc822" {
+		t.Fatalf("attachments = %+v", m.Attachments)
+	}
+	if !bytes.Contains(buf.Bytes(), []byte("Content-Type: message/rfc822")) || !bytes.Contains(buf.Bytes(), []byte("Message-ID: <orig1@example.org>")) {
+		t.Errorf("composed message lacks the rfc822 part:\n%s", buf.String())
+	}
+	if !bytes.Contains(buf.Bytes(), []byte(orig)) {
+		t.Errorf("original bytes are not carried verbatim:\n%s", buf.String())
+	}
+}
+
+func TestComposeEmbeddedInvalid(t *testing.T) {
+	base := mime.Outgoing{
+		From: mime.Address{Address: "a@example.com"}, To: []mime.Address{{Address: "b@example.com"}},
+		Date: time.Date(2026, 10, 11, 8, 0, 0, 0, time.UTC), MessageID: "<x@example.com>", Text: "t",
+	}
+	for name, e := range map[string]*mime.Embedded{
+		"empty": {Raw: nil}, "nul": {Raw: []byte("A: b\r\n\x00\r\n")}, "name newline": {Name: "a\nb", Raw: []byte("A: b\r\n\r\n")},
+	} {
+		o := base
+		o.Embedded = e
+		if err := mime.Compose(&bytes.Buffer{}, o); !errors.Is(err, mime.ErrInvalid) {
+			t.Errorf("%s: err = %v, want ErrInvalid", name, err)
+		}
+	}
+}
+
+func TestParseHeader(t *testing.T) {
+	h, err := mime.ParseHeader(strings.NewReader(crlf("Subject: =?utf-8?q?Caf=C3=A9?=\nMessage-ID: <a@b.c>\n\nbody")), 0)
+	if err != nil || h.Subject != "Café" || h.MessageID != "<a@b.c>" {
+		t.Fatalf("ParseHeader = %+v, %v", h, err)
+	}
+	if _, err := mime.ParseHeader(strings.NewReader("Subject: "+strings.Repeat("x", 100)+"\r\n\r\n"), 20); !errors.Is(err, mime.ErrMalformed) {
+		t.Errorf("over the bound: err = %v", err)
+	}
+}
