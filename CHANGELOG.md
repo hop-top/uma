@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.1.0-alpha.2](https://github.com/hop-top/uma/compare/v0.1.0-alpha.1...v0.1.0-alpha.2) (2026-11-20)
+
+
+### Features
+
+* **events:** desk state events for read markers and snooze end ([#6](https://github.com/hop-top/uma/issues/6)) ([84c6de9](https://github.com/hop-top/uma/commit/84c6de94d2998f85063b332a6b4b96c5b964f8cc))
+* **mail/google:** forward a message with the original attached as message/rfc822 ([#12](https://github.com/hop-top/uma/issues/12)) ([6739f80](https://github.com/hop-top/uma/commit/6739f80724291da17e12a6acdd4dc31d2d30fdd0))
+* target state verbs, tag and unsubscribe at named messages ([#10](https://github.com/hop-top/uma/issues/10)) ([9c4d733](https://github.com/hop-top/uma/commit/9c4d733c7ebbe3b126b6c3c266515de219a1d1ab))
+
 ## [0.1.0-alpha.1](https://github.com/hop-top/uma/compare/v0.1.0-alpha.0...v0.1.0-alpha.1) (2026-11-17)
 
 
