@@ -45,7 +45,7 @@ func (f *Factory) Extensions() []adapter.ExtensionDefinition {
 		Name: ExtensionLabels, Version: ExtensionVersion, Kind: model.ExtensionKindEffect,
 		InputSchema:        model.Extension{Name: ExtensionLabels + ".input", Version: ExtensionVersion},
 		RequiredCapability: model.CapabilityExtensionExecute, AuthorizeAs: model.ActionConversationLabel,
-	}, replyDraftDefinition(), unsubscribeDefinition()}, mailboxExtensions()...)
+	}, replyDraftDefinition(), unsubscribeDefinition(), forwardDefinition()}, mailboxExtensions()...)
 }
 
 // ValidateAction checks the fields of an extension effect without I/O
@@ -56,6 +56,15 @@ func (f *Factory) Extensions() []adapter.ExtensionDefinition {
 func (f *Factory) ValidateAction(_ model.Audience, action model.Extension) []model.ValidationIssue {
 	if action.Name == ExtensionUnsubscribe {
 		return validateUnsubscribe(action)
+	}
+	if action.Name == ExtensionForward {
+		if action.Version != ExtensionVersion {
+			return nil
+		}
+		if _, issue := checkForward(action); issue != nil {
+			return []model.ValidationIssue{*issue}
+		}
+		return nil
 	}
 	if action.Name == string(ExtensionMailboxCreate) {
 		return validateMailboxCreate(action)
@@ -140,6 +149,9 @@ func (i *instance) Execute(ctx context.Context, req adapter.ExecuteRequest) (ada
 	}
 	if req.Action.Name == ExtensionUnsubscribe {
 		return i.unsubscribeEffect(ctx, req)
+	}
+	if req.Action.Name == ExtensionForward {
+		return i.forwardEffect(ctx, req)
 	}
 	if req.Action.Name != ExtensionLabels && req.Action.Name != ExtensionReplyDraft {
 		return rejected(model.Unsupported, "unknown "+string(Type)+" action"), nil
