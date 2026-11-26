@@ -12,8 +12,7 @@ require (
 require (
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/sys v0.49.0 // indirect
+	go.yaml.in/yaml/v3 v3.0.6 // indirect
 	hop.top/xrr v0.1.0-alpha.5 // indirect
 )
 

@@ -12,7 +12,7 @@ require (
 	github.com/emersion/go-smtp v0.25.0
 	github.com/jcmturner/gofork v1.7.6
 	github.com/jcmturner/gokrb5/v8 v8.4.4
-	github.com/testcontainers/testcontainers-go v0.44.0
+	github.com/testcontainers/testcontainers-go v0.45.0
 	github.com/xdg-go/scram v1.2.0
 	golang.org/x/crypto v0.58.0
 	golang.org/x/net v0.62.0
