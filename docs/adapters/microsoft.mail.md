@@ -12,7 +12,7 @@ plain JSON over the host's HTTP client (no Graph SDK).
 | Events | `message.received`, `delivery.updated` |
 | Identity namespaces | `microsoft.mail.address` |
 | Sender kinds | person |
-| Provider permissions | Graph `Mail.ReadWrite`, `Mail.Send` (delegated or application) |
+| Provider permissions | Graph `Mail.ReadWrite`, `Mail.Send` (delegated or application); `Mail.Send` alone in direct send mode ([Send modes](#send-modes)) |
 | Message IDs and threading | assigned by Graph; email header threading |
 | Reply parent | reported: the first valid `In-Reply-To` msg-id; resolved to a stored message by its `Message-ID` |
 | Interactions | none ([interactions](../interactions.md)) |
@@ -41,6 +41,51 @@ The matrix of all adapters is in [Adapters](README.md).
 | `read_state` | `Conversations.SetRead`: `PATCH` of `isRead` on each message |
 | `flag` | `Conversations.Flag`: `PATCH` of the follow-up `flag` (`flagged` / `notFlagged`), kind `star`; `PATCH` of `importance` (`high` / `normal`), kind `important` |
 | `trash` | `Conversations.Trash`: each message moves to Deleted Items; untrash moves it to the undo folder. Never a permanent delete |
+
+## Send modes
+
+`send_mode` in the channel configuration chooses how `send` delivers.
+
+| Mode | Calls | Permissions | Outcome |
+| --- | --- | --- | --- |
+| `draft` (default) | `createReply` or `POST /messages`, `PATCH`, `POST /messages/{id}/send` | `Mail.ReadWrite` and `Mail.Send` | `provider_accepted` with the draft's Graph and Message-ID references; a lost answer is `outcome_unknown` and `reconcile` looks the attempt up in Sent Items; the sent copy stays in Sent Items |
+| `direct` | `POST /users/{mailbox}/sendMail` (`/me/sendMail` without a mailbox) with `{message, saveToSentItems}` | `Mail.Send` only | `provider_accepted` with no references (Graph answers 202 with no message ID); a lost answer or a 5xx other than 503 is `outcome_unknown` and the channel cannot reconcile, so the operation stays unresolved and the send is never repeated on its own; no sent copy unless `save_to_sent_items` is `true` |
+
+- `save_to_sent_items` (direct mode only, default `false`) is sent as
+  `saveToSentItems`. Draft mode always keeps the sent copy and refuses the
+  field.
+- Direct mode sends new messages: a route with a parent message (a reply in a
+  thread) is a final `rejected` with `unsupported`, since `createReply` needs a
+  draft; reply to all is refused the same way. Cc and Bcc are sent.
+- In direct mode every capability but `send` and `start_conversation` reports
+  unavailable (`unsupported`): reading, change notifications, state verbs,
+  extensions and `reconcile` all need `Mail.ReadWrite`.
+- The permissions of a channel are `Config.RequiredPermissions`. A host whose
+  app holds `Mail.Send` only registers the adapter with
+  `microsoft.NewFactory(microsoft.Options{SendOnly: true})`: the descriptor
+  then declares `send` and `start_conversation` alone, no events, no reconcile
+  window, and `Mail.Send` as its only required permission; channels default to
+  `direct` and refuse `draft`. Without `SendOnly` the descriptor declares every
+  capability and the channel's own mode narrows them.
+- The text body is the message body (`contentType` `text`); engine sends carry
+  no subject.
+
+### Sending without the engine
+
+`microsoft.NewMailer` returns a `Mailer` whose `Send(ctx, Message)` posts one
+`sendMail` with the same HTTP, token and error handling as direct mode, for a
+host with no channels, routes or effects (for example one-time sign-in codes
+from a no-reply mailbox).
+
+| Piece | Behavior |
+| --- | --- |
+| `Message` | `From`, `To`, `Cc`, `Bcc`, `ReplyTo`, `Subject`, `Text`, `HTML`; at least one recipient and a body; Graph's JSON message holds one body, so with `HTML` set the message is sent as that HTML |
+| `MailerConfig` | `Mailbox` (empty is `/me`), `Cloud`, `HTTP` (`ports.HTTPClient`; an `*http.Client` works), `Tokens`, `SaveToSentItems`, `MaxRetries` (zero is 3, negative none), `RetryBackoff` (500 ms), `MaxRetryWait` (30 s) |
+| `TokenSource` | `Token(ctx) (Token, error)` and `Invalidate()`: the shape of kit's `storage/secret/oauth` `TokenSource` (cached client-credentials grant). The package does not import kit; `TokenSourceFunc` wraps a kit source in a few lines |
+| 401 | `Invalidate`, one fresh token, one repeat; a second 401 is `unauthorized` |
+| 429, 503, other 5xx | retried up to `MaxRetries`, after `Retry-After` (a wait over `MaxRetryWait` is not waited on: the error comes back with `RetryAfter`) or an exponential backoff; at-least-once, since a 5xx may follow a delivery |
+| Lost answer | `outcome_unknown`, never retried |
+| Errors | `model.Error` with fixed text: no content, address, subject or token; the context's error when it ends |
 
 ## Not declared
 

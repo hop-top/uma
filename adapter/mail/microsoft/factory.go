@@ -38,8 +38,15 @@ const (
 // needs, delegated or application: Mail.ReadWrite (read, delta, change
 // notifications, drafts, createReply, extended-property lookups, and the
 // message update behind ExtensionCategories, the state verbs and the folder
-// delta queries) and Mail.Send (send drafts).
-var RequiredPermissions = []string{"Mail.ReadWrite", "Mail.Send"}
+// delta queries) and Mail.Send (send drafts). A channel in SendModeDirect
+// needs Mail.Send alone: see Config.RequiredPermissions.
+var RequiredPermissions = []string{PermissionMailReadWrite, PermissionMailSend}
+
+// The Graph permissions the adapter names.
+const (
+	PermissionMailReadWrite = "Mail.ReadWrite"
+	PermissionMailSend      = "Mail.Send"
+)
 
 // Options configure a Factory. Graph calls go through the host's HTTP
 // client, Dependencies.HTTP; Open fails without one.
@@ -57,6 +64,15 @@ type Options struct {
 	// library's generator. Tests and hosts set it to make the waits
 	// deterministic.
 	Jitter func() float64
+	// SendOnly makes the factory a send-only adapter for hosts whose app
+	// holds Mail.Send alone (for example an Exchange application access
+	// policy limits it to one sender mailbox): the descriptor declares only
+	// send and start_conversation, no event, no reconcile settle window and
+	// RequiredPermissions of Mail.Send alone, and a channel's send mode
+	// defaults to SendModeDirect (SendModeDraft is refused). Without it the
+	// descriptor declares every capability, and a direct-mode channel
+	// reports all but send and start_conversation unavailable.
+	SendOnly bool
 }
 
 // Factory is the microsoft.mail adapter factory. It is safe for concurrent
@@ -96,8 +112,24 @@ var capabilities = []model.Capability{
 	model.CapabilityExtensionQuery, ExtensionMailboxes, ExtensionMailboxCreate,
 }
 
+// sendOnlyCapabilities are the capabilities of a send-only factory: a direct
+// sendMail reaches any address, and reads nothing back.
+var sendOnlyCapabilities = []model.Capability{model.CapabilitySend, model.CapabilityStartConversation}
+
 // Describe returns the descriptor.
 func (f *Factory) Describe() adapter.Descriptor {
+	if f.opts.SendOnly {
+		return adapter.Descriptor{
+			Type:                Type,
+			ContractMajor:       adapter.ContractMajor,
+			ConfigurationSchema: model.Extension{Name: ConfigSchema, Version: ConfigVersion},
+			Capabilities:        append([]model.Capability(nil), sendOnlyCapabilities...),
+			IdentityNamespaces:  []string{IdentityNamespace},
+			RequiredPermissions: []string{PermissionMailSend},
+			Maturity:            "experimental",
+			Exchange:            adapter.Exchange{MessageIDs: adapter.MessageIDsProvider, Threading: adapter.ThreadingEmail},
+		}
+	}
 	return adapter.Descriptor{
 		Type:                Type,
 		ContractMajor:       adapter.ContractMajor,
@@ -131,8 +163,25 @@ func (f *Factory) NormalizeRecipient(recipient model.ExternalRef) (model.Externa
 
 // Validate checks a channel configuration without I/O.
 func (f *Factory) Validate(e model.Extension) []model.ValidationIssue {
-	_, issues := parseConfig(e)
+	_, issues := f.parse(e)
 	return issues
+}
+
+// parse is parseConfig with the factory's send-mode rules: a send-only
+// factory defaults to, and requires, direct mode; the sent-copy switch is a
+// direct-mode field.
+func (f *Factory) parse(e model.Extension) (Config, []model.ValidationIssue) {
+	cfg, issues := parseConfig(e)
+	if f.opts.SendOnly && cfg.SendMode == "" {
+		cfg.SendMode = SendModeDirect
+	}
+	switch {
+	case f.opts.SendOnly && cfg.SendMode == SendModeDraft:
+		issues = append(issues, issue("send_mode", "a send-only factory sends in direct mode"))
+	case cfg.SaveToSentItems && cfg.sendMode() != SendModeDirect:
+		issues = append(issues, issue("save_to_sent_items", "needs send_mode direct; draft mode always keeps the sent copy"))
+	}
+	return cfg, issues
 }
 
 // Open returns an instance for channel. It makes no Graph call.
@@ -146,7 +195,7 @@ func (f *Factory) Open(ctx context.Context, ch model.Channel, deps adapter.Depen
 	if ch.Type != Type {
 		return nil, model.NewError(model.Validation, "channel type is not "+string(Type))
 	}
-	cfg, issues := parseConfig(ch.Configuration)
+	cfg, issues := f.parse(ch.Configuration)
 	if len(issues) > 0 {
 		return nil, model.NewError(model.Validation, "invalid "+ConfigSchema+" configuration")
 	}

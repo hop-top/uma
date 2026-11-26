@@ -16,7 +16,9 @@
 // resolved with purpose PurposeNotifications. The application needs the
 // Graph permissions in RequiredPermissions, Mail.ReadWrite and Mail.Send,
 // as delegated or as application permissions; app-only tokens need
-// Config.Mailbox, since /me requires a signed-in user.
+// Config.Mailbox, since /me requires a signed-in user. That is draft send
+// mode, the default; a channel in direct send mode needs Mail.Send alone
+// (see Sending and Config.RequiredPermissions).
 //
 // # Categories
 //
@@ -93,4 +95,55 @@
 // property holding the operation attempt, which Reconcile looks up in Sent
 // Items after a lost answer. Retry-After is reported to the operation
 // ledger and never waited on here.
+//
+// # Send modes and permissions
+//
+// Config.SendMode picks how a send is delivered.
+//
+//   - draft (the default): the draft flow above. It needs Mail.ReadWrite
+//     and Mail.Send, reports the draft's Graph and Internet message IDs, keeps
+//     the sent copy in Sent Items and lets Reconcile find it.
+//   - direct: one POST /users/{mailbox}/sendMail (/me/sendMail without a
+//     mailbox) with {message, saveToSentItems}. It needs Mail.Send only, for
+//     example an app whose Exchange application access policy limits it to
+//     one sender mailbox. Graph answers 202 with no message ID, so the
+//     outcome is provider_accepted with no provider reference; a lost
+//     answer or a 5xx other than 503 is outcome_unknown and stays so: the
+//     adapter reads nothing back (Mail.Send cannot read Sent Items), so the
+//     channel cannot reconcile and a send is never repeated on its own.
+//     Direct mode keeps no sent copy unless Config.SaveToSentItems is set,
+//     sends new messages only (a route with a parent message is refused,
+//     since createReply needs a draft) and reports every capability but send
+//     and start_conversation unavailable.
+//
+// Config.RequiredPermissions reports the permissions of a channel's mode.
+// The descriptor is the factory's, not the channel's: to register an adapter
+// that declares only send and requires only Mail.Send, build the factory
+// with Options.SendOnly. Its descriptor declares send and start_conversation
+// alone, no events and no reconcile window, and its channels default to
+// direct mode (draft mode is refused).
+//
+// # Sending without the engine
+//
+// A Mailer sends one message with the same HTTP, token and error handling as
+// direct mode (one code path), for a host that needs to send a notice and
+// has no channels, routes or effects:
+//
+//	m, err := microsoft.NewMailer(microsoft.MailerConfig{
+//		Mailbox: "no-reply@contoso.example", HTTP: client, Tokens: tokens,
+//	})
+//	err = m.Send(ctx, microsoft.Message{
+//		To: []string{"user@example.org"}, Subject: "Your sign-in code", Text: "123456",
+//	})
+//
+// Tokens is a TokenSource with the shape of hop.top/kit's storage/secret/
+// oauth TokenSource (Token and Invalidate); TokenSourceFunc wraps one, as
+// this package does not import kit. A 401 invalidates the source and sends
+// once with a fresh token, a second 401 is model.Unauthorized; 429 and 5xx
+// are retried within MaxRetries, waiting Retry-After (bounded by
+// MaxRetryWait) or an exponential backoff, so a message can arrive twice
+// when a 5xx followed a delivery; a lost answer is model.OutcomeUnknown and
+// never retried. The context bounds everything. Errors carry no message
+// content, address or token. Graph's JSON message holds one body: a
+// Message with an HTML alternative is sent as that HTML.
 package microsoft
