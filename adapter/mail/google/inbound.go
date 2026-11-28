@@ -32,9 +32,18 @@ const (
 	maxAddrs      = 50
 )
 
+// payloadHeaders is the headers record of the payload: the header values a
+// host reads, as the other mail adapters record them under headers.
+type payloadHeaders struct {
+	// AutoSubmitted is the Auto-Submitted header (RFC 3834) as found, empty
+	// when absent, so a host can tell automated mail apart.
+	AutoSubmitted string `json:"auto_submitted,omitempty"`
+}
+
 // messagePayload is PayloadMessage version 1.
 type messagePayload struct {
-	Subject string `json:"subject,omitempty"`
+	Headers payloadHeaders `json:"headers"`
+	Subject string         `json:"subject,omitempty"`
 	// ThreadID is Gmail's thread: a provider hint, never conversation
 	// identity.
 	ThreadID          string   `json:"thread_id,omitempty"`
@@ -276,6 +285,7 @@ func (i *instance) normalize(m gMessage, msg *mime.Message, staged []model.Part,
 	}
 
 	p := messagePayload{
+		Headers: payloadHeaders{AutoSubmitted: cut(h.AutoSubmitted, 255)},
 		Subject: cut(h.Subject, maxFieldBytes), ThreadID: m.ThreadID, LabelIDs: m.LabelIDs,
 		InternetMessageID: cut(h.MessageID, maxFieldBytes),
 		To:                addresses(h.To), Cc: addresses(h.Cc), ReplyTo: addresses(h.ReplyTo),

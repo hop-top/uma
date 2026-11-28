@@ -366,6 +366,12 @@ possible before it calls the effect. They decide nothing; the effect reads the
 headers again from Gmail. A message too large to fetch raw, delivered from its
 headers alone, carries neither.
 
+The payload also records the `Auto-Submitted` header (RFC 3834) as found, as
+`headers.auto_submitted` (empty when absent, at most 255 bytes), the field the
+IMAP, SMTP and HTTP mail adapters record, so a host can tell automated mail
+apart with one check across mail adapters. It is read from the raw message, or
+from the metadata headers of a message delivered from its headers alone.
+
 ## Permissions
 
 - **Provider.** Every unit of work resolves an access token through
