@@ -342,6 +342,12 @@ them in `internetMessageHeaders` (a repeated field joined by a space), so a host
 can tell that an unsubscribe is possible before it calls the effect. They
 decide nothing; the effect reads the message again from Graph.
 
+The payload also records the `Auto-Submitted` header (RFC 3834) as Graph
+reports it in `internetMessageHeaders`, as `headers.auto_submitted` (empty when
+absent, at most 255 bytes), the field the IMAP, SMTP and HTTP mail adapters
+record, so a host can tell automated mail apart with one check across mail
+adapters.
+
 ## Permissions
 
 - **Provider.** Every unit of work resolves an access token through
