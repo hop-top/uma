@@ -30,15 +30,25 @@ const maxAttachmentParts = 64 - 1 - maxStagedAttachments
 // that are read.
 const maxAttachmentPages = 20
 
+// payloadHeaders is the headers record of the payload: the header values a
+// host reads, as the other mail adapters record them under headers.
+type payloadHeaders struct {
+	// AutoSubmitted is the Auto-Submitted header (RFC 3834) as Graph reports
+	// it in internetMessageHeaders, empty when absent, so a host can tell
+	// automated mail apart.
+	AutoSubmitted string `json:"auto_submitted,omitempty"`
+}
+
 // messagePayload is PayloadMessage version 1.
 type messagePayload struct {
-	Subject           string    `json:"subject,omitempty"`
-	ConversationID    string    `json:"conversation_id,omitempty"`
-	InternetMessageID string    `json:"internet_message_id,omitempty"`
-	To                []string  `json:"to,omitempty"`
-	Cc                []string  `json:"cc,omitempty"`
-	ReplyTo           []string  `json:"reply_to,omitempty"`
-	ReceivedAt        time.Time `json:"received_at,omitzero"`
+	Headers           payloadHeaders `json:"headers"`
+	Subject           string         `json:"subject,omitempty"`
+	ConversationID    string         `json:"conversation_id,omitempty"`
+	InternetMessageID string         `json:"internet_message_id,omitempty"`
+	To                []string       `json:"to,omitempty"`
+	Cc                []string       `json:"cc,omitempty"`
+	ReplyTo           []string       `json:"reply_to,omitempty"`
+	ReceivedAt        time.Time      `json:"received_at,omitzero"`
 	// AuthenticationResults is the receiving server's
 	// Authentication-Results header, recorded as found, not verified.
 	AuthenticationResults string `json:"authentication_results,omitempty"`
@@ -175,6 +185,7 @@ func (i *instance) normalize(m gMessage, atts []gAttachment, st staged) model.In
 	}
 
 	p := messagePayload{
+		Headers: payloadHeaders{AutoSubmitted: cutBytes(eh.AutoSubmitted, 255)},
 		Subject: m.Subject, ConversationID: m.ConversationID, InternetMessageID: m.InternetMessageID,
 		To: addresses(m.ToRecipients), Cc: addresses(m.CcRecipients), ReplyTo: addresses(m.ReplyTo),
 		ReceivedAt: m.ReceivedDateTime, AuthenticationResults: h["authentication-results"],
@@ -285,4 +296,15 @@ func truncateText(s string, n int) (string, bool) {
 		cut--
 	}
 	return s[:cut], true
+}
+
+// cutBytes bounds s to n bytes on a rune boundary.
+func cutBytes(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	for n > 0 && s[n]&0xC0 == 0x80 {
+		n--
+	}
+	return s[:n]
 }
